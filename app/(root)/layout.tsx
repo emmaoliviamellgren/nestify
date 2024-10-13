@@ -1,5 +1,9 @@
-const PublicLayout = () => {
-    return <div>PublicLayout</div>;
+const PublicLayout = ({
+    children,
+}: Readonly<{
+    children: React.ReactNode;
+}>) => {
+    return <div>{children}</div>;
 };
 
 export default PublicLayout;

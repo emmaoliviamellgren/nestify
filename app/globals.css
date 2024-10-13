@@ -32,6 +32,12 @@ body {
     font-family: var(-font-familjenGrotesk), sans-serif;
 }
 
+.button {
+    font-family: var(--font-familjenGrotesk), sans-serif;
+    font-weight: var(--font-regular);
+    font-size: 12pt;
+}
+
 h1 {
     font-family: var(--font-lexend);
     font-weight: var(--font-light);
@@ -76,30 +82,36 @@ p.title {
     p {
         font-family: var(--font-familjenGrotesk), sans-serif;
         font-weight: var(--font-regular);
-        font-size: 15pt;
+        font-size: 13pt;
+    }
+
+    .button {
+        font-family: var(--font-familjenGrotesk), sans-serif;
+        font-weight: var(--font-regular);
+        font-size: 13pt;
     }
 
     a {
-      font-family: var(--font-familjenGrotesk), sans-serif;
-      font-weight: var(--font-medium);
-      font-size: 15pt;
-  }
+        font-family: var(--font-familjenGrotesk), sans-serif;
+        font-weight: var(--font-medium);
+        font-size: 13pt;
+    }
 
     p.bold {
         font-weight: var(--font-semibold);
-        font-size: 15pt;
+        font-size: 13pt;
     }
 
     p.caption {
         font-family: var(--font-familjenGrotesk), sans-serif;
         font-weight: var(--font-regular);
-        font-size: 12pt;
+        font-size: 11pt;
     }
 
     p.title {
         font-family: var(--font-familjenGrotesk), sans-serif;
         font-weight: var(--font-medium);
-        font-size: 22pt;
+        font-size: 18pt;
     }
 }
 

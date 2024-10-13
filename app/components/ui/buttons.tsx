@@ -1,7 +1,24 @@
 // Define the type for button props
 type ButtonProps = {
     label: string;
+    icon?: React.ReactNode;
     onClick?: () => void;
+};
+
+// Primary Button with icon
+export const PrimaryButtonWithIcon = ({
+    label,
+    icon,
+    onClick,
+}: ButtonProps) => {
+    return (
+        <button
+            onClick={onClick}
+            className='button text-[--text-secondary] bg-[--primary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--primary-hover] transition-colors duration-75 flex items-center gap-1'>
+            <span className='icon'>{icon}</span>
+            {label}
+        </button>
+    );
 };
 
 // Primary Button

@@ -1,17 +1,14 @@
-import {
-    PrimaryButton,
-    SecondaryButton,
-    DisabledButton,
-    WarningButton,
-} from '../components/ui/buttons';
+'use client';
+
+import { RegularInput } from '../components/ui/inputs';
 
 const LandingPage = () => {
     return (
         <div className='flex gap-2 flex-col'>
-            <PrimaryButton label='Primary' />
-            <SecondaryButton label='Secondary' />
-            <DisabledButton label='Disabled' />
-            <WarningButton label='Warning' />
+            <RegularInput
+                placeholder='Enter text'
+                onChange={(e) => console.log(e.target.value)}
+            />
         </div>
     );
 };

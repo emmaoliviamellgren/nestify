@@ -29,7 +29,7 @@
 body {
     color: var(--text-primary);
     background: var(--background);
-    font-family: var(-font-familjenGrotesk), sans-serif;
+    font-family: var(--font-familjenGrotesk), sans-serif;
 }
 
 .button {

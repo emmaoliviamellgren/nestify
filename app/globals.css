@@ -38,6 +38,12 @@ body {
     font-size: 12pt;
 }
 
+.input {
+    font-family: var(--font-familjenGrotesk), sans-serif;
+    font-weight: var(--font-regular);
+    font-size: 12pt;
+}
+
 h1 {
     font-family: var(--font-lexend);
     font-weight: var(--font-light);
@@ -86,6 +92,12 @@ p.title {
     }
 
     .button {
+        font-family: var(--font-familjenGrotesk), sans-serif;
+        font-weight: var(--font-regular);
+        font-size: 13pt;
+    }
+
+    .input {
         font-family: var(--font-familjenGrotesk), sans-serif;
         font-weight: var(--font-regular);
         font-size: 13pt;

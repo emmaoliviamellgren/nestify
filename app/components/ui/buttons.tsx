@@ -48,7 +48,7 @@ export const DisabledButton = ({ label }: ButtonProps) => {
     return (
         <button
             disabled
-            className='button text-[--text-secondary] bg-[--disabled]  w-fit px-5 py-1.5 rounded-lg'>
+            className='button text-[--text-secondary] bg-[--disabled] w-fit px-5 py-1.5 rounded-lg'>
             {label}
         </button>
     );
@@ -60,6 +60,17 @@ export const WarningButton = ({ label, onClick }: ButtonProps) => {
         <button
             onClick={onClick}
             className='button text-[--text-secondary] bg-[--warning] w-fit px-5 py-1.5 rounded-lg hover:bg-[--warning-hover] transition-colors duration-75'>
+            {label}
+        </button>
+    );
+};
+
+// Outlined Button
+export const OutlinedButton = ({ label, onClick }: ButtonProps) => {
+    return (
+        <button
+            onClick={onClick}
+            className='button text-[--secondary] outline outline-[--secondary] hover:opacity-70 w-fit px-5 py-1.5 rounded-lg transition-colors duration-75'>
             {label}
         </button>
     );

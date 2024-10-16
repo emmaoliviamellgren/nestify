@@ -1,8 +1,12 @@
 'use client';
 
+import Navigation from '../components/navigation';
+
 const LandingPage = () => {
     return (
-        <div>Landing Page</div>
+        <>
+            <Navigation />
+        </>
     );
 };
 

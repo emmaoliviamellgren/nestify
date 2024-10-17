@@ -1,7 +1,7 @@
 import { ChangeEvent, useState } from 'react';
 import { SearchBarPrimary, SearchBarSecondary } from './ui/inputs';
 import { CircleUserRound } from 'lucide-react';
-import PillButtons from './ui/pillButtons';
+import { PillButton } from './ui/pillButtons';
 
 const Navigation = () => {
     const [searchValue, setSearchValue] = useState('');
@@ -18,8 +18,7 @@ const Navigation = () => {
                     onChange={handleSearch}
                     placeholder='Search...'
                 />
-                <button
-                    className='bg-[--primary] hover:bg-[--primary-hover] p-2 rounded-full'>
+                <button className='bg-[--primary] hover:bg-[--primary-hover] p-2 rounded-full'>
                     <CircleUserRound className='size-7 text-[--text-secondary]' />
                 </button>
             </span>
@@ -27,7 +26,7 @@ const Navigation = () => {
             <span className='py-4 hidden md:flex justify-between items-center px-8 border-b'>
                 <h2>Nestify</h2>
                 <div className='flex gap-4 items-center'>
-                    <PillButtons
+                    <PillButton
                         label='Log in'
                         icon={<CircleUserRound />}
                     />

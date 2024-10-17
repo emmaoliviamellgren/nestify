@@ -1,13 +1,9 @@
 'use client';
 
-import Navigation from '../components/navigation';
+import Filters from '../components/filters';
 
 const LandingPage = () => {
-    return (
-        <>
-            <Navigation />
-        </>
-    );
+    return <Filters />;
 };
 
 export default LandingPage;

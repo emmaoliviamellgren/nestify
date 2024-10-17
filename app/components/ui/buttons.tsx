@@ -14,7 +14,7 @@ export const PrimaryButtonWithIcon = ({
     return (
         <button
             onClick={onClick}
-            className='button text-[--text-secondary] bg-[--primary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--primary-hover] transition-colors duration-75 flex items-center gap-1'>
+            className='text-[--text-secondary] bg-[--primary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--primary-hover] flex items-center gap-1'>
             <span className='icon'>{icon}</span>
             {label}
         </button>
@@ -26,7 +26,7 @@ export const PrimaryButton = ({ label, onClick }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='button text-[--text-secondary] bg-[--primary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--primary-hover] transition-colors duration-75'>
+            className='text-[--text-secondary] bg-[--primary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--primary-hover]'>
             {label}
         </button>
     );
@@ -37,7 +37,7 @@ export const SecondaryButton = ({ label, onClick }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='button text-[--text-secondary] bg-[--secondary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--secondary-hover] transition-colors duration-75'>
+            className='text-[--text-secondary] bg-[--secondary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--secondary-hover]'>
             {label}
         </button>
     );
@@ -48,7 +48,7 @@ export const DisabledButton = ({ label }: ButtonProps) => {
     return (
         <button
             disabled
-            className='button text-[--text-secondary] bg-[--disabled] w-fit px-5 py-1.5 rounded-lg'>
+            className='text-[--text-secondary] bg-[--disabled] w-fit px-5 py-1.5 rounded-lg'>
             {label}
         </button>
     );
@@ -59,7 +59,7 @@ export const WarningButton = ({ label, onClick }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='button text-[--text-secondary] bg-[--warning] w-fit px-5 py-1.5 rounded-lg hover:bg-[--warning-hover] transition-colors duration-75'>
+            className='text-[--text-secondary] bg-[--warning] w-fit px-5 py-1.5 rounded-lg hover:bg-[--warning-hover]'>
             {label}
         </button>
     );
@@ -70,7 +70,7 @@ export const OutlinedButton = ({ label, onClick }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='button text-[--secondary] outline outline-[--secondary] hover:opacity-70 w-fit px-5 py-1.5 rounded-lg transition-colors duration-75'>
+            className='text-[--secondary] outline outline-[--secondary] hover:opacity-70 w-fit px-5 py-1.5 rounded-lg'>
             {label}
         </button>
     );

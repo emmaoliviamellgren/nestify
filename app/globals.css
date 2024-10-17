@@ -32,20 +32,18 @@ body {
     font-family: var(--font-familjenGrotesk), sans-serif;
 }
 
-.button {
+button {
     font-family: var(--font-familjenGrotesk), sans-serif;
     font-weight: var(--font-regular);
     font-size: 12pt;
+    transition: background-color 0.1s ease-in;
+    box-shadow: 0px 2px 3px rgba(74, 57, 232, 0.2);
 }
 
 .input {
     font-family: var(--font-familjenGrotesk), sans-serif;
     font-weight: var(--font-regular);
     font-size: 12pt;
-}
-
-.pill-shadow {
-    box-shadow: 0px 2px 3px rgba(74, 57, 232, 0.2);
 }
 
 h1 {
@@ -89,44 +87,20 @@ p.title {
 }
 
 @media screen and (min-width: 768px) {
-    p {
-        font-family: var(--font-familjenGrotesk), sans-serif;
-        font-weight: var(--font-regular);
-        font-size: 13pt;
-    }
 
-    .button {
-        font-family: var(--font-familjenGrotesk), sans-serif;
-        font-weight: var(--font-regular);
-        font-size: 13pt;
-    }
-
-    .input {
-        font-family: var(--font-familjenGrotesk), sans-serif;
-        font-weight: var(--font-regular);
-        font-size: 13pt;
-    }
-
-    a {
-        font-family: var(--font-familjenGrotesk), sans-serif;
-        font-weight: var(--font-medium);
-        font-size: 13pt;
-    }
-
+    p,
+    button,
+    .input,
+    a,
     p.bold {
-        font-weight: var(--font-semibold);
         font-size: 13pt;
     }
 
     p.caption {
-        font-family: var(--font-familjenGrotesk), sans-serif;
-        font-weight: var(--font-regular);
         font-size: 11pt;
     }
 
     p.title {
-        font-family: var(--font-familjenGrotesk), sans-serif;
-        font-weight: var(--font-medium);
         font-size: 18pt;
     }
 }

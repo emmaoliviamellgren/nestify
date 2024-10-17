@@ -11,30 +11,34 @@ const Navigation = () => {
     };
 
     return (
-        <main>
-            <span className='md:hidden'>
+        <>
+            <span className='py-6 justify-center flex gap-6 items-center md:hidden'>
                 <SearchBarPrimary
                     value={searchValue}
                     onChange={handleSearch}
                     placeholder='Search...'
                 />
+                <button
+                    className='bg-[--primary] hover:bg-[--primary-hover] p-2 rounded-full'>
+                    <CircleUserRound className='size-7 text-[--text-secondary]' />
+                </button>
             </span>
             {/* Desktop size */}
-            <span className='hidden md:flex justify-evenly items-center'>
-                <div className='flex gap-2 items-center'>
-                    <h2>Nestify</h2>
+            <span className='py-4 hidden md:flex justify-between items-center px-8 border-b'>
+                <h2>Nestify</h2>
+                <div className='flex gap-4 items-center'>
                     <PillButtons
                         label='Log in'
                         icon={<CircleUserRound />}
                     />
+                    <SearchBarSecondary
+                        value={searchValue}
+                        onChange={handleSearch}
+                        placeholder='Search...'
+                    />
                 </div>
-                <SearchBarSecondary
-                    value={searchValue}
-                    onChange={handleSearch}
-                    placeholder='Search...'
-                />
             </span>
-        </main>
+        </>
     );
 };
 

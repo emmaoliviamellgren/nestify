@@ -1,7 +1,7 @@
 import React from 'react';
 
-const accommodationsList = () => {
+const Accommodation = () => {
     return <div>accommodationsList</div>;
 };
 
-export default accommodationsList;
+export default Accommodation;

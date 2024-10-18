@@ -3,6 +3,7 @@
 import { useState } from 'react';
 import Filters from '../components/filters';
 import { SearchBarPrimary } from '../components/ui/inputs';
+import Accommodation from '../components/accommodation';
 
 const LandingPage = () => {
     const [value, setValue] = useState('');
@@ -20,7 +21,7 @@ const LandingPage = () => {
                 />
             </div>
             <Filters />
-            
+            <Accommodation />
         </>
     );
 };

@@ -18,7 +18,7 @@ const AccommodationCard = ({ accommodation }: Props) => {
                 <h3 className='text-lg font-bold'>{accommodation.title}</h3>
                 <p className='text-gray-600'>{accommodation.location}</p>
                 <p className='text-gray-900 font-semibold'>
-                    ${accommodation.price} / night
+                    {accommodation.price} SEK
                 </p>
                 <span className='flex space-x-2 mt-2'>
                     {accommodation.properties?.map((property, index) => (

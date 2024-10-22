@@ -2,8 +2,11 @@ import { ChangeEvent, useState } from 'react';
 import { SearchBarPrimary, SearchBarSecondary } from './ui/inputs';
 import { CircleUserRound } from 'lucide-react';
 import { PillButton } from './ui/pillButtons';
+import { useRouter } from 'next/navigation';
 
 const Navigation = () => {
+
+    const router = useRouter();
     const [searchValue, setSearchValue] = useState('');
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +32,7 @@ const Navigation = () => {
                     <PillButton
                         label='Log in'
                         icon={<CircleUserRound />}
+                        onClick={() => router.push('/log-in')}
                     />
                     <SearchBarSecondary
                         value={searchValue}

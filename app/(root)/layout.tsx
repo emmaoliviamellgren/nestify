@@ -1,6 +1,7 @@
 'use client'
 
 import Navigation from '../components/navigation';
+import Footer from '../components/footer';
 
 const PublicLayout = ({
     children,
@@ -11,6 +12,7 @@ const PublicLayout = ({
         <>
             <Navigation />
             {children}
+            <Footer />
         </>
     );
 };

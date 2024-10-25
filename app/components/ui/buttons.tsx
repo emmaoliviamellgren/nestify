@@ -3,6 +3,7 @@ type ButtonProps = {
     label: string;
     icon?: React.ReactNode;
     onClick?: () => void;
+    type?: 'button' | 'submit';
 };
 
 // Primary Button with icon
@@ -22,11 +23,12 @@ export const PrimaryButtonWithIcon = ({
 };
 
 // Primary Button
-export const PrimaryButton = ({ label, onClick }: ButtonProps) => {
+export const PrimaryButton = ({ label, onClick, type }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='text-[--text-secondary] bg-[--primary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--primary-hover]'>
+            type={type}
+            className='text-[--text-secondary] bg-[--primary] w-fit min-w-96 px-5 py-1.5 rounded-lg hover:bg-[--primary-hover]'>
             {label}
         </button>
     );
@@ -37,7 +39,7 @@ export const SecondaryButton = ({ label, onClick }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='text-[--text-secondary] bg-[--secondary] w-fit px-5 py-1.5 rounded-lg hover:bg-[--secondary-hover]'>
+            className='text-[--text-secondary] bg-[--secondary] w-fit min-w-96 px-5 py-1.5 rounded-lg hover:bg-[--secondary-hover]'>
             {label}
         </button>
     );
@@ -48,7 +50,7 @@ export const DisabledButton = ({ label }: ButtonProps) => {
     return (
         <button
             disabled
-            className='text-[--text-secondary] bg-[--disabled] w-fit px-5 py-1.5 rounded-lg'>
+            className='text-[--text-secondary] bg-[--disabled] w-fit min-w-96 px-5 py-1.5 rounded-lg'>
             {label}
         </button>
     );
@@ -59,7 +61,7 @@ export const WarningButton = ({ label, onClick }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='text-[--text-secondary] bg-[--warning] w-fit px-5 py-1.5 rounded-lg hover:bg-[--warning-hover]'>
+            className='text-[--text-secondary] bg-[--warning] w-fit min-w-96 px-5 py-1.5 rounded-lg hover:bg-[--warning-hover]'>
             {label}
         </button>
     );
@@ -70,7 +72,7 @@ export const OutlinedButton = ({ label, onClick }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
-            className='text-[--secondary] outline outline-[--secondary] hover:opacity-70 w-fit px-5 py-1.5 rounded-lg'>
+            className='text-[--secondary] outline outline-[--secondary] hover:opacity-70 w-fit min-w-96 px-5 py-1.5 rounded-lg'>
             {label}
         </button>
     );

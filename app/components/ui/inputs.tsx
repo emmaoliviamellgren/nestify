@@ -3,19 +3,19 @@ import { Search } from 'lucide-react';
 // Define the type for the input props
 type InputProps = {
     value?: string;
-    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    type?: string;
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder?: string;
 };
 
 // Regular Input
-export const Input = ({ value, onChange, placeholder }: InputProps) => {
+export const Input = ({ value, type, placeholder }: InputProps) => {
     return (
         <input
-            type='text'
+            type={type || 'text'}
             value={value}
-            onChange={onChange}
             placeholder={placeholder || 'Enter text'}
-            className='input w-[250px] md:w-[350px] h-[35px] md:h-[40px] rounded-lg outline outline-offset-2 outline-1 outline-[--primary] py-1.5 px-3 placeholder-opacity-30 text-opacity-30 '
+            className='input w-fit min-w-96 h-[35px] md:h-[40px] rounded-lg outline outline-offset-2 outline-1 outline-[--primary] py-1.5 px-3 placeholder-opacity-30 text-opacity-30'
         />
     );
 };

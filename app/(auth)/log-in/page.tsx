@@ -98,19 +98,19 @@ const LogInPage = () => {
                     <div className='flex justify-center'>
                         <PrimaryButton
                             type='submit'
-                            label='Create an account'
+                            label='Log in'
                             onClick={() => console.log('clicked')}
                         />
                     </div>
-                <span className='flex flex-col text-center md:text-left gap-0.5'>
-                    <p className='caption'>Not a member?</p>
-                    <Link
-                        className='text-[10pt] md:text-[11pt] font-bold underline underline-offset-2 hover:no-underline hover:opacity-70'
-                        href='/register'>
-                        Create an account
-                    </Link>
-                </span>
-                            </form>
+                    <span className='flex flex-col text-center mt-8 gap-0.5'>
+                        <p className='caption'>Not a member?</p>
+                        <Link
+                            className='text-[10pt] md:text-[11pt] font-bold underline underline-offset-2 hover:no-underline hover:opacity-70'
+                            href='/register'>
+                            Create an account
+                        </Link>
+                    </span>
+                </form>
             </main>
         </>
     );

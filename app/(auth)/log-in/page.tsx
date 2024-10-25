@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/app/hooks/useAuth';
+import { useAuth } from '@/app/hooks/authProvider';
 
 type LoginFormValues = {
     email: string;
@@ -51,38 +51,57 @@ const LogInPage = () => {
                 <h2 className='text-center md:text-left'>Log In</h2>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='flex flex-col mx-auto md:mx-0 mb-12'>
-                    <div className='py-8'>
-                        <label className='flex flex-col gap-2 pb-6'>
-                            <p className='bold'>Email adress</p>
+                    className='w-full md:w-[450px] pt-8 md:pt-8'>
+                    <div className='grid grid-cols-1 gap-y-4 pb-8 md:pb-10'>
+                        <div>
+                            <label
+                                htmlFor='email'
+                                className='block leading-6 pb-2'>
+                                Email adress
+                            </label>
                             <Input
+                                id='email'
                                 placeholder='Email'
                                 {...form.register('email')}
-                            />
-                        </label>
-                        <label className='flex flex-col gap-2'>
-                            <p className='bold'>Password</p>
-                            <Input
-                                type='password'
-                                placeholder='Password'
-                                {...form.register('password')}
                             />
                             {form.formState.errors.email && (
                                 <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
                                     <MdErrorOutline />
                                     <span className='text-xs'>
-                                        {form.formState.errors.email.message}
+                                        {form.formState.errors.email?.message}
                                     </span>
                                 </span>
                             )}
-                        </label>
+                        </div>
+                        <div>
+                            <label
+                                htmlFor='password'
+                                className='block leading-6 pb-2'>
+                                Password
+                            </label>
+                            <Input
+                                id='password'
+                                type='password'
+                                placeholder='Password'
+                                {...form.register('password')}
+                            />
+                            {form.formState.errors.password && (
+                                <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                    <MdErrorOutline />
+                                    <span className='text-xs'>
+                                        {form.formState.errors.password.message}
+                                    </span>
+                                </span>
+                            )}
+                        </div>
                     </div>
-                    <PrimaryButton
-                        type='submit'
-                        label='Log in'
-                        onClick={() => console.log('clicked')}
-                    />
-                </form>
+                    <div className='flex justify-center'>
+                        <PrimaryButton
+                            type='submit'
+                            label='Create an account'
+                            onClick={() => console.log('clicked')}
+                        />
+                    </div>
                 <span className='flex flex-col text-center md:text-left gap-0.5'>
                     <p className='caption'>Not a member?</p>
                     <Link
@@ -91,6 +110,7 @@ const LogInPage = () => {
                         Create an account
                     </Link>
                 </span>
+                            </form>
             </main>
         </>
     );

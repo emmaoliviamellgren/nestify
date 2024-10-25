@@ -2,10 +2,10 @@
 
 import { PrimaryButton } from '@/app/components/ui/buttons';
 import { Input } from '@/app/components/ui/inputs';
-import { useAuth } from '@/app/hooks/useAuth';
+import { useAuth } from '@/app/hooks/authProvider';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
-import { useRouter } from 'next/router';
+import { useRouter } from 'next/navigation';
 import { useForm } from 'react-hook-form';
 import { MdErrorOutline } from 'react-icons/md';
 import { z } from 'zod';
@@ -26,7 +26,7 @@ const formSchema = z.object({
     }),
 });
 
-export const RegisterPage = () => {
+const RegisterPage = () => {
     const { register } = useAuth();
     const router = useRouter();
 
@@ -73,12 +73,17 @@ export const RegisterPage = () => {
                 <h2 className='text-center md:text-left'>Register</h2>
                 <form
                     onSubmit={form.handleSubmit(onSubmit)}
-                    className='flex flex-col mx-auto md:mx-0 mb-12'>
-                    <div className='py-8'>
-                        <div className='flex w-full'>
-                            <label className='flex flex-col gap-2 pb-6 w-1/2'>
-                                <p className='bold'>First name</p>
+                    className='w-full md:w-[450px] pt-8 md:pt-8'>
+                    <div className='grid grid-cols-1 gap-y-4 pb-8 md:pb-10'>
+                        <div className='grid md:grid-cols-2 gap-x-6 gap-y-4'>
+                            <div>
+                                <label
+                                    htmlFor='firstName'
+                                    className='block leading-6 pb-2'>
+                                    First name
+                                </label>
                                 <Input
+                                    id='firstName'
                                     placeholder='First name'
                                     {...form.register('firstName')}
                                 />
@@ -93,10 +98,15 @@ export const RegisterPage = () => {
                                         </span>
                                     </span>
                                 )}
-                            </label>
-                            <label className='flex flex-col gap-2 pb-6'>
-                                <p className='bold'>Last name</p>
+                            </div>
+                            <div>
+                                <label
+                                    htmlFor='lastName'
+                                    className='block leading-6 pb-2'>
+                                    Last name
+                                </label>
                                 <Input
+                                    id='lastName'
                                     placeholder='Last name'
                                     {...form.register('lastName')}
                                 />
@@ -111,11 +121,16 @@ export const RegisterPage = () => {
                                         </span>
                                     </span>
                                 )}
-                            </label>
+                            </div>
                         </div>
-                        <label className='flex flex-col gap-2 pb-6'>
-                            <p className='bold'>Email adress</p>
+                        <div>
+                            <label
+                                htmlFor='email'
+                                className='block leading-6 pb-2'>
+                                Email adress
+                            </label>
                             <Input
+                                id='email'
                                 placeholder='Email'
                                 {...form.register('email')}
                             />
@@ -127,26 +142,36 @@ export const RegisterPage = () => {
                                     </span>
                                 </span>
                             )}
-                        </label>
-                        <label className='flex flex-col gap-2'>
-                            <p className='bold'>Password</p>
+                        </div>
+                        <div>
+                            <label
+                                htmlFor='password'
+                                className='block leading-6 pb-2'>
+                                Password
+                            </label>
                             <Input
+                                id='password'
                                 type='password'
                                 placeholder='Password'
                                 {...form.register('password')}
                             />
-                            {form.formState.errors.email && (
+                            {form.formState.errors.password && (
                                 <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
                                     <MdErrorOutline />
                                     <span className='text-xs'>
-                                        {form.formState.errors.email.message}
+                                        {form.formState.errors.password.message}
                                     </span>
                                 </span>
                             )}
-                        </label>
-                        <label className='flex flex-col gap-2'>
-                            <p className='bold'>Confirm password</p>
+                        </div>
+                        <div>
+                            <label
+                                htmlFor='confirmPassword'
+                                className='block leading-6 pb-2'>
+                                Confirm Password
+                            </label>
                             <Input
+                                id='confirmPassword'
                                 type='password'
                                 placeholder='Confirm Password'
                                 {...form.register('password')}
@@ -159,23 +184,27 @@ export const RegisterPage = () => {
                                     </span>
                                 </span>
                             )}
-                        </label>
+                        </div>
                     </div>
-                    <PrimaryButton
-                        type='submit'
-                        label='Create an account'
-                        onClick={() => console.log('clicked')}
-                    />
+                    <div className='flex justify-center'>
+                        <PrimaryButton
+                            type='submit'
+                            label='Create an account'
+                            onClick={() => console.log('clicked')}
+                        />
+                    </div>
+                    <span className='flex flex-col text-center mt-8 gap-0.5'>
+                        <p className='caption'>Already a member?</p>
+                        <Link
+                            className='text-[10pt] md:text-[11pt] font-bold underline underline-offset-2 hover:no-underline hover:opacity-70'
+                            href='/log-in'>
+                            Log in
+                        </Link>
+                    </span>
                 </form>
-                <span className='flex flex-col text-center md:text-left gap-0.5'>
-                    <p className='caption'>Already a member?</p>
-                    <Link
-                        className='text-[10pt] md:text-[11pt] font-bold underline underline-offset-2 hover:no-underline hover:opacity-70'
-                        href='/register'>
-                        Log in
-                    </Link>
-                </span>
             </main>
         </>
     );
 };
+
+export default RegisterPage;

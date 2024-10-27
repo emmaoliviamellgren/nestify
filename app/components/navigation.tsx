@@ -27,7 +27,7 @@ const Navigation = () => {
             </span>
             {/* Desktop size */}
             <span className='py-4 hidden md:flex justify-between items-center px-8 border-b'>
-                <h2>Nestify</h2>
+                <h2 className='cursor-pointer transition-all hover:translate-y-0.5' onClick={() => router.push('/')}>Nestify</h2>
                 <div className='flex gap-4 items-center'>
                     <PillButton
                         label='Log in'

@@ -1,17 +1,23 @@
 import { Accommodation } from '../types/accommodation';
+import Image from 'next/image';
 import iconMappingToNode from './ui/propertiesIcons';
+import { useRouter } from 'next/navigation';
 
 type Props = {
     accommodation: Accommodation;
 };
 
 const AccommodationCard = ({ accommodation }: Props) => {
+    const router = useRouter();
     return (
-        <div className='border rounded-lg max-w-[300px]'>
-            <img
+        <div
+            className='border rounded-lg max-w-[300px] cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-400/30'
+            onClick={() => router.push(`/accommodations/${accommodation.id}`)}>
+            <Image
                 src={accommodation.image}
+                width={300}
+                height={200}
                 alt={accommodation.title}
-                // className='w-full h-48 object-cover'
             />
 
             <div className='p-4'>

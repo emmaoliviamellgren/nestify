@@ -1,12 +1,12 @@
 'use client';
 
 import { useEffect, useState } from 'react';
-import Filters from '../components/filters';
-import { SearchBarPrimary } from '../components/ui/inputs';
-import AccommodationGrid from '../components/accommodationGrid';
-import { Accommodation } from '../types/accommodation';
-import { getAllAccommodations } from '../lib/accommodation.db';
-import Loading from '../components/Loading';
+import Filters from '@/components/filters';
+import { SearchBarPrimary } from '@/components/ui/inputs';
+import AccommodationGrid from '@/components/accommodationGrid';
+import { Accommodation } from '@/types/accommodation';
+import { getAllAccommodations } from '@/lib/accommodation.db';
+import Loading from '@/components/loading';
 
 const LandingPage = () => {
     const [accommodations, setAccommodations] = useState<Accommodation[]>([]);

@@ -1,4 +1,4 @@
-import { Accommodation } from '../types/accommodation';
+import { Accommodation } from '@/types/accommodation';
 import AccommodationCard from "./accommodationCard";
 
 type Props = {

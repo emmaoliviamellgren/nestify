@@ -1,11 +1,10 @@
-import AccommodationDetails from '@/app/components/accommodationDetails';
+import AccommodationDetails from '@/components/accommodationDetails';
 import { useParams } from 'next/navigation';
-import { Accommodation } from '@types/accommodation';
-
-const { id } = useParams();
+// import { Accommodation } from '@/types/accommodation';
 
 const HomeDetailsPage = () => {
-    return <AccommodationDetails id={id as Accommodation} />;
+    const { id } = useParams();
+    return <AccommodationDetails id={id} />;
 };
 
 export default HomeDetailsPage;

@@ -1,7 +1,7 @@
 'use client';
 
-import { PrimaryButton } from '@/app/components/ui/buttons';
-import { Input } from '@/app/components/ui/inputs';
+import { PrimaryButton } from '@/components/ui/buttons';
+import { Input } from '@/components/ui/inputs';
 import { MdErrorOutline } from 'react-icons/md';
 import Link from 'next/link';
 
@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/app/hooks/authProvider';
+import { useAuth } from '@/hooks/authProvider';
 
 type LoginFormValues = {
     email: string;

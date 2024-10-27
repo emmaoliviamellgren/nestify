@@ -1,4 +1,4 @@
-import { Accommodation } from '../types/accommodation';
+import { Accommodation } from '@/types/accommodation';
 import Image from 'next/image';
 import iconMappingToNode from './ui/propertiesIcons';
 import { useRouter } from 'next/navigation';

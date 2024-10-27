@@ -1,8 +1,8 @@
 'use client';
 
-import { PrimaryButton } from '@/app/components/ui/buttons';
-import { Input } from '@/app/components/ui/inputs';
-import { useAuth } from '@/app/hooks/authProvider';
+import { PrimaryButton } from '@/components/ui/buttons';
+import { Input } from '@/components/ui/inputs';
+import { useAuth } from '@/hooks/authProvider';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';

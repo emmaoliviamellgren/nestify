@@ -1,10 +1,49 @@
+'use client'
+
 import AccommodationDetails from '@/components/accommodationDetails';
-import { useParams } from 'next/navigation';
-// import { Accommodation } from '@/types/accommodation';
+import Loading from '@/components/loading';
+import { getAccommodationById } from '@/lib/accommodation.db';
+import { Accommodation } from '@/types/accommodation';
+import { useParams, useRouter } from 'next/navigation';
+import { useEffect, useState } from 'react';
 
 const HomeDetailsPage = () => {
+    
     const { id } = useParams();
-    return <AccommodationDetails id={id} />;
+    const router = useRouter();
+    const [loading, setLoading] = useState(true);
+    const [accommodation, setAccommodation] = useState<Accommodation | null>(null);
+
+    
+    useEffect(() => {
+        
+        const fetchAccommodation = async () => {
+            console.log(id)
+            if (typeof id == 'string') {
+                try {
+                    const fetchedAccommodation = await getAccommodationById(id);
+                    if (fetchedAccommodation) {
+                        setAccommodation(fetchedAccommodation);
+                        
+                    } else {
+                        console.log('No accommodation found with the given ID.');
+                    }
+                } catch (error) {
+                    console.error('Error fetching accommodation data:', error);
+                } finally {
+                    setLoading(false);
+                }
+            } else {
+                console.log('ID is not available in search parameters.');
+            }
+        };
+
+        fetchAccommodation();
+    }, [id, router]);
+
+    if (loading) return <Loading />;
+
+    return <AccommodationDetails accommodation={accommodation} />;
 };
 
 export default HomeDetailsPage;

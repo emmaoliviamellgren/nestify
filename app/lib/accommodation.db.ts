@@ -1,5 +1,5 @@
-import { Accommodation } from '@/app/types/accommodation';
-import { db, storage } from '@/firebase.config';
+import { Accommodation } from '@/types/accommodation';
+import { db, storage } from '../../firebase.config';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import toast from 'react-hot-toast';
@@ -7,9 +7,7 @@ import toast from 'react-hot-toast';
 export const getAllAccommodations = async (): Promise<Accommodation[]> => {
     try {
         const accommodationsCollection = collection(db, 'Accommodations');
-        console.log('Fetching accommodations from Firestore:', accommodationsCollection);
         const accommodationsSnapshot = await getDocs(accommodationsCollection);
-        console.log('Accommodations snapshot:', accommodationsSnapshot);
 
         if (accommodationsSnapshot.empty) {
             console.log('No accommodations found.');
@@ -19,19 +17,9 @@ export const getAllAccommodations = async (): Promise<Accommodation[]> => {
         const accommodations: Accommodation[] = await Promise.all(
             accommodationsSnapshot.docs.map(async (doc) => {
                 const data = doc.data() as Accommodation;
-                console.log('Accommodation data:', data);
-
-                if (!data.image) {
-                    console.log('No image field found for accommodation:', doc.id);
-                    return { ...data, id: doc.id, image: '' };
-                }
-
                 const imageRef = ref(storage, data.image);
-                console.log('Image reference:', imageRef);
-
                 try {
                     const imageUrl = await getDownloadURL(imageRef);
-                    console.log('Image URL:', imageUrl);
                     return { ...data, id: doc.id, image: imageUrl };
                 } catch (imageError) {
                     console.error('Error fetching image URL:', imageError);
@@ -39,8 +27,6 @@ export const getAllAccommodations = async (): Promise<Accommodation[]> => {
                 }
             })
         );
-
-        console.log('Fetched accommodations:', accommodations);
         return accommodations;
     } catch (error) {
         toast.error(
@@ -54,7 +40,7 @@ export const getAccommodationById = async (
     id: string
 ): Promise<Accommodation | null> => {
     try {
-        const accommodationDoc = await getDoc(doc(db, 'accommodations', id));
+        const accommodationDoc = await getDoc(doc(db, 'Accommodations', id));
         if (!accommodationDoc.exists()) {
             console.log(`Accommodation with ID ${id} does not exist.`);
             return null;

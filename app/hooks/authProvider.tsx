@@ -1,6 +1,7 @@
 'use client';
 
-import { auth } from '@/firebase.config';
+import { auth } from '../../firebase.config';
+
 import {
     createUserWithEmailAndPassword,
     onAuthStateChanged,
@@ -16,10 +17,10 @@ import {
     useEffect,
     useState,
 } from 'react';
-import { User } from '../types/user';
+import { User } from '@/types/user';
 
 import toast from 'react-hot-toast';
-import { handleError } from '../utils/errorHandler';
+import { handleError } from '@/utils/errorHandler';
 
 type AuthValues = {
     email: string;

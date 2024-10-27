@@ -17,7 +17,7 @@ export const getAllAccommodations = async (): Promise<Accommodation[]> => {
         const accommodations: Accommodation[] = await Promise.all(
             accommodationsSnapshot.docs.map(async (doc) => {
                 const data = doc.data() as Accommodation;
-                const imageRef = ref(storage, data.image);
+                const imageRef = ref(storage, data.images[0]);
                 try {
                     const imageUrl = await getDownloadURL(imageRef);
                     return { ...data, id: doc.id, image: imageUrl };
@@ -47,12 +47,12 @@ export const getAccommodationById = async (
         }
 
         const data = accommodationDoc.data() as Accommodation;
-        const imageRef = ref(storage, data.image);
+        const imageRef = ref(storage, data.images[0]);
         const imageUrl = await getDownloadURL(imageRef);
         const accommodation: Accommodation = {
             ...data,
             id,
-            image: imageUrl,
+            images: [imageUrl],
         };
 
         return accommodation;

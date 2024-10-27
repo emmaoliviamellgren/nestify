@@ -4,6 +4,6 @@ export type Accommodation = {
     description: string;
     price: number;
     location: string;
-    image: string;
+    images: string[];
     properties?: React.ReactNode[];
 };

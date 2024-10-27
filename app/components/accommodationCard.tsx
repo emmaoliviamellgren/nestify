@@ -14,7 +14,7 @@ const AccommodationCard = ({ accommodation }: Props) => {
             className='border rounded-lg max-w-[300px] cursor-pointer transition-all hover:shadow-lg hover:shadow-blue-400/30'
             onClick={() => router.push(`/accommodations/${accommodation.id}`)}>
             <Image
-                src={accommodation.image}
+                src={accommodation.images[0]}
                 width={300}
                 height={200}
                 alt={accommodation.title}

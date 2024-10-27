@@ -41,6 +41,7 @@ export const getAccommodationById = async (
 ): Promise<Accommodation | null> => {
     try {
         const accommodationDoc = await getDoc(doc(db, 'Accommodations', id));
+        console.log(accommodationDoc)
         if (!accommodationDoc.exists()) {
             console.log(`Accommodation with ID ${id} does not exist.`);
             return null;
@@ -48,6 +49,7 @@ export const getAccommodationById = async (
 
         const data = accommodationDoc.data() as Accommodation;
         const imageRef = ref(storage, data.images[0]);
+        console.log(imageRef)
         const imageUrl = await getDownloadURL(imageRef);
         const accommodation: Accommodation = {
             ...data,

@@ -18,7 +18,6 @@ const HomeDetailsPage = () => {
     useEffect(() => {
         
         const fetchAccommodation = async () => {
-            console.log(id)
             if (typeof id == 'string') {
                 try {
                     const fetchedAccommodation = await getAccommodationById(id);

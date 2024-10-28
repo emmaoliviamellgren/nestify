@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import './embla.css';
 import { lexend, familjenGrotesk } from './utils/fonts';
 import { Toaster } from 'react-hot-toast';
 import AuthContextProvider from './hooks/authProvider';

@@ -21,7 +21,6 @@ const LandingPage = () => {
         const fetchAccommodations = async () => {
             try {
                 const data: Accommodation[] = await getAllAccommodations();
-                console.log(data)
                 setAccommodations(data);
             } catch (error) {
                 console.error('Error fetching threads:', error);

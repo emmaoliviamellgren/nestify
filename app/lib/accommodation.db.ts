@@ -41,20 +41,22 @@ export const getAccommodationById = async (
 ): Promise<Accommodation | null> => {
     try {
         const accommodationDoc = await getDoc(doc(db, 'Accommodations', id));
-        console.log(accommodationDoc)
         if (!accommodationDoc.exists()) {
             console.log(`Accommodation with ID ${id} does not exist.`);
             return null;
         }
 
         const data = accommodationDoc.data() as Accommodation;
-        const imageRef = ref(storage, data.images[0]);
-        console.log(imageRef)
-        const imageUrl = await getDownloadURL(imageRef);
+        const imageUrls = await Promise.all(
+            data.images.map(async (imagePath: string) => {
+                const imageRef = ref(storage, imagePath);
+                return await getDownloadURL(imageRef);
+            })
+        );
         const accommodation: Accommodation = {
             ...data,
             id,
-            images: [imageUrl],
+            images: imageUrls,
         };
 
         return accommodation;

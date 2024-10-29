@@ -7,6 +7,7 @@ import AccommodationGrid from '@/components/accommodationGrid';
 import { Accommodation } from '@/types/accommodation';
 import { getAllAccommodations } from '@/lib/accommodation.db';
 import Loading from '@/components/loading';
+import Navigation from '@/components/navigation';
 
 const LandingPage = () => {
     const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
@@ -36,7 +37,8 @@ const LandingPage = () => {
 
     return (
         <>
-            <div className='hidden md:block md:py-6 md:px-16'>
+            <Navigation />
+            <div className='overflow-x-hidden hidden md:block md:py-6 md:px-16'>
                 <div className='py-9'>
                     <h1>Rent your dream home</h1>
                     <h2>Where do you want to go?</h2>
@@ -47,7 +49,7 @@ const LandingPage = () => {
                 />
             </div>
             <Filters />
-            <div className='px-4 md:px-12 mx-auto'>
+            <div className='overflow-x-hidden px-4 md:px-12 mx-auto'>
                 <p className='title pb-2 pt-6'>Featured</p>
                 <p className='hidden md:block pb-6'>
                     Take a look at our most popular accommodations!

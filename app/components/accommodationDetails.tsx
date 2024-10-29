@@ -2,6 +2,7 @@ import { Accommodation } from '@/types/accommodation';
 import Image from 'next/image';
 import EmblaCarousel from '@/components/carousel';
 import { EmblaOptionsType } from 'embla-carousel';
+import iconMappingToNode from './ui/propertiesIcons';
 
 type AccommodationDetailsProps = {
     accommodation: Accommodation | null;
@@ -34,14 +35,13 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
     };
 
     return (
-        <div>
-            <div className='block mx-auto max-w-[calc(100vw-50px)] md:hidden'>
+        <>
+            <div className='block mt-5 mx-auto w-screen max-w-[calc(100vw-50px)] md:hidden'>
                 <EmblaCarousel
                     slides={SLIDES}
                     options={OPTIONS}
                 />
             </div>
-            <p className='title'>{accommodation.title}</p>
             <div className='hidden md:grid mx-auto gap-2 md:grid-cols-2 md:w-[800px]'>
                 <div className='h-[400px]'>
                     <Image
@@ -69,10 +69,26 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
                     />
                 </div>
             </div>
-            <p>{accommodation.description}</p>
-            <p>Price: {accommodation.price}</p>
-            <p>Location: {accommodation.location}</p>
-        </div>
+            <div className='flex flex-col gap-2 px-8 py-4 md:px-16'>
+                <p className='title'>{accommodation.title}</p>
+                <div className='flex justify-between'>
+                    <p>Host: Catherine</p>
+                    <p>Price: {accommodation.price} SEK / night</p>
+                    <p>Location: {accommodation.location}</p>
+                </div>
+                <div className='flex flex-col gap-2'>
+                    <p className='caption'>This accommodation offers</p>
+                    <span>
+                        {accommodation.properties?.map((property, index) => (
+                            <span key={index}>
+                                {iconMappingToNode[property as string]}
+                            </span>
+                        ))}
+                    </span>
+                </div>
+                <p>{accommodation.description}</p>
+            </div>
+        </>
     );
 };
 

@@ -21,8 +21,9 @@ const Navigation = () => {
                     onChange={handleSearch}
                     placeholder='Search...'
                 />
-                <button className='bg-[--primary] hover:bg-[--primary-hover] p-2 rounded-full'>
-                    <CircleUserRound className='size-7 text-[--text-secondary]' />
+                <button className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'>
+                    <CircleUserRound className='size-6 text-[--text-secondary]' />
+                    <p className='text-[--text-secondary]'>My account</p>
                 </button>
             </span>
             {/* Desktop size */}

@@ -1,6 +1,5 @@
 'use client'
 
-import Navigation from '@/components/navigation';
 import Footer from '@/components/footer';
 
 const PublicLayout = ({
@@ -10,7 +9,6 @@ const PublicLayout = ({
 }>) => {
     return (
         <>
-            <Navigation />
             {children}
             <Footer />
         </>

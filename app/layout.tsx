@@ -4,6 +4,7 @@ import './embla.css';
 import { lexend, familjenGrotesk } from './utils/fonts';
 import { Toaster } from 'react-hot-toast';
 import AuthContextProvider from './hooks/authProvider';
+import { NextUIProvider } from '@nextui-org/react';
 
 export const metadata: Metadata = {
     title: 'Nestify',
@@ -19,12 +20,12 @@ export default function RootLayout({
         <html lang='en'>
             <body
                 className={`${lexend.variable} ${familjenGrotesk.variable} antialiased`}>
-                <AuthContextProvider>
-                    <>
+                <NextUIProvider>
+                    <AuthContextProvider>
                         <Toaster />
                         {children}
-                    </>
-                </AuthContextProvider>
+                    </AuthContextProvider>
+                </NextUIProvider>
             </body>
         </html>
     );

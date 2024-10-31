@@ -8,10 +8,10 @@ const PublicLayout = ({
     children: React.ReactNode;
 }>) => {
     return (
-        <>
+        <div>
             {children}
             <Footer />
-        </>
+        </div>
     );
 };
 

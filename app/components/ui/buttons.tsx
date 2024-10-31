@@ -4,6 +4,7 @@ type ButtonProps = {
     icon?: React.ReactNode;
     onClick?: () => void;
     type?: 'button' | 'submit';
+    customWidth?: boolean;
 };
 
 // Primary Button with icon
@@ -23,12 +24,12 @@ export const PrimaryButtonWithIcon = ({
 };
 
 // Primary Button
-export const PrimaryButton = ({ label, onClick, type }: ButtonProps) => {
+export const PrimaryButton = ({ label, onClick, type, customWidth }: ButtonProps) => {
     return (
         <button
             onClick={onClick}
             type={type}
-            className='text-[--text-secondary] bg-[--primary] w-fit min-w-96 px-5 py-1.5 rounded-lg hover:bg-[--primary-hover]'>
+            className={`text-[--text-secondary] bg-[--primary] px-5 py-1.5 rounded-lg hover:bg-[--primary-hover] ${customWidth ? '' : 'min-w-96'}`}>
             {label}
         </button>
     );

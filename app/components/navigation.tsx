@@ -14,7 +14,7 @@ const Navigation = () => {
     };
 
     return (
-        <>
+        <div>
             <span className='py-6 justify-center flex gap-6 items-center md:hidden'>
                 <SearchBarPrimary
                     value={searchValue}
@@ -42,7 +42,7 @@ const Navigation = () => {
                     />
                 </div>
             </span>
-        </>
+        </div>
     );
 };
 

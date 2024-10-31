@@ -44,10 +44,10 @@ const HomeDetailsPage = () => {
     if (loading) return <Loading />;
 
     return (
-        <>
+        <div>
             <span className='md:hidden'><LabelButton /></span>
             <AccommodationDetails accommodation={accommodation} />
-        </>
+        </div>
     );
 };
 

@@ -8,6 +8,7 @@ import { Accommodation } from '@/types/accommodation';
 import { getAllAccommodations } from '@/lib/accommodation.db';
 import Loading from '@/components/loading';
 import Navigation from '@/components/navigation';
+import Footer from '@/components/footer';
 
 
 const LandingPage = () => {
@@ -37,7 +38,7 @@ const LandingPage = () => {
     if (loading) return <Loading />;
 
     return (
-        <div>
+        <>
             <Navigation />
             <div className='overflow-x-hidden hidden md:block md:py-6 md:px-16'>
                 <div className='py-9'>
@@ -57,7 +58,8 @@ const LandingPage = () => {
                 </p>
                 <AccommodationGrid accommodations={accommodations} />
             </div>
-        </div>
+            <Footer />
+        </>
     );
 };
 

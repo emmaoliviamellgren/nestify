@@ -1,6 +1,7 @@
 'use client';
 
 import AccommodationDetails from '@/components/accommodationDetails';
+import Footer from '@/components/footer';
 import Loading from '@/components/loading';
 import LabelButton from '@/components/ui/labelButton';
 import { getAccommodationById } from '@/lib/accommodation.db';
@@ -44,10 +45,15 @@ const HomeDetailsPage = () => {
     if (loading) return <Loading />;
 
     return (
-        <div>
-            <span className='md:hidden'><LabelButton /></span>
+        <>
+            <span className='md:hidden'>
+                <LabelButton />
+            </span>
             <AccommodationDetails accommodation={accommodation} />
-        </div>
+            <span className='hidden md:block'>
+                <Footer />
+            </span>
+        </>
     );
 };
 

@@ -7,10 +7,7 @@ import { EmblaOptionsType } from 'embla-carousel';
 import iconMappingToNode from './ui/propertiesIcons';
 import Navigation from './navigation';
 import smilingMan from '../lib/images/smiling-man.jpg';
-import { Input } from './ui/inputs';
-import { PrimaryButton } from './ui/buttons';
-import { DatePicker, Select, SelectItem } from '@nextui-org/react';
-import { CircleUserRound } from 'lucide-react';
+import BookingForm from './BookingForm';
 
 type AccommodationDetailsProps = {
     accommodation: Accommodation | null;
@@ -43,7 +40,7 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
     };
 
     return (
-        <div>
+        <>
             <section className='block mt-5 mx-auto w-screen max-w-[calc(100vw-50px)] md:hidden'>
                 <EmblaCarousel
                     slides={SLIDES}
@@ -137,55 +134,14 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
                                 SEK per night
                             </p>
                         </span>
-                        <p>Check in</p>
-                        <Input />
-                        <p>Check out</p>
-                        <Input />
-                        <p>N.o. guests</p>
-                        <Input />
-                        <span className='flex justify-between py-4'>
-                            <p className='bold'>Total amount SEK</p>
-                            <p>000</p>
-                        </span>
-                        <PrimaryButton
-                            label='Book now'
-                            customWidth={true}
-                        />
+                        <BookingForm />
                     </div>
                 </section>
             </main>
-            <footer className='flex flex-col md:hidden justify-between rounded-md bg-gray-200/60 border-[--primary] p-8 gap-4'>
-                <div>
-                    <DatePicker
-                        label='Check in'
-                        className='max-w-[284px]'
-                        disableAnimation={true}
-                    />
-
-                    <DatePicker
-                        label='Check out'
-                        className='max-w-[284px]'
-                        disableAnimation={true}
-                    />
-                    <Select
-                        className='max-w-xs'
-                        defaultSelectedKeys={['2']}
-                        label='Guests'
-                        placeholder='2'
-                        startContent={<CircleUserRound />}>
-                        <SelectItem key={1}>1</SelectItem>
-                        <SelectItem key={2}>2</SelectItem>
-                        <SelectItem key={3}>3</SelectItem>
-                        <SelectItem key={4}>4</SelectItem>
-                        <SelectItem key={5}>5</SelectItem>
-                    </Select>
-                </div>
-                <PrimaryButton
-                    label='Book now'
-                    customWidth={true}
-                />
+            <footer className='flex flex-col md:hidden justify-between rounded-md bg-gray-200/60 border-[--primary] py-12 px-8 gap-8'>
+            <BookingForm />
             </footer>
-        </div>
+        </>
     );
 };
 

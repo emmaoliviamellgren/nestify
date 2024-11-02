@@ -49,7 +49,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
                 const user = {
                     id: _user.uid,
                     username: _user.displayName || '',
-                    name: '',
                     email: _user.email || '',
                     password: '',
                 };

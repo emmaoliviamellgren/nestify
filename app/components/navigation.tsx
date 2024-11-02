@@ -5,7 +5,6 @@ import { PillButton } from './ui/pillButtons';
 import { useRouter } from 'next/navigation';
 
 const Navigation = () => {
-
     const router = useRouter();
     const [searchValue, setSearchValue] = useState('');
 
@@ -21,14 +20,20 @@ const Navigation = () => {
                     onChange={handleSearch}
                     placeholder='Search...'
                 />
-                <button className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'>
+                <button
+                    className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
+                    onClick={() => router.push('/log-in')}>
                     <CircleUserRound className='size-6 text-[--text-secondary]' />
                     <p className='text-[--text-secondary]'>My account</p>
                 </button>
             </span>
             {/* Desktop size */}
             <span className='py-4 hidden md:flex justify-between items-center px-8 border-b'>
-                <h2 className='cursor-pointer transition-all hover:translate-y-0.5' onClick={() => router.push('/')}>Nestify</h2>
+                <h2
+                    className='cursor-pointer transition-all hover:translate-y-0.5'
+                    onClick={() => router.push('/')}>
+                    Nestify
+                </h2>
                 <div className='flex gap-4 items-center'>
                     <PillButton
                         label='Log in'

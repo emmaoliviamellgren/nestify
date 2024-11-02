@@ -2,20 +2,27 @@ import { Search } from 'lucide-react';
 
 // Define the type for the input props
 type InputProps = {
+    type: string;
+    onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    placeholder: string;
     value?: string;
-    type?: string;
     id?: string;
-    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void;
-    placeholder?: string;
 };
 
 // Regular Input
-export const Input = ({ id, value, type, placeholder }: InputProps) => {
+export const Input = ({
+    id,
+    value,
+    type,
+    placeholder,
+    onChange,
+}: InputProps) => {
     return (
         <input
             type={type || 'text'}
             id={id}
             value={value}
+            onChange={onChange}
             placeholder={placeholder || 'Enter text'}
             className='input w-full h-[35px] md:h-[40px] rounded-lg outline outline-offset-2 outline-1 outline-[--primary] py-1.5 px-3 placeholder-opacity-30 text-opacity-30'
         />
@@ -30,7 +37,9 @@ export const SearchBarPrimary = ({
 }: InputProps) => {
     return (
         <div className='relative flex items-center'>
-            <span className='absolute left-2 bg-[--primary] rounded-full'><Search className='size-4 text-[--text-secondary] m-[0.4rem] md:m-2'/></span>
+            <span className='absolute left-2 bg-[--primary] rounded-full'>
+                <Search className='size-4 text-[--text-secondary] m-[0.4rem] md:m-2' />
+            </span>
             <input
                 type='search'
                 value={value}
@@ -49,7 +58,9 @@ export const SearchBarSecondary = ({
 }: InputProps) => {
     return (
         <div className='relative flex items-center'>
-            <span className='absolute left-2'><Search className='size-5'/></span>
+            <span className='absolute left-2'>
+                <Search className='size-5' />
+            </span>
             <input
                 type='search'
                 value={value}

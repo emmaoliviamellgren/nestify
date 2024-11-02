@@ -2,9 +2,9 @@ import { Search } from 'lucide-react';
 
 // Define the type for the input props
 type InputProps = {
-    type: string;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     placeholder: string;
+    type?: string;
     value?: string;
     id?: string;
 };

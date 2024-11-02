@@ -3,9 +3,11 @@ import { SearchBarPrimary, SearchBarSecondary } from './ui/inputs';
 import { CircleUserRound } from 'lucide-react';
 import { PillButton } from './ui/pillButtons';
 import { useRouter } from 'next/navigation';
+import { useAuth } from '@/hooks/authProvider';
 
 const Navigation = () => {
     const router = useRouter();
+    const { user } = useAuth();
     const [searchValue, setSearchValue] = useState('');
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
@@ -20,12 +22,21 @@ const Navigation = () => {
                     onChange={handleSearch}
                     placeholder='Search...'
                 />
-                <button
-                    className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
-                    onClick={() => router.push('/log-in')}>
-                    <CircleUserRound className='size-6 text-[--text-secondary]' />
-                    <p className='text-[--text-secondary]'>My account</p>
-                </button>
+                {!user ? (
+                    <button
+                        className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
+                        onClick={() => router.push('/log-in')}>
+                        <CircleUserRound className='size-6 text-[--text-secondary]' />
+                        <p className='text-[--text-secondary]'>Log in</p>
+                    </button>
+                ) : (
+                    <button
+                        className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
+                        onClick={() => router.push('/user')}>
+                        <CircleUserRound className='size-6 text-[--text-secondary]' />
+                        <p className='text-[--text-secondary]'>My account</p>
+                    </button>
+                )}
             </span>
             {/* Desktop size */}
             <span className='py-4 hidden md:flex justify-between items-center px-8 border-b'>
@@ -35,11 +46,20 @@ const Navigation = () => {
                     Nestify
                 </h2>
                 <div className='flex gap-4 items-center'>
-                    <PillButton
-                        label='Log in'
-                        icon={<CircleUserRound />}
-                        onClick={() => router.push('/log-in')}
-                    />
+                    {!user ? (
+                        <PillButton
+                            label='Log in'
+                            icon={<CircleUserRound />}
+                            onClick={() => router.push('/log-in')}
+                        />
+                    ) : (
+                        <PillButton
+                            label='My account'
+                            icon={<CircleUserRound />}
+                            onClick={() => router.push('/user')}
+                        />
+                    )}
+
                     <SearchBarSecondary
                         value={searchValue}
                         onChange={handleSearch}

@@ -46,6 +46,7 @@ const LandingPage = () => {
                     <h2>Where do you want to go?</h2>
                 </div>
                 <SearchBarPrimary
+                    placeholder='Search...'
                     onChange={handleChange}
                     value={value}
                 />

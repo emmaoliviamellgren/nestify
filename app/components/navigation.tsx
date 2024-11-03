@@ -2,17 +2,36 @@ import { ChangeEvent, useState } from 'react';
 import { SearchBarPrimary, SearchBarSecondary } from './ui/inputs';
 import { CircleUserRound } from 'lucide-react';
 import { PillButton } from './ui/pillButtons';
+import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useAuth } from '@/hooks/authProvider';
+import { auth } from '../../firebase.config';
+import { signOut } from 'firebase/auth';
+import Loading from '@/components/loading';
 
 const Navigation = () => {
     const router = useRouter();
     const { user } = useAuth();
     const [searchValue, setSearchValue] = useState('');
+    const [loading, setLoading] = useState(false);
 
     const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
         setSearchValue(e.target.value);
     };
+
+    const handleLogout = async () => {
+        setLoading(true);
+        try {
+            await signOut(auth);
+        } catch (error) {
+            console.error('Could not log out', error);
+        } finally {
+            setLoading(false);
+            router.push('/');
+        }
+    };
+
+    if (loading) return <Loading />;
 
     return (
         <div>
@@ -30,12 +49,24 @@ const Navigation = () => {
                         <p className='text-[--text-secondary]'>Log in</p>
                     </button>
                 ) : (
-                    <button
-                        className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
-                        onClick={() => router.push('/user')}>
-                        <CircleUserRound className='size-6 text-[--text-secondary]' />
-                        <p className='text-[--text-secondary]'>My account</p>
-                    </button>
+                    <>
+                        <button
+                            className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
+                            onClick={() => router.push('/user')}>
+                            <CircleUserRound className='size-6 text-[--text-secondary]' />
+                            <p className='text-[--text-secondary]'>
+                                My account
+                            </p>
+                        </button>
+                        <button
+                            className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
+                            onClick={handleLogout}>
+                            <LogOut className='size-6 text-[--text-secondary]' />
+                            <p className='text-[--text-secondary]'>
+                                Log out
+                            </p>
+                        </button>
+                    </>
                 )}
             </span>
             {/* Desktop size */}
@@ -53,11 +84,18 @@ const Navigation = () => {
                             onClick={() => router.push('/log-in')}
                         />
                     ) : (
-                        <PillButton
-                            label='My account'
-                            icon={<CircleUserRound />}
-                            onClick={() => router.push('/user')}
-                        />
+                        <>
+                            <PillButton
+                                label='My account'
+                                icon={<CircleUserRound />}
+                                onClick={() => router.push('/user')}
+                            />
+                            <PillButton
+                                label='Log out'
+                                icon={<LogOut />}
+                                onClick={handleLogout}
+                            />
+                        </>
                     )}
 
                     <SearchBarSecondary

@@ -1,4 +1,3 @@
-// Define the type for button props
 type ButtonProps = {
     label: string;
     icon?: React.ReactNode;

@@ -103,7 +103,7 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
                             <p>Alex</p>
                         </span>
 
-                        <div className='flex flex-col gap-4 my-6 p-3 rounded-md bg-gray-200/60 w-full'>
+                        <div className='flex flex-col gap-4 my-6 p-3 rounded-md bg-[--background-muted] w-full'>
                             <p className='caption'>This accommodation offers</p>
                             <span className='flex gap-4 items-center'>
                                 {accommodation.properties?.map(
@@ -138,7 +138,7 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
                     </div>
                 </section>
             </main>
-            <footer className='flex flex-col md:hidden justify-between rounded-md bg-gray-200/60 border-[--primary] py-12 px-8 gap-8'>
+            <footer className='flex flex-col md:hidden justify-between rounded-md bg-[--background-muted] border-[--primary] py-12 px-8 gap-8'>
             <BookingForm />
             </footer>
         </>

@@ -1,6 +1,6 @@
 'use client';
 
-import AccommodationDetails from '@/components/accommodationDetails';
+import AccommodationDetails from '@/components/accommodation/accommodationDetails';
 import Footer from '@/components/footer';
 import Loading from '@/components/loading';
 import LabelButton from '@/components/ui/labelButton';

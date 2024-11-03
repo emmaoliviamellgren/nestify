@@ -4,10 +4,10 @@ import { Accommodation } from '@/types/accommodation';
 import Image from 'next/image';
 import EmblaCarousel from '@/components/carousel';
 import { EmblaOptionsType } from 'embla-carousel';
-import iconMappingToNode from './ui/propertiesIcons';
-import Navigation from './navigation';
+import iconMappingToNode from '@/components/ui/propertiesIcons';
+import Navigation from '@/components/navigation';
 import smilingMan from '../lib/images/smiling-man.jpg';
-import BookingForm from './BookingForm';
+import BookingForm from '@/components/BookingForm';
 
 type AccommodationDetailsProps = {
     accommodation: Accommodation | null;

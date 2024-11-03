@@ -1,9 +1,15 @@
-import { Accommodation } from "./accommodation";
-import { User } from "./user";
+import { Accommodation } from './accommodation';
+
+export type PastBooking = {
+    chosenAccommodation: Accommodation;
+    guests: number;
+    fromDate: Date;
+    toDate: Date;
+};
 
 export type Booking = {
-    chosenAccommodation: Accommodation[];
-    dates: string;
+    chosenAccommodation: Accommodation;
     guests: number;
-    bookingByUser: User[];
+    fromDate: Date;
+    toDate: Date;
 };

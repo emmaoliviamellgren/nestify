@@ -41,15 +41,19 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
 
     return (
         <>
+            {/* ------ CAROUSEL IN DEFAULT VIEW ------ */}
             <section className='block mt-5 mx-auto w-screen max-w-[calc(100vw-50px)] md:hidden'>
                 <EmblaCarousel
                     slides={SLIDES}
                     options={OPTIONS}
                 />
             </section>
+
             <nav className='hidden md:block'>
                 <Navigation />
             </nav>
+
+            {/* ------ IMAGE GRID IN DESKTOP VIEW ------ */}
             <section className='mt-6 hidden md:grid mx-auto md:mb-4 gap-2 md:grid-cols-2 md:w-[900px]'>
                 <div className='h-[400px]'>
                     <Image
@@ -102,7 +106,7 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
                             <p className='bold pl-2'>Hosted by</p>
                             <p>Alex</p>
                         </span>
-
+                        {/* ------ ACCOMMODATION PROPERTY CONTAINER ------ */}
                         <div className='flex flex-col gap-4 my-6 p-3 rounded-md bg-[--background-muted] w-full'>
                             <p className='caption'>This accommodation offers</p>
                             <span className='flex gap-4 items-center'>
@@ -122,11 +126,13 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
                                 )}
                             </span>
                         </div>
+
                         <div className='flex flex-col gap-2'>
                             <p className='bold'>About this space</p>
                             <p>{accommodation.description}</p>
                         </div>
                     </div>
+                    {/* ------ BOOKING FORM FOR DESKTOP ------ */}
                     <div className='hidden md:flex md:flex-col md:justify-between rounded-md border-2 border-[--primary] p-8 gap-4'>
                         <span className='flex gap-2 items-baseline'>
                             <h2>{accommodation.price}</h2>
@@ -138,6 +144,7 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
                     </div>
                 </section>
             </main>
+            {/* ------ BOOKING FORM DEFAULT (MOBILE) ------ */}
             <footer className='flex flex-col md:hidden justify-between rounded-md bg-[--background-muted] border-[--primary] py-12 px-8 gap-8'>
             <BookingForm />
             </footer>

@@ -50,8 +50,7 @@ const RegisterPage = () => {
             console.log(values);
             await addNewUser({
                 id: uid,
-                firstName: values.firstName,
-                lastName: values.lastName,
+                username: `${values.firstName} ${values.lastName}`,
                 email: values.email,
                 password: values.password,
             });
@@ -77,7 +76,9 @@ const RegisterPage = () => {
                     onSubmit={handleSubmit(onSubmit)}
                     className='w-full md:w-[450px] pt-8 md:pt-8'>
                     <div className='grid grid-cols-1 gap-y-4 pb-8 md:pb-10'>
+                        {/* ------ FIRST & LAST NAME INPUT GRID ------ */}
                         <div className='grid md:grid-cols-2 gap-x-6 gap-y-4'>
+                            {/* ------ FIRST NAME INPUT ------ */}
                             <div>
                                 <label
                                     htmlFor='firstName'
@@ -105,6 +106,7 @@ const RegisterPage = () => {
                                     </span>
                                 )}
                             </div>
+                            {/* ------ LAST NAME INPUT ------ */}
                             <div>
                                 <label
                                     htmlFor='lastName'
@@ -133,6 +135,7 @@ const RegisterPage = () => {
                                 )}
                             </div>
                         </div>
+                        {/* ------ EMAIL INPUT ------ */}
                         <div>
                             <label
                                 htmlFor='email'
@@ -160,6 +163,7 @@ const RegisterPage = () => {
                                 </span>
                             )}
                         </div>
+                        {/* ------ PASSWORD INPUT ------ */}
                         <div>
                             <label
                                 htmlFor='password'

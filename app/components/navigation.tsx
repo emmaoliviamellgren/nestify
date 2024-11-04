@@ -34,7 +34,8 @@ const Navigation = () => {
     if (loading) return <Loading />;
 
     return (
-        <div>
+        <>
+            {/* ------ DEFAULT SIZE ------ */}
             <span className='py-6 justify-center flex gap-6 items-center md:hidden'>
                 <SearchBarPrimary
                     value={searchValue}
@@ -69,7 +70,7 @@ const Navigation = () => {
                     </>
                 )}
             </span>
-            {/* Desktop size */}
+            {/* ------ DESKTOP SIZE ------ */}
             <span className='py-4 hidden md:flex justify-between items-center px-8 border-b'>
                 <h2
                     className='cursor-pointer transition-all hover:translate-y-0.5'
@@ -105,7 +106,7 @@ const Navigation = () => {
                     />
                 </div>
             </span>
-        </div>
+        </>
     );
 };
 

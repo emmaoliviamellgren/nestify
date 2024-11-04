@@ -58,6 +58,7 @@ const LogInPage = () => {
                     onSubmit={handleSubmit(onSubmit)}
                     className='w-full md:w-[450px] pt-8 md:pt-8'>
                     <div className='grid grid-cols-1 gap-y-4 pb-8 md:pb-10'>
+                        {/* ------ EMAIL INPUT ------ */}
                         <div>
                             <label
                                 htmlFor='email'
@@ -85,6 +86,7 @@ const LogInPage = () => {
                                 </span>
                             )}
                         </div>
+                        {/* ------ PASSWORD INPUT ------ */}
                         <div>
                             <label
                                 htmlFor='password'

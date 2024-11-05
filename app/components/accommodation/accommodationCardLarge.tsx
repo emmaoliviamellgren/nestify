@@ -7,7 +7,7 @@ type Props = {
     accommodation: Accommodation;
 };
 
-const AccommodationCard = ({ accommodation }: Props) => {
+const AccommodationCardLarge = ({ accommodation }: Props) => {
     const router = useRouter();
     return (
         <div
@@ -38,4 +38,4 @@ const AccommodationCard = ({ accommodation }: Props) => {
     );
 };
 
-export default AccommodationCard;
+export default AccommodationCardLarge;

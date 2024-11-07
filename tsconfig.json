@@ -20,6 +20,7 @@
         "paths": {
             "@/types/*": ["types/*"],
             "@/lib/*": ["lib/*"],
+            "@/public/*": ["public/*"],
             "@/hooks/*": ["hooks/*"],
             "@/utils/*": ["utils/*"],
             "@/components/*": ["components/*"]

@@ -12,6 +12,6 @@ export type Booking = {
     id: string;
     chosenAccommodation: Accommodation;
     guests: number;
-    fromDate: Date;
-    toDate: Date;
+    fromDate: string;
+    toDate: string;
 };

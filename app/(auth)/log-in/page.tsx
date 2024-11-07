@@ -9,7 +9,7 @@ import { z } from 'zod';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/authProvider';
+import { useAuth } from 'contexts/authProvider';
 
 type LoginFormValues = {
     email: string;
@@ -52,7 +52,7 @@ const LogInPage = () => {
                     className='h-screen w-full object-cover'
                 />
             </aside>
-            <main className='flex items-center justify-center flex-col px-12 w-full'>
+            <main className='flex items-center justify-center flex-col p-12 w-full'>
                 <h2 className='text-center md:text-left'>Log In</h2>
                 <form
                     onSubmit={handleSubmit(onSubmit)}

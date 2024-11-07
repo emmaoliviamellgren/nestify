@@ -2,7 +2,7 @@
 
 import { PrimaryButton } from '@/components/ui/buttons';
 import { Input } from '@/components/ui/inputs';
-import { useAuth } from '@/hooks/authProvider';
+import { useAuth } from 'contexts/authProvider';
 import { addNewUser } from '@/lib/user.db';
 import { zodResolver } from '@hookform/resolvers/zod';
 import Link from 'next/link';
@@ -70,7 +70,7 @@ const RegisterPage = () => {
                     className='h-screen w-full object-cover'
                 />
             </aside>
-            <main className='flex items-center justify-center flex-col px-12 w-full'>
+            <main className='flex items-center justify-center flex-col p-12 w-full'>
                 <h2 className='text-center md:text-left'>Register</h2>
                 <form
                     onSubmit={handleSubmit(onSubmit)}

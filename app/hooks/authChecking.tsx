@@ -1,10 +1,9 @@
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/authProvider';
+import { useAuth } from 'contexts/authProvider';
 import { useEffect, ComponentType } from 'react';
 import Loading from '@/components/loading';
 
 const authChecking = <P extends object>(WrappedComponent: ComponentType<P>) => {
-
     const AuthComponent = (props: P) => {
         const { user, authLoaded } = useAuth();
         const router = useRouter();

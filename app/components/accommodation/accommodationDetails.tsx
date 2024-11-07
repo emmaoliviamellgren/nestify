@@ -1,20 +1,22 @@
 'use client';
 
-import { Accommodation } from '@/types/accommodation';
 import Image from 'next/image';
 import EmblaCarousel from '@/components/carousel';
 import { EmblaOptionsType } from 'embla-carousel';
 import iconMappingToNode from '@/components/ui/propertiesIcons';
 import Navigation from '@/components/navigation';
-import smilingMan from '../lib/images/smiling-man.jpg';
+import smilingMan from '@/public/smiling-man.jpg';
 import BookingForm from '@/components/BookingForm';
+import { useAccommodation } from 'contexts/accommodationProvider';
+import Loading from '../loading';
 
-type AccommodationDetailsProps = {
-    accommodation: Accommodation | null;
-};
+const AccommodationDetails = () => {
+    const { accommodation, loading } = useAccommodation();
 
-const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
-    if (accommodation === null) return <h2>No accommodation found.</h2>;
+    if (loading) return <Loading />;
+
+    if (!accommodation)
+        return <h2 className='h-screen w-screen'>No accommodation found.</h2>;
 
     const SLIDES = [
         {
@@ -146,7 +148,7 @@ const AccommodationDetails = ({ accommodation }: AccommodationDetailsProps) => {
             </main>
             {/* ------ BOOKING FORM DEFAULT (MOBILE) ------ */}
             <footer className='flex flex-col md:hidden justify-between rounded-md bg-[--background-muted] border-[--primary] py-12 px-8 gap-8'>
-            <BookingForm />
+                <BookingForm />
             </footer>
         </>
     );

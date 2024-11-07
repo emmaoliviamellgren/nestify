@@ -27,8 +27,8 @@ const AccommodationCardSmall = ({ booking }: AccommodationCardSmallProps) => {
                 </div>
                 <div className='py-2'>
                     <p className='caption'>
-                        {booking.fromDate.toDateString()} {' '}-{' '}
-                        {booking.toDate.toDateString()}
+                        {booking.fromDate} {' '}-{' '}
+                        {booking.toDate}
                     </p>
                     <p className='caption'>{booking.guests} guests</p>
                 </div>

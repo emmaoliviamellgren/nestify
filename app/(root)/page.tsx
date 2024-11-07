@@ -1,41 +1,21 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Filters from '@/components/filters';
 import { SearchBarPrimary } from '@/components/ui/inputs';
 import AccommodationGrid from '@/components/accommodation/accommodationGrid';
-import { Accommodation } from '@/types/accommodation';
-import { getAllAccommodations } from '@/lib/accommodation.db';
-import Loading from '@/components/loading';
 import Navigation from '@/components/navigation';
 import Footer from '@/components/footer';
+import { useAccommodation } from 'contexts/accommodationProvider';
 
 
 const LandingPage = () => {
-    const [accommodations, setAccommodations] = useState<Accommodation[]>([]);
-    const [loading, setLoading] = useState(true);
-
+    
     const [value, setValue] = useState('');
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         setValue(e.target.value);
     };
-
-    useEffect(() => {
-        const fetchAccommodations = async () => {
-            try {
-                const data: Accommodation[] = await getAllAccommodations();
-                setAccommodations(data);
-            } catch (error) {
-                console.error('Error fetching threads:', error);
-            } finally {
-                setLoading(false);
-            }
-        };
-
-        fetchAccommodations();
-    }, []);
-
-    if (loading) return <Loading />;
+    const { accommodations } = useAccommodation();
 
     return (
         <>

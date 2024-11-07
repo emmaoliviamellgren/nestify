@@ -4,7 +4,7 @@ import { CircleUserRound } from 'lucide-react';
 import { PillButton } from './ui/pillButtons';
 import { LogOut } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useAuth } from '@/hooks/authProvider';
+import { useAuth } from 'contexts/authProvider';
 import { auth } from '../../firebase.config';
 import { signOut } from 'firebase/auth';
 import Loading from '@/components/loading';
@@ -36,7 +36,7 @@ const Navigation = () => {
     return (
         <>
             {/* ------ DEFAULT SIZE ------ */}
-            <span className='py-6 justify-center flex gap-6 items-center md:hidden'>
+            <span className='py-6 justify-center flex flex-wrap gap-6 items-center md:hidden'>
                 <SearchBarPrimary
                     value={searchValue}
                     onChange={handleSearch}
@@ -63,9 +63,7 @@ const Navigation = () => {
                             className='bg-[--primary] hover:bg-[--primary-hover] px-3 py-2 rounded-full flex items-center gap-1.5'
                             onClick={handleLogout}>
                             <LogOut className='size-6 text-[--text-secondary]' />
-                            <p className='text-[--text-secondary]'>
-                                Log out
-                            </p>
+                            <p className='text-[--text-secondary]'>Log out</p>
                         </button>
                     </>
                 )}

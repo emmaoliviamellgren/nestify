@@ -14,7 +14,6 @@ export const addNewUser = async (user: User): Promise<void> => {
             ...user,
             password: hashedPassword,
         });
-        console.log(user)
         toast.success('User added successfully!');
     } catch (error) {
         toast.error('Failed to add user: ' + (error as Error).message);

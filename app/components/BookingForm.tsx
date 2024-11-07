@@ -1,66 +1,15 @@
 import { DatePicker, Select, SelectItem } from '@nextui-org/react';
 import { CircleUserRound } from 'lucide-react';
 import { PrimaryButton } from './ui/buttons';
-import { createBooking } from '@/lib/booking.db';
-import { Booking } from '@/types/booking';
-import { useAuth } from 'contexts/authProvider';
-import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm } from 'react-hook-form';
-import { z } from 'zod';
-import { useRouter } from 'next/navigation';
-import { Accommodation } from '@/types/accommodation';
-import { useAccommodation } from 'contexts/accommodationProvider';
 import { useState } from 'react';
 import { parseDate } from '@internationalized/date';
-
-const FormSchema = z.object({
-    fromDate: z.string(),
-    toDate: z.string(),
-    guests: z.number().int().min(1).max(7),
-});
-
-type BookingFormData = z.infer<typeof FormSchema>;
+import { useBooking } from 'contexts/bookingProvider';
 
 const BookingForm = () => {
-    const router = useRouter();
-    const { user } = useAuth();
-    const { accommodation } = useAccommodation();
-
-    const { register, handleSubmit, setValue } = useForm<BookingFormData>({
-        resolver: zodResolver(FormSchema),
-        defaultValues: {
-            fromDate: '',
-            toDate: '',
-            guests: 2,
-        },
-    });
+    const { onSubmit, register, handleSubmit, setValue } = useBooking();
 
     const [fromDate, setFromDate] = useState<string>('');
     const [toDate, setToDate] = useState<string>('');
-
-    const onSubmit = async (data: BookingFormData) => {
-        console.log(data);
-        if (!user) {
-            console.error('User not authenticated');
-            return;
-        }
-
-        try {
-            const booking: Booking = {
-                id: Math.random().toString(16).slice(2),
-                chosenAccommodation: accommodation as Accommodation,
-                guests: data.guests,
-                fromDate: data.fromDate,
-                toDate: data.toDate,
-            };
-            console.log(booking);
-            await createBooking(user.id, booking);
-            console.log('Booking created successfully');
-            router.push('/');
-        } catch (error) {
-            console.error('Failed to create booking:', error);
-        }
-    };
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>

@@ -1,25 +1,35 @@
 'use client';
 
-import { createBooking } from '@/lib/booking.db';
+import { createBooking, moveBooking } from '@/lib/booking.db';
 import { Booking } from '@/types/booking';
 import { useAuth } from 'contexts/authProvider';
-import { createContext, useContext } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
-import { useForm, UseFormReturn } from 'react-hook-form';
+import {
+    useForm,
+    UseFormRegister,
+    UseFormSetValue,
+    UseFormHandleSubmit,
+} from 'react-hook-form';
 import { z } from 'zod';
 import { useRouter } from 'next/navigation';
+import { Accommodation } from '@/types/accommodation';
+import { useAccommodation } from './accommodationProvider';
 
 const FormSchema = z.object({
-    fromDate: z.string().datetime(),
-    toDate: z.string().datetime(),
+    fromDate: z.string(),
+    toDate: z.string(),
     guests: z.number().int().min(1).max(7),
 });
 
 type BookingFormData = z.infer<typeof FormSchema>;
 
 type BookingContextType = {
-    form: UseFormReturn<BookingFormData>;
-    FormSchema: typeof FormSchema;
+    onSubmit: (data: BookingFormData) => Promise<void>;
+    checkIfBookingExpired: () => void;
+    register: UseFormRegister<BookingFormData>;
+    handleSubmit: UseFormHandleSubmit<BookingFormData>;
+    setValue: UseFormSetValue<BookingFormData>;
 };
 
 export const BookingContext = createContext<BookingContextType | undefined>(
@@ -33,12 +43,26 @@ const BookingContextProvider = ({
 }>) => {
     const router = useRouter();
     const { user } = useAuth();
+    const { accommodation } = useAccommodation();
+
+    const checkIfBookingExpired = () => {
+        if (user && user.activeBookings) {
+            const bookings = user.activeBookings;
+            bookings.forEach((booking) => {
+                const bookingToDate = new Date(booking.toDate);
+                const currentDate = new Date();
+                if (bookingToDate < currentDate) {
+                    moveBooking(user.id, booking);
+                }
+            });
+        }
+    };
 
     {
         /* ------ ZOD FORM HANDLING ------ */
     }
 
-    const form = useForm<BookingFormData>({
+    const { register, handleSubmit, setValue } = useForm<BookingFormData>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             fromDate: '',
@@ -47,41 +71,33 @@ const BookingContextProvider = ({
         },
     });
 
-    const onSubmit = async (data: z.infer<typeof FormSchema>) => {
-        console.log(data);
+    const onSubmit = async (data: BookingFormData) => {
         if (!user) {
-            console.error('User not authenticated');
+            console.log('User not authenticated');
             return;
         }
 
         try {
             const booking: Booking = {
-                id: '',
-                chosenAccommodation: {
-                    id: '',
-                    title: '',
-                    description: '',
-                    location: '',
-                    price: 0,
-                    images: [],
-                },
+                id: Math.random().toString(16).slice(2),
+                chosenAccommodation: accommodation as Accommodation,
                 guests: data.guests,
                 fromDate: data.fromDate,
                 toDate: data.toDate,
             };
-
             await createBooking(user.id, booking);
-            console.log('Booking created successfully');
             router.push('/');
         } catch (error) {
-            console.error('Failed to create booking:', error);
+            console.log('Failed to create booking:', error);
         }
     };
 
     const value = {
         onSubmit,
-        FormSchema,
-        form,
+        checkIfBookingExpired,
+        register,
+        handleSubmit,
+        setValue,
     };
 
     return (

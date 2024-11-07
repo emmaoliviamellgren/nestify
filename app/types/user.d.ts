@@ -1,4 +1,4 @@
-import { Booking, PastBooking } from './booking';
+import { Booking } from './booking';
 
 export type User = {
     id: string;
@@ -8,5 +8,5 @@ export type User = {
     email: string;
     password: string;
     activeBookings?: Booking[];
-    pastBookings?: PastBooking[];
+    pastBookings?: Booking[];
 };

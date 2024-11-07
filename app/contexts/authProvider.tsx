@@ -21,6 +21,7 @@ import { User } from '@/types/user';
 
 import toast from 'react-hot-toast';
 import { handleError } from '@/utils/errorHandler';
+import { fetchBookings } from '@/lib/booking.db';
 
 type AuthValues = {
     email: string;
@@ -44,14 +45,25 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     const [authLoaded, setAuthLoaded] = useState<boolean>(false);
 
     useEffect(() => {
-        const unsub = onAuthStateChanged(auth, (_user) => {
+        const unsub = onAuthStateChanged(auth, async (_user) => {
             if (_user) {
-                const user = {
+                const user: User = {
                     id: _user.uid,
                     username: _user.displayName || '',
                     email: _user.email || '',
                     password: '',
+                    activeBookings: [],
+                    pastBookings: [],
                 };
+
+                try {
+                    const bookings = await fetchBookings(user.id);
+                    user.activeBookings = bookings || [];
+                    user.pastBookings = bookings || [];
+                } catch (error) {
+                    toast.error('Failed to fetch bookings: ' + (error as Error).message);
+                }
+
                 setUser(user);
             } else {
                 setUser(null);
@@ -76,8 +88,6 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             if (!userCredential.user) {
                 throw new Error('Something went wrong!. Please try again.');
             }
-            console.log(userCredential);
-
             await updateProfile(userCredential.user, {
                 displayName: `${values.firstName} ${values.lastName}`,
             });
@@ -103,11 +113,10 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
             );
 
             if (!userCredential.user) {
-                throw new Error('Something went wrong!. Please try again.');
+                throw new Error('Something went wrong! Please try again.');
             }
             console.log(userCredential);
             const token = await userCredential.user.getIdToken();
-            console.log('token:', token);
 
             toast.success('Logged in successfully', { id: toastId });
         } catch (error: unknown) {

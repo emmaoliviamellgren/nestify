@@ -9,15 +9,24 @@ import AccommodationCardSmall from '@/components/accommodation/accommodationCard
 import Footer from '@/components/footer';
 import { useEffect } from 'react';
 import { useBooking } from 'contexts/bookingProvider';
+import { fetchBookings } from '@/lib/booking.db';
 
 const ProfilePage = () => {
-
     const { user } = useAuth();
-    const { checkIfBookingExpired } = useBooking();
-    
+    const {
+        checkIfBookingExpired,
+        activeBookings,
+        pastBookings,
+        setActiveBookings,
+        setPastBookings,
+    } = useBooking();
+
     useEffect(() => {
+        setActiveBookings(user?.activeBookings || []);
+        setPastBookings(user?.pastBookings || []);
+        fetchBookings(user?.id ?? '');
         checkIfBookingExpired();
-    }, [user]);
+    }, [user, activeBookings, pastBookings]);
 
     return (
         <>
@@ -28,12 +37,12 @@ const ProfilePage = () => {
                 <span className='md:hidden'>
                     <LabelButton />
                 </span>
-                <p className='title text-center md:text-left md:py-16 md:px-24 py-8'>
+                <p className='title text-center py-8 md:py-12 md:max-w-6xl md:mx-auto'>
                     My account
                 </p>
-                <div className='flex flex-col gap-6 md:gap-2 md:flex-row md:justify-between'>
+                <div className='overflow-x-hidden flex flex-col gap-6 md:gap-16 md:flex-row md:max-w-7xl md:mx-auto'>
                     {/* ------ PROFILE CARD ------ */}
-                    <section className='mt-2 mb-8 flex justify-around gap-4 mx-auto md:mx-24 p-8 bg-[--background-muted] shadow-lg min-w-[280px] md:max-h-36 outline outline-2 outline-slate-600/10 rounded-3xl'>
+                    <section className='mt-2 min-w-fit mx-auto md:mx-0 md:mt-20 mb-8 flex justify-around gap-4 p-8 bg-[--background-muted] shadow-lg md:max-h-36 outline outline-2 outline-slate-600/10 rounded-3xl'>
                         <span className='flex justify-center items-center size-20 bg-[--secondary] rounded-full border-3 border-[--primary]'>
                             <h2 className='text-[--text-secondary]'>
                                 {getInitials(user?.username ?? '')}
@@ -43,27 +52,31 @@ const ProfilePage = () => {
                             <p className='text-lg font-semibold pb-2'>
                                 {user?.username}
                             </p>
-                            <p className='caption'>Active bookings:</p>
+                            <p className='caption'>
+                                Active bookings: {activeBookings.length}
+                            </p>
                             <p className='caption opacity-50'>
-                                Previous bookings:
+                                Previous bookings: {pastBookings.length}
                             </p>
                         </div>
                     </section>
                     <div className='flex flex-col'>
                         {/* ------ ACTIVE BOOKINGS ------ */}
-                        <section className='px-8 md:px-0 py-4 md:mx-auto md:w-[900px]'>
+                        <section className='px-8 md:px-0 py-4'>
                             <p className='bold pb-4'>Active bookings:</p>
-                            {user?.activeBookings?.map((booking) => (
+                            {activeBookings.map((booking) => (
                                 <AccommodationCardSmall
                                     booking={booking}
                                     key={booking.id}
                                 />
                             ))}
                         </section>
+                    </div>
+                    <div className='flex flex-col'>
                         {/* ------ PREVIOUS BOOKINGS ------ */}
-                        <section className='px-8 md:px-0 py-4 md:mx-auto md:w-[900px]'>
+                        <section className='px-8 md:px-0 py-4'>
                             <p className='bold pb-4'>Previous bookings:</p>
-                            {user?.pastBookings?.map((booking) => (
+                            {pastBookings.map((booking) => (
                                 <AccommodationCardSmall
                                     booking={booking}
                                     key={booking.id}

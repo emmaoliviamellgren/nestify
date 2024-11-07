@@ -8,7 +8,7 @@ type AccommodationCardSmallProps = {
 const AccommodationCardSmall = ({ booking }: AccommodationCardSmallProps) => {
     return (
         <div
-            className='border flex rounded-lg w-[450px] transition-all'
+            className='border flex rounded-lg w-[450px] transition-all my-4'
             key={booking.chosenAccommodation.id}>
             <Image
                 src='https://firebasestorage.googleapis.com/v0/b/nestify-a7b1f.appspot.com/o/Home2%2F1.jpg?alt=media&token=0642e6af-7852-469d-ba36-a3592c3d68d7'

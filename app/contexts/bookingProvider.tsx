@@ -30,6 +30,10 @@ type BookingContextType = {
     register: UseFormRegister<BookingFormData>;
     handleSubmit: UseFormHandleSubmit<BookingFormData>;
     setValue: UseFormSetValue<BookingFormData>;
+    activeBookings: Booking[];
+    pastBookings: Booking[];
+    setActiveBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
+    setPastBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
 };
 
 export const BookingContext = createContext<BookingContextType | undefined>(
@@ -44,6 +48,9 @@ const BookingContextProvider = ({
     const router = useRouter();
     const { user } = useAuth();
     const { accommodation } = useAccommodation();
+
+    const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
+    const [pastBookings, setPastBookings] = useState<Booking[]>([]);
 
     const checkIfBookingExpired = () => {
         if (user && user.activeBookings) {
@@ -98,6 +105,10 @@ const BookingContextProvider = ({
         register,
         handleSubmit,
         setValue,
+        activeBookings,
+        setActiveBookings,
+        pastBookings,
+        setPastBookings,
     };
 
     return (

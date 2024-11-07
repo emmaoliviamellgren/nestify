@@ -20,7 +20,7 @@ const LandingPage = () => {
     return (
         <>
             <Navigation />
-            <div className='overflow-x-hidden hidden md:block md:py-6 md:px-16'>
+            <div className='hidden md:block mx-auto md:py-6 md:max-w-6xl'>
                 <div className='py-9'>
                     <h1>Rent your dream home</h1>
                     <h2>Where do you want to go?</h2>
@@ -32,7 +32,7 @@ const LandingPage = () => {
                 />
             </div>
             <Filters />
-            <div className='overflow-x-hidden px-4 md:px-12 mx-auto'>
+            <div className='px-4 mx-auto md:max-w-6xl'>
                 <p className='title pb-2 pt-6'>Featured</p>
                 <p className='hidden md:block pb-6'>
                     Take a look at our most popular accommodations!

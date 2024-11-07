@@ -58,8 +58,8 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
                 try {
                     const bookings = await fetchBookings(user.id);
-                    user.activeBookings = bookings || [];
-                    user.pastBookings = bookings || [];
+                    user.activeBookings = bookings.activeBookings;
+                    user.pastBookings = bookings.pastBookings;
                 } catch (error) {
                     toast.error('Failed to fetch bookings: ' + (error as Error).message);
                 }

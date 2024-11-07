@@ -2,7 +2,7 @@ import { DatePicker, Select, SelectItem } from '@nextui-org/react';
 import { CircleUserRound } from 'lucide-react';
 import { PrimaryButton } from './ui/buttons';
 import { useState } from 'react';
-import { parseDate } from '@internationalized/date';
+import { parseDate, DateValue } from '@internationalized/date';
 import { useBooking } from 'contexts/bookingProvider';
 
 const BookingForm = () => {
@@ -10,6 +10,9 @@ const BookingForm = () => {
 
     const [fromDate, setFromDate] = useState<string>('');
     const [toDate, setToDate] = useState<string>('');
+
+    {/* ------ Setting a min value date for toDate based on fromDate ------ */}
+    const [minValueDate, setMinValueDate] = useState<DateValue | undefined>(undefined);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -30,6 +33,7 @@ const BookingForm = () => {
                     }}
                     disableAnimation={true}
                     onChange={(date) => {
+                        setMinValueDate(date.add({days: 2}));
                         setFromDate(date.toString());
                         setValue('fromDate', date.toString());
                     }}
@@ -55,6 +59,7 @@ const BookingForm = () => {
                         setValue('toDate', date.toString());
                     }}
                     value={toDate ? parseDate(toDate) : null}
+                    minValue={minValueDate}
                 />
                 <Select
                     labelPlacement='outside-left'

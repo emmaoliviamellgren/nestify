@@ -21,7 +21,7 @@ const BookingForm = () => {
     const [userSubmitted, setUserSubmitted] = useState<boolean>(false);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-8'>
             <div className='flex flex-row md:flex-col gap-4'>
                 <DatePicker
                     labelPlacement='outside-left'
@@ -104,12 +104,14 @@ const BookingForm = () => {
                     <SelectItem key={7}>7</SelectItem>
                 </Select>
             </div>
-            <PrimaryButton
-                label='Book now'
-                type='submit'
-                onClick={() => setUserSubmitted(true)}
-                customWidth={true}
-            />
+            <div className='flex justify-center'>
+                <PrimaryButton
+                    label='Book now'
+                    type='submit'
+                    onClick={() => setUserSubmitted(true)}
+                    customWidth={false}
+                />
+            </div>
         </form>
     );
 };

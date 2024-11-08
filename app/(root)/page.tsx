@@ -20,7 +20,7 @@ const LandingPage = () => {
     return (
         <>
             <Navigation />
-            <div className='hidden md:block mx-auto md:py-6 md:max-w-6xl'>
+            <div className='hidden md:block mx-auto md:py-6 md:max-w-6xl sm:pl-10 lg:pl-0'>
                 <div className='py-9'>
                     <h1>Rent your dream home</h1>
                     <h2>Where do you want to go?</h2>

@@ -14,9 +14,7 @@ const AccommodationDetails = () => {
     const { accommodation, loading } = useAccommodation();
 
     if (loading) return <Loading />;
-
-    if (!accommodation)
-        return <h2 className='h-screen w-screen'>No accommodation found.</h2>;
+    if (!accommodation) return null;
 
     const SLIDES = [
         {
@@ -135,8 +133,8 @@ const AccommodationDetails = () => {
                         </div>
                     </div>
                     {/* ------ BOOKING FORM FOR DESKTOP ------ */}
-                    <div className='hidden md:flex md:flex-col md:justify-between rounded-md border-2 border-[--primary] p-8 gap-4'>
-                        <span className='flex gap-2 items-baseline'>
+                    <div className='hidden md:flex md:flex-col md:justify-evenly rounded-md border-2 border-[--primary] md:px-4'>
+                        <span className='flex gap-2 items-baseline py-3'>
                             <h2>{accommodation.price}</h2>
                             <p className='text-slate-500 relative bottom-0.5'>
                                 SEK per night
@@ -147,7 +145,7 @@ const AccommodationDetails = () => {
                 </section>
             </main>
             {/* ------ BOOKING FORM DEFAULT (MOBILE) ------ */}
-            <footer className='flex flex-col md:hidden justify-between rounded-md bg-[--background-muted] border-[--primary] py-12 px-8 gap-8'>
+            <footer className='flex flex-col md:hidden justify-between rounded-md bg-[--background-muted] border-[--primary] px-8 py-10 gap-8 mt-2'>
                 <BookingForm />
             </footer>
         </>

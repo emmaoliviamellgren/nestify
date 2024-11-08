@@ -4,9 +4,14 @@ import { PrimaryButton } from './ui/buttons';
 import { useState } from 'react';
 import { parseDate, DateValue } from '@internationalized/date';
 import { useBooking } from 'contexts/bookingProvider';
+import { useRouter } from 'next/navigation';
+import { useAccommodation } from 'contexts/accommodationProvider';
 
 const BookingForm = () => {
     const { onSubmit, register, handleSubmit, setValue } = useBooking();
+    const { accommodation } = useAccommodation();
+
+    const router = useRouter();
 
     const [fromDate, setFromDate] = useState<string>('');
     const [toDate, setToDate] = useState<string>('');
@@ -17,11 +22,13 @@ const BookingForm = () => {
     const [minValueDate, setMinValueDate] = useState<DateValue | undefined>(
         undefined
     );
-
+    
     const [userSubmitted, setUserSubmitted] = useState<boolean>(false);
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)} className='flex flex-col gap-8'>
+        <form
+            onSubmit={handleSubmit(onSubmit)}
+            className='flex flex-col gap-8'>
             <div className='flex flex-row md:flex-col gap-4'>
                 <DatePicker
                     labelPlacement='outside-left'
@@ -107,8 +114,11 @@ const BookingForm = () => {
             <div className='flex justify-center'>
                 <PrimaryButton
                     label='Book now'
-                    type='submit'
-                    onClick={() => setUserSubmitted(true)}
+                    // type='submit'
+                    onClick={() => {
+                        setUserSubmitted(true);
+                        router.push(`/accommodations/${accommodation?.id}/payment`);
+                    }}
                     customWidth={false}
                 />
             </div>

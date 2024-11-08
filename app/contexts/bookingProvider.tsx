@@ -78,7 +78,7 @@ const BookingContextProvider = ({
         },
     });
 
-    const { register, handleSubmit, setValue, reset } = form;
+    const { register, handleSubmit, setValue } = form;
 
     const onSubmit = async (data: BookingFormData) => {
         if (!user) {
@@ -110,7 +110,7 @@ const BookingContextProvider = ({
         activeBookings,
         setActiveBookings,
         pastBookings,
-        setPastBookings,
+        setPastBookings
     };
 
     return (

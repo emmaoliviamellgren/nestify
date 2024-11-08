@@ -30,7 +30,7 @@ const ProfilePage = () => {
 
     return (
         <>
-            <main className='w-screen min-h-screen'>
+            <main className='overflow-x-hidden w-screen min-h-screen'>
                 <nav className='hidden md:block'>
                     <Navigation />
                 </nav>
@@ -40,7 +40,7 @@ const ProfilePage = () => {
                 <p className='title text-center py-8 md:py-12 md:max-w-6xl md:mx-auto'>
                     My account
                 </p>
-                <div className='overflow-x-hidden flex flex-col gap-6 md:gap-16 md:flex-row md:max-w-7xl md:mx-auto'>
+                <div className='flex flex-col gap-6 md:gap-16 md:flex-row md:max-w-7xl md:mx-auto'>
                     {/* ------ PROFILE CARD ------ */}
                     <section className='mt-2 min-w-fit mx-auto md:mx-0 md:mt-20 mb-8 flex justify-around gap-4 p-8 bg-[--background-muted] shadow-lg md:max-h-36 outline outline-2 outline-slate-600/10 rounded-3xl'>
                         <span className='flex justify-center items-center size-20 bg-[--secondary] rounded-full border-3 border-[--primary]'>

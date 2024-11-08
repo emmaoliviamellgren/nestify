@@ -11,7 +11,7 @@ const AccommodationCardSmall = ({ booking }: AccommodationCardSmallProps) => {
             className='border flex rounded-lg w-[450px] transition-all my-4'
             key={booking.chosenAccommodation.id}>
             <Image
-                src='https://firebasestorage.googleapis.com/v0/b/nestify-a7b1f.appspot.com/o/Home2%2F1.jpg?alt=media&token=0642e6af-7852-469d-ba36-a3592c3d68d7'
+                src={booking.chosenAccommodation.images[0]}
                 width={200}
                 height={50}
                 alt={booking.chosenAccommodation.title}

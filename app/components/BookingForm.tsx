@@ -11,8 +11,14 @@ const BookingForm = () => {
     const [fromDate, setFromDate] = useState<string>('');
     const [toDate, setToDate] = useState<string>('');
 
-    {/* ------ Setting a min value date for toDate based on fromDate ------ */}
-    const [minValueDate, setMinValueDate] = useState<DateValue | undefined>(undefined);
+    {
+        /* ------ Setting a min value date for toDate based on fromDate ------ */
+    }
+    const [minValueDate, setMinValueDate] = useState<DateValue | undefined>(
+        undefined
+    );
+
+    const [userSubmitted, setUserSubmitted] = useState<boolean>(false);
 
     return (
         <form onSubmit={handleSubmit(onSubmit)}>
@@ -23,21 +29,30 @@ const BookingForm = () => {
                     label='Check in'
                     className='max-w-[284px] md:max-w-none flex flex-col gap-1 items-start'
                     classNames={{
-                        selectorIcon: 'size-4 text-[--secondary]',
+                        selectorIcon: `size-4 ${
+                            !toDate && userSubmitted
+                                ? 'text-red-500'
+                                : 'text-[--secondary]'
+                        }`,
                         selectorButton: 'size-4',
                     }}
                     dateInputClassNames={{
                         label: 'text-base md:text-[1.1rem]',
-                        inputWrapper: 'hover:border-[--secondary]',
+                        inputWrapper: `${
+                            !toDate && userSubmitted
+                                ? 'border-red-500'
+                                : 'hover:border-[--secondary]'
+                        }`,
                         innerWrapper: 'text-[--text-primary]',
                     }}
                     disableAnimation={true}
                     onChange={(date) => {
-                        setMinValueDate(date.add({days: 2}));
+                        setMinValueDate(date.add({ days: 2 }));
                         setFromDate(date.toString());
                         setValue('fromDate', date.toString());
                     }}
                     value={fromDate ? parseDate(fromDate) : null}
+                    isInvalid={!fromDate && userSubmitted}
                 />
                 <DatePicker
                     labelPlacement='outside-left'
@@ -45,12 +60,20 @@ const BookingForm = () => {
                     label='Check out'
                     className='max-w-[284px] md:max-w-none flex flex-col gap-1 items-start'
                     classNames={{
-                        selectorIcon: 'size-4 text-[--secondary]',
+                        selectorIcon: `size-4 ${
+                            !fromDate && userSubmitted
+                                ? 'text-red-500'
+                                : 'text-[--secondary]'
+                        }`,
                         selectorButton: 'size-4',
                     }}
                     dateInputClassNames={{
                         label: 'text-base md:text-[1.1rem]',
-                        inputWrapper: 'hover:border-[--secondary]',
+                        inputWrapper: `${
+                            !fromDate && userSubmitted
+                                ? 'border-red-500'
+                                : 'hover:border-[--secondary]'
+                        }`,
                         innerWrapper: 'text-[--text-primary]',
                     }}
                     disableAnimation={true}
@@ -60,6 +83,7 @@ const BookingForm = () => {
                     }}
                     value={toDate ? parseDate(toDate) : null}
                     minValue={minValueDate}
+                    isInvalid={!toDate && userSubmitted}
                 />
                 <Select
                     labelPlacement='outside-left'
@@ -83,6 +107,7 @@ const BookingForm = () => {
             <PrimaryButton
                 label='Book now'
                 type='submit'
+                onClick={() => setUserSubmitted(true)}
                 customWidth={true}
             />
         </form>

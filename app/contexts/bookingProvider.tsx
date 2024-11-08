@@ -17,8 +17,8 @@ import { Accommodation } from '@/types/accommodation';
 import { useAccommodation } from './accommodationProvider';
 
 const FormSchema = z.object({
-    fromDate: z.string(),
-    toDate: z.string(),
+    fromDate: z.string().min(1),
+    toDate: z.string().min(1),
     guests: z.number().int().min(1).max(7),
 });
 
@@ -69,7 +69,7 @@ const BookingContextProvider = ({
         /* ------ ZOD FORM HANDLING ------ */
     }
 
-    const { register, handleSubmit, setValue } = useForm<BookingFormData>({
+    const form = useForm<BookingFormData>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
             fromDate: '',
@@ -77,6 +77,8 @@ const BookingContextProvider = ({
             guests: 2,
         },
     });
+
+    const { register, handleSubmit, setValue, reset } = form;
 
     const onSubmit = async (data: BookingFormData) => {
         if (!user) {
@@ -93,7 +95,7 @@ const BookingContextProvider = ({
                 toDate: data.toDate,
             };
             await createBooking(user.id, booking);
-            router.push('/');
+            router.push('/user');
         } catch (error) {
             console.log('Failed to create booking:', error);
         }

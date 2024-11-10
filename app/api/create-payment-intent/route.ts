@@ -1,35 +1,23 @@
 'use server';
 
-import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-import { getAccommodationById } from '../../lib/accommodation.db';
 import { calculateOrderAmount } from '../../lib/stripe/calculateTotalAmount';
+import { NextRequest, NextResponse } from 'next/server';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '');
 
-export default async function handler(
-    req: NextApiRequest,
-    res: NextApiResponse
-) {
-    const { fromDate, toDate, accommodationId } = req.body;
+export async function POST(req: NextRequest) {
+    const { fromDate, toDate, cost } = await req.json();
 
-    if (!fromDate || !toDate || !accommodationId) {
-        return res.status(400).json({ error: 'Missing required parameters' });
+    if (!fromDate || !toDate || !cost) {
+        return NextResponse.json(
+            { error: 'Missing required parameters' },
+            { status: 400 }
+        );
     }
 
     try {
-        // Fetch accommodation details
-        const accommodation = await getAccommodationById(accommodationId);
-        if (!accommodation) {
-            return res.status(404).json({ error: 'Accommodation not found' });
-        }
-
-        // Calculate the order amount
-        const amount = calculateOrderAmount(
-            fromDate,
-            toDate,
-            accommodation.price
-        );
+        const amount = calculateOrderAmount(fromDate, toDate, cost);
         {
             /* ------ PAYMENT INTENT WITH AMOUNT + CURRENCY ------ */
         }
@@ -41,11 +29,12 @@ export default async function handler(
             },
         });
 
-        res.send({
-            clientSecret: paymentIntent.client_secret,
-        });
+        return NextResponse.json({ clientSecret: paymentIntent.client_secret });
     } catch (error) {
         console.error('Error creating payment intent:', error);
-        res.status(500).json({ error: 'Internal Server Error' });
+        return NextResponse.json(
+            { error: 'Internal Server Error' },
+            { status: 500 }
+        );
     }
 }

@@ -22,7 +22,7 @@ const BookingForm = () => {
     const [minValueDate, setMinValueDate] = useState<DateValue | undefined>(
         undefined
     );
-    
+
     const [userSubmitted, setUserSubmitted] = useState<boolean>(false);
 
     return (
@@ -117,7 +117,7 @@ const BookingForm = () => {
                     // type='submit'
                     onClick={() => {
                         setUserSubmitted(true);
-                        router.push(`/accommodations/${accommodation?.id}/payment`);
+                        router.push(`/accommodations/${accommodation?.id}/booking`);
                     }}
                     customWidth={false}
                 />

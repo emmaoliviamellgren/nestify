@@ -5,30 +5,29 @@ import {
     useStripe,
     useElements,
 } from '@stripe/react-stripe-js';
+import { useAccommodation } from 'contexts/accommodationProvider';
 import { useState } from 'react';
 
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
+    const { accommodation } = useAccommodation();
 
     const [message, setMessage] = useState<string | null>(null);
-    const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+
         e.preventDefault();
-
-        {
-            /* ------ RETURN NOTHING IF STRIPE HASN'T YET LOADED ------ */
-        }
         if (!stripe || !elements) return;
-
-        setIsLoading(true);
+        
+        setLoading(true);
 
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
                 // Make sure to change this to your payment completion page
-                return_url: '/payment',
+                return_url: `/accommodations/${accommodation?.id}/booking/confirmed`,
             },
         });
 
@@ -38,14 +37,14 @@ const CheckoutForm = () => {
             setMessage('Payment succeeded!');
         }
 
-        setIsLoading(false);
+        setLoading(false);
     };
 
     return (
         <form onSubmit={handleSubmit}>
             <PaymentElement />
-            <button disabled={isLoading || !stripe || !elements}>
-                {isLoading ? 'Processing...' : 'Pay now'}
+            <button disabled={loading || !stripe || !elements}>
+                {loading ? 'Processing...' : 'Pay now'}
             </button>
             {message && <div>{message}</div>}
         </form>

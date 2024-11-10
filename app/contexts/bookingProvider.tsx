@@ -12,10 +12,8 @@ import {
     UseFormHandleSubmit,
 } from 'react-hook-form';
 import { z } from 'zod';
-import { useRouter } from 'next/navigation';
 import { Accommodation } from '@/types/accommodation';
 import { useAccommodation } from './accommodationProvider';
-// import { calculateOrderAmount } from '@/lib/stripe/calculateTotalAmount';
 
 const FormSchema = z.object({
     fromDate: z.string().min(1),
@@ -50,7 +48,7 @@ const BookingContextProvider = ({
 }: Readonly<{
     children: React.ReactNode;
 }>) => {
-    const router = useRouter();
+
     const { user } = useAuth();
     const { accommodation } = useAccommodation();
 
@@ -104,15 +102,11 @@ const BookingContextProvider = ({
                 toDate: data.toDate,
             };
 
-            // const totalCost = calculateOrderAmount(data.fromDate, data.toDate, accommodation?.price || 0);
-            // setTotalCost(totalCost);
-            
             setCost(accommodation?.price || 0)
             setFromDate(data.fromDate);
             setToDate(data.toDate);
             await createBooking(user.id, booking);
-            
-            router.push('/user');
+
         } catch (error) {
             console.log('Failed to create booking:', error);
         }

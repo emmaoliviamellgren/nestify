@@ -2,32 +2,34 @@
 
 import { NextApiRequest, NextApiResponse } from 'next';
 import Stripe from 'stripe';
-import { differenceInDays, parseISO } from 'date-fns';
+import { getAccommodationById } from '../../lib/accommodation.db';
+import { calculateOrderAmount } from '../../lib/stripe/calculateTotalAmount';
 
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '');
-
-export const calculateOrderAmount = (
-    fromDate: string,
-    toDate: string,
-    price: number
-): number => {
-    const days = differenceInDays(parseISO(toDate), parseISO(fromDate));
-    return days * price * 100; // multiplied by 100 for amount in öre (expected by Stripe)
-};
 
 export default async function handler(
     req: NextApiRequest,
     res: NextApiResponse
 ) {
-    const { fromDate, toDate, price } = req.body;
+    const { fromDate, toDate, accommodationId } = req.body;
 
-    if (!fromDate || !toDate || !price) {
+    if (!fromDate || !toDate || !accommodationId) {
         return res.status(400).json({ error: 'Missing required parameters' });
     }
 
     try {
-        const amount = calculateOrderAmount(fromDate, toDate, price);
+        // Fetch accommodation details
+        const accommodation = await getAccommodationById(accommodationId);
+        if (!accommodation) {
+            return res.status(404).json({ error: 'Accommodation not found' });
+        }
 
+        // Calculate the order amount
+        const amount = calculateOrderAmount(
+            fromDate,
+            toDate,
+            accommodation.price
+        );
         {
             /* ------ PAYMENT INTENT WITH AMOUNT + CURRENCY ------ */
         }
@@ -40,7 +42,7 @@ export default async function handler(
         });
 
         res.send({
-            clientSecret: paymentIntent.client_secret
+            clientSecret: paymentIntent.client_secret,
         });
     } catch (error) {
         console.error('Error creating payment intent:', error);

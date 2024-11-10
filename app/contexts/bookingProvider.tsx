@@ -3,7 +3,7 @@
 import { createBooking, moveBooking } from '@/lib/booking.db';
 import { Booking } from '@/types/booking';
 import { useAuth } from 'contexts/authProvider';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
     useForm,
@@ -15,6 +15,7 @@ import { z } from 'zod';
 import { useRouter } from 'next/navigation';
 import { Accommodation } from '@/types/accommodation';
 import { useAccommodation } from './accommodationProvider';
+// import { calculateOrderAmount } from '@/lib/stripe/calculateTotalAmount';
 
 const FormSchema = z.object({
     fromDate: z.string().min(1),
@@ -34,6 +35,10 @@ type BookingContextType = {
     pastBookings: Booking[];
     setActiveBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
     setPastBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
+    // totalCost: number;
+    cost: number;
+    fromDate: string;
+    toDate: string;
 };
 
 export const BookingContext = createContext<BookingContextType | undefined>(
@@ -51,6 +56,10 @@ const BookingContextProvider = ({
 
     const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
     const [pastBookings, setPastBookings] = useState<Booking[]>([]);
+
+    const [cost, setCost] = useState<number>(0);
+    const [fromDate, setFromDate] = useState<string>('');
+    const [toDate, setToDate] = useState<string>('');
 
     const checkIfBookingExpired = () => {
         if (user && user.activeBookings) {
@@ -94,12 +103,24 @@ const BookingContextProvider = ({
                 fromDate: data.fromDate,
                 toDate: data.toDate,
             };
+
+            // const totalCost = calculateOrderAmount(data.fromDate, data.toDate, accommodation?.price || 0);
+            // setTotalCost(totalCost);
+            
+            setCost(accommodation?.price || 0)
+            setFromDate(data.fromDate);
+            setToDate(data.toDate);
             await createBooking(user.id, booking);
+            
             router.push('/user');
         } catch (error) {
             console.log('Failed to create booking:', error);
         }
     };
+
+    useEffect(() => {
+        console.log('Cost:', cost, 'From date:', fromDate, 'To date:', toDate);
+    }, [cost, fromDate, toDate]);
 
     const value = {
         onSubmit,
@@ -110,7 +131,10 @@ const BookingContextProvider = ({
         activeBookings,
         setActiveBookings,
         pastBookings,
-        setPastBookings
+        setPastBookings,
+        cost,
+        fromDate,
+        toDate
     };
 
     return (

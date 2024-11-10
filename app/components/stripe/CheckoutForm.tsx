@@ -6,15 +6,8 @@ import {
     useElements,
 } from '@stripe/react-stripe-js';
 import { useState } from 'react';
-import { calculateOrderAmount } from '@/lib/stripe/create-payment-intent';
 
-type CheckoutFormProps = {
-    fromDate: string;
-    toDate: string;
-    price: number;
-};
-
-const CheckoutForm = ({ fromDate, toDate, price }: CheckoutFormProps) => {
+const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
 
@@ -30,9 +23,6 @@ const CheckoutForm = ({ fromDate, toDate, price }: CheckoutFormProps) => {
         if (!stripe || !elements) return;
 
         setIsLoading(true);
-
-        const amount = calculateOrderAmount(fromDate, toDate, price);
-        console.log('Total amount:', amount);
 
         const { error } = await stripe.confirmPayment({
             elements,

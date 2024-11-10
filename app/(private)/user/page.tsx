@@ -29,7 +29,7 @@ const ProfilePage = () => {
                 checkIfBookingExpired();
             });
         }
-    }, [user, activeBookings, pastBookings]);
+    }, []);
 
     return (
         <>

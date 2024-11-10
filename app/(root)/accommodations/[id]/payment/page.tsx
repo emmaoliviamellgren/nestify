@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import { loadStripe, Appearance } from '@stripe/stripe-js';
 import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from '@/components/stripe/CheckoutForm';
-import { calculateOrderAmount } from '@/lib/stripe/create-payment-intent';
+import { useBooking } from 'contexts/bookingProvider';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
@@ -12,29 +12,30 @@ const stripePublishableKey: string =
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '';
 const stripePromise = loadStripe(stripePublishableKey);
 
-type PaymentPageProps = {
-    fromDate: string;
-    toDate: string;
-    price: number;
-};
+// type PaymentPageProps = {
+//     fromDate: string;
+//     toDate: string;
+//     price: number;
+// };
 
-const PaymentPage = ({ fromDate, toDate, price }: PaymentPageProps) => {
+const PaymentPage = (
+    // { fromDate, toDate, price }: PaymentPageProps
+) => {
     const [clientSecret, setClientSecret] = useState('');
+    const { cost, fromDate, toDate } = useBooking();
+    const API = 'api/create-payment-intent/route.ts';
 
     useEffect(() => {
-        const amount = calculateOrderAmount(fromDate, toDate, price);
-        console.log('Total amount:', amount);
-
-        fetch('@/lib/stripe/create-payment-intent', {
+        fetch(API, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ amount }),
+            body: JSON.stringify({ cost, fromDate, toDate }),
         })
             .then((res) => res.json())
             .then((data) => {
                 setClientSecret(data.clientSecret);
             });
-    }, [fromDate, toDate, price]);
+    }, []);
 
     const appearance = {
         theme: 'stripe' as Appearance['theme'],
@@ -56,9 +57,9 @@ const PaymentPage = ({ fromDate, toDate, price }: PaymentPageProps) => {
                     options={options}
                     stripe={stripePromise}>
                     <CheckoutForm
-                        fromDate={fromDate}
-                        toDate={toDate}
-                        price={price}
+                        // fromDate={fromDate}
+                        // toDate={toDate}
+                        // cost={cost}
                     />
                 </Elements>
             )}

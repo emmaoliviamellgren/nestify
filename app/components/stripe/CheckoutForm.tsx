@@ -4,16 +4,21 @@ import {
     PaymentElement,
     useStripe,
     useElements,
+    Elements,
 } from '@stripe/react-stripe-js';
 import { Layout } from '@stripe/stripe-js';
-import { useAccommodation } from 'contexts/accommodationProvider';
 import { useState } from 'react';
 import { DisabledButton, PrimaryButtonWithIcon } from '../ui/buttons';
+import { useBooking } from 'contexts/bookingProvider';
+import { createBooking } from '@/lib/booking.db';
+import { useAuth } from 'contexts/authProvider';
+import { BadgeCheck } from 'lucide-react';
 
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
-    const { accommodation } = useAccommodation();
+    const { currentBooking } = useBooking();
+    const { user } = useAuth();
 
     const [message, setMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -24,11 +29,21 @@ const CheckoutForm = () => {
 
         setLoading(true);
 
+        if (user && currentBooking) {
+            try {
+                await createBooking(user.id, currentBooking);
+                console.log('Payment and booking succeeded!');
+            } catch (err) {
+                console.log('Booking could not be created: ' + err);
+            }
+        } else {
+            console.log('Booking could not be created');
+        }
+
         const { error } = await stripe.confirmPayment({
             elements,
             confirmParams: {
-                // Payment completion page
-                return_url: `/accommodations/${accommodation?.id}/booking/confirmed`,
+                return_url: `${window.location.origin}/accommodations/${currentBooking?.chosenAccommodation.id}/${currentBooking?.id}/booking/confirmed`,
             },
         });
 
@@ -43,14 +58,19 @@ const CheckoutForm = () => {
 
     const paymentElementOptions = {
         layout: 'tabs' as Layout,
+        style: {
+            base: {
+                color: '#0b132b',
+                fontFamily: 'familjenGrotesk, sans-serif',
+            },
+        },
     };
-
 
     return (
         <form
             id='payment-form'
             onSubmit={handleSubmit}
-            className='md:max-w-5xl h-screen mx-auto flex flex-col gap-4 justify-center items-center'>
+            className='md:max-w-xl md:mx-auto px-12 md:px-0 h-screen flex flex-col gap-12 justify-center'>
             <PaymentElement
                 id='payment-element'
                 options={paymentElementOptions}
@@ -60,8 +80,11 @@ const CheckoutForm = () => {
             ) : (
                 <PrimaryButtonWithIcon
                     id='submit'
-                    label={loading ? 'Loading...' : 'Pay now'}>
-                </PrimaryButtonWithIcon>
+                    icon={<BadgeCheck />}
+                    className='w-full h-[50px] flex justify-center items-center gap-2'
+                    label={
+                        loading ? 'Loading...' : 'Pay now'
+                    }></PrimaryButtonWithIcon>
             )}
 
             {message && <div id='payment-message'>{message}</div>}

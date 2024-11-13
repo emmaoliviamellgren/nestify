@@ -18,19 +18,21 @@ export default function RootLayout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+
+
     return (
         <html lang='en'>
             <body
                 className={`${lexend.variable} ${familjenGrotesk.variable} antialiased`}>
                 <NextUIProvider>
-                    <AccommodationContextProvider>
-                        <AuthContextProvider>
-                            <BookingContextProvider>
-                                <Toaster />
-                                {children}
-                            </BookingContextProvider>
-                        </AuthContextProvider>
-                    </AccommodationContextProvider>
+                        <AccommodationContextProvider>
+                            <AuthContextProvider>
+                                <BookingContextProvider>
+                                    <Toaster />
+                                    {children}
+                                </BookingContextProvider>
+                            </AuthContextProvider>
+                        </AccommodationContextProvider>
                 </NextUIProvider>
             </body>
         </html>

@@ -7,17 +7,17 @@ import { NextRequest, NextResponse } from 'next/server';
 const stripe = new Stripe(process.env.NEXT_PUBLIC_STRIPE_SECRET_KEY || '');
 
 export async function POST(req: NextRequest) {
-    const { fromDate, toDate, cost } = await req.json();
-
-    if (!fromDate || !toDate || !cost) {
-        return NextResponse.json(
-            { error: 'Missing required parameters' },
-            { status: 400 }
-        );
-    }
-
     try {
-        const amount = calculateOrderAmount(fromDate, toDate, cost  * 100);
+        const { fromDate, toDate, cost } = await req.json();
+
+        if (!fromDate || !toDate || !cost) {
+            return NextResponse.json(
+                { error: 'Missing required parameters' },
+                { status: 400 }
+            );
+        }
+
+        const amount = calculateOrderAmount(fromDate, toDate, cost * 100);
         // Stripe expects the amount in cents (öre for SEK)
         {
             /* ------ PAYMENT INTENT WITH AMOUNT + CURRENCY ------ */

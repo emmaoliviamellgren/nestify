@@ -6,9 +6,8 @@ import { Elements } from '@stripe/react-stripe-js';
 import CheckoutForm from '@/components/stripe/CheckoutForm';
 import { useBooking } from 'contexts/bookingProvider';
 import Loading from '@/components/loading';
+import CompletedPage from './confirmed/page';
 
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
 const stripePublishableKey: string =
     process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY || '';
 const stripePromise = loadStripe(stripePublishableKey);
@@ -17,6 +16,24 @@ const PaymentPage = () => {
     const [clientSecret, setClientSecret] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
+
+    const [paymentIntent, setPaymentIntent] = useState<string | null>(null);
+    const [confirmed, setConfirmed] = useState(false);
+
+    useEffect(() => {
+        setPaymentIntent(
+            new URLSearchParams(window.location.search).get(
+                'payment_intent_client_secret'
+            )
+        );
+
+        if (paymentIntent !== null) {
+            setConfirmed(true);
+            console.log('Payment intent was set');
+        } else {
+            console.log('Payment intent was not set');
+        }
+    }, []);
 
     const { cost, fromDate, toDate } = useBooking();
     const API = '/api/create-payment-intent';
@@ -50,11 +67,6 @@ const PaymentPage = () => {
 
     const appearance = {
         theme: 'stripe' as Appearance['theme'],
-        // variables: {
-        //     colorPrimary: 'var(--primary)',
-        //     colorBackground: 'var(--background)',
-        //     colorText: 'var(--text-primary)',
-        // },
     };
     const options = {
         clientSecret,
@@ -69,37 +81,15 @@ const PaymentPage = () => {
                     <h2>{error}</h2>
                 </div>
             )}
-            {!loading && !error && clientSecret && (
+            {clientSecret && (
                 <Elements
                     options={options}
                     stripe={stripePromise}>
-                    <CheckoutForm
-                    // fromDate={fromDate}
-                    // toDate={toDate}
-                    // cost={cost}
-                    />
+                    {confirmed ? <CompletedPage /> : <CheckoutForm />}
                 </Elements>
             )}
         </>
     );
 };
-
-// const [confirmed, setConfirmed] = useState(false);
-
-// useEffect(() => {
-//     setConfirmed(
-//         new URLSearchParams(window.location.search).get(
-//             'payment_intent_client_secret'
-//         )
-//     );
-// });
-
-// {/* {confirmed ? ( */}
-// <CompletePage />
-// {/* ) : ( */}
-// <CheckoutForm
-// // dpmCheckerLink={dpmCheckerLink}
-// />
-// {/* )} */}
 
 export default PaymentPage;

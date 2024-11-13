@@ -23,7 +23,7 @@ export const PrimaryButtonWithIcon = ({
         <button
             id={id}
             onClick={onClick}
-            className={` ${className} text-[--text-secondary] bg-[--primary] w-fit px-5 py-1.5 rounded-lg flex items-center gap-1 ${
+            className={` ${className} text-[--text-secondary] bg-[--primary] hover:bg-[--primary-hover] px-5 py-1.5 rounded-lg flex items-center gap-1 ${
                 !customWidth && 'min-w-96'
             }`}>
             <span className='icon'>{icon}</span>

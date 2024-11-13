@@ -1,9 +1,9 @@
 'use client';
 
-import { createBooking, moveBooking } from '@/lib/booking.db';
+import { moveBooking } from '@/lib/booking.db';
 import { Booking } from '@/types/booking';
 import { useAuth } from 'contexts/authProvider';
-import { createContext, useContext, useEffect, useState } from 'react';
+import { createContext, useContext, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
     useForm,
@@ -49,8 +49,8 @@ const BookingContextProvider = ({
 }: Readonly<{
     children: React.ReactNode;
 }>) => {
-
     const router = useRouter();
+
     const { user } = useAuth();
     const { accommodation } = useAccommodation();
 
@@ -97,6 +97,9 @@ const BookingContextProvider = ({
         }
 
         try {
+            {
+                /* ------ CREATE BOOKING OBJECT WITH DATA ------ */
+            }
             const booking: Booking = {
                 id: Math.random().toString(16).slice(2),
                 chosenAccommodation: accommodation as Accommodation,
@@ -105,17 +108,14 @@ const BookingContextProvider = ({
                 toDate: data.toDate,
             };
 
-            setCost(accommodation?.price || 0)
+            setCost(accommodation?.price || 0);
             setFromDate(data.fromDate);
             setToDate(data.toDate);
 
             setCurrentBooking(booking);
-            router.push(`/accommodations/${accommodation?.id}/booking/${booking.id}`);
-
-            await createBooking(user.id, booking);
-
+            router.push(`/accommodations/${accommodation?.id}/${booking.id}`);
         } catch (error) {
-            console.log('Failed to create booking:', error);
+            console.log('Failed to create booking object:', error);
         }
     };
 
@@ -132,7 +132,7 @@ const BookingContextProvider = ({
         currentBooking,
         cost,
         fromDate,
-        toDate
+        toDate,
     };
 
     return (

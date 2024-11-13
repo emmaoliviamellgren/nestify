@@ -1,9 +1,7 @@
 import LandingPage from './(root)/page';
 
 const RootPage = () => {
-    return (
-            <LandingPage />
-    );
+    return <LandingPage />;
 };
 
 export default RootPage;

@@ -6,5 +6,5 @@ export const calculateOrderAmount = (
     price: number
 ): number => {
     const days = differenceInDays(parseISO(toDate), parseISO(fromDate));
-    return days * price * 100; // Stripe expects the amount in cents (öre for SEK)
+    return days * price;
 };

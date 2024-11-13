@@ -17,7 +17,7 @@ const PaymentPage = () => {
     const [clientSecret, setClientSecret] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
-    
+
     const { cost, fromDate, toDate } = useBooking();
     const API = '/api/create-payment-intent';
 
@@ -64,7 +64,11 @@ const PaymentPage = () => {
     return (
         <>
             {loading && <Loading />}
-            {error && <p>{error}</p>}
+            {error && (
+                <div className='w-screen h-screen'>
+                    <h2>{error}</h2>
+                </div>
+            )}
             {!loading && !error && clientSecret && (
                 <Elements
                     options={options}

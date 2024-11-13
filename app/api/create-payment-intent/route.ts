@@ -17,7 +17,8 @@ export async function POST(req: NextRequest) {
     }
 
     try {
-        const amount = calculateOrderAmount(fromDate, toDate, cost);
+        const amount = calculateOrderAmount(fromDate, toDate, cost  * 100);
+        // Stripe expects the amount in cents (öre for SEK)
         {
             /* ------ PAYMENT INTENT WITH AMOUNT + CURRENCY ------ */
         }

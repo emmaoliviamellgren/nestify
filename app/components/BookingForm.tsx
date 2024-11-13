@@ -4,14 +4,9 @@ import { PrimaryButton } from './ui/buttons';
 import { useState } from 'react';
 import { parseDate, DateValue } from '@internationalized/date';
 import { useBooking } from 'contexts/bookingProvider';
-import { useRouter } from 'next/navigation';
-import { useAccommodation } from 'contexts/accommodationProvider';
 
 const BookingForm = () => {
     const { onSubmit, register, handleSubmit, setValue } = useBooking();
-    const { accommodation } = useAccommodation();
-
-    const router = useRouter();
 
     const [fromDate, setFromDate] = useState<string>('');
     const [toDate, setToDate] = useState<string>('');
@@ -113,11 +108,10 @@ const BookingForm = () => {
             </div>
             <div className='flex justify-center'>
                 <PrimaryButton
-                    label='Book now'
-                    // type='submit'
+                    label='Reserve'
+                    type='submit'
                     onClick={() => {
                         setUserSubmitted(true);
-                        router.push(`/accommodations/${accommodation?.id}/booking`);
                     }}
                     customWidth={false}
                 />

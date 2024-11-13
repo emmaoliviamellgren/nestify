@@ -14,6 +14,7 @@ import {
 import { z } from 'zod';
 import { Accommodation } from '@/types/accommodation';
 import { useAccommodation } from './accommodationProvider';
+import { useRouter } from 'next/navigation';
 
 const FormSchema = z.object({
     fromDate: z.string().min(1),
@@ -33,7 +34,7 @@ type BookingContextType = {
     pastBookings: Booking[];
     setActiveBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
     setPastBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
-    // totalCost: number;
+    currentBooking: Booking | null;
     cost: number;
     fromDate: string;
     toDate: string;
@@ -49,11 +50,13 @@ const BookingContextProvider = ({
     children: React.ReactNode;
 }>) => {
 
+    const router = useRouter();
     const { user } = useAuth();
     const { accommodation } = useAccommodation();
 
     const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
     const [pastBookings, setPastBookings] = useState<Booking[]>([]);
+    const [currentBooking, setCurrentBooking] = useState<Booking | null>(null);
 
     const [cost, setCost] = useState<number>(0);
     const [fromDate, setFromDate] = useState<string>('');
@@ -105,16 +108,16 @@ const BookingContextProvider = ({
             setCost(accommodation?.price || 0)
             setFromDate(data.fromDate);
             setToDate(data.toDate);
+
+            setCurrentBooking(booking);
+            router.push(`/accommodations/${accommodation?.id}/booking/${booking.id}`);
+
             await createBooking(user.id, booking);
 
         } catch (error) {
             console.log('Failed to create booking:', error);
         }
     };
-
-    useEffect(() => {
-        console.log('Cost:', cost, 'From date:', fromDate, 'To date:', toDate);
-    }, [cost, fromDate, toDate]);
 
     const value = {
         onSubmit,
@@ -126,6 +129,7 @@ const BookingContextProvider = ({
         setActiveBookings,
         pastBookings,
         setPastBookings,
+        currentBooking,
         cost,
         fromDate,
         toDate

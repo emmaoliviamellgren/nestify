@@ -87,6 +87,25 @@ export const DisabledButton = ({
     );
 };
 
+// Disabled Button
+export const DisabledButtonWithIcon = ({
+    label,
+    className,
+    icon,
+    customWidth,
+}: ButtonProps) => {
+    return (
+        <button
+            disabled
+            className={`${className} text-[--text-secondary] bg-[--disabled] px-5 py-1.5 rounded-lg ${
+                !customWidth && 'min-w-96'
+            }`}>
+            <span className='icon'>{icon}</span>
+            {label}
+        </button>
+    );
+};
+
 // Warning Button
 export const WarningButton = ({
     label,
@@ -106,8 +125,9 @@ export const WarningButton = ({
 };
 
 // Outlined Button
-export const OutlinedButton = ({
+export const OutlinedButtonWithIcon = ({
     label,
+    icon,
     onClick,
     className,
     customWidth,
@@ -118,6 +138,7 @@ export const OutlinedButton = ({
             className={` ${className} text-[--secondary] outline outline-[--secondary] hover:outline-[--text-secondary] hover:text-[--text-secondary] hover:shadow-lg hover:bg-[--secondary] transition-all px-5 py-1.5 rounded-lg ${
                 !customWidth && 'min-w-96'
             }`}>
+            <span className='icon'>{icon}</span>
             {label}
         </button>
     );

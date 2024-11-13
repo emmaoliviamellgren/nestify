@@ -3,19 +3,20 @@
 import { useBooking } from 'contexts/bookingProvider';
 import Loading from '@/components/loading';
 import Image from 'next/image';
-import { OutlinedButton, PrimaryButton } from '@/components/ui/buttons';
+import { OutlinedButtonWithIcon, PrimaryButton } from '@/components/ui/buttons';
 import LabelButton from '@/components/ui/labelButton';
 import { calculateOrderAmount } from '@/lib/stripe/calculateTotalAmount';
 import Footer from '@/components/footer';
 import Navigation from '@/components/navigation';
 import useResponsive from '@/hooks/useResponsive';
 import { useRouter } from 'next/navigation';
+import { MdEdit } from 'react-icons/md';
 
 const BookingDetailsPage = () => {
     const { currentBooking, cost } = useBooking();
     const { bigScreen, smallScreen } = useResponsive();
     const router = useRouter();
-    
+
     if (!currentBooking) {
         return <Loading />;
     }
@@ -27,8 +28,10 @@ const BookingDetailsPage = () => {
     );
 
     const redirectToBooking = () => {
-        router.push(`/accommodations/${currentBooking.chosenAccommodation.id}/${currentBooking.id}/booking`);
-    }
+        router.push(
+            `/accommodations/${currentBooking.chosenAccommodation.id}/${currentBooking.id}/booking`
+        );
+    };
 
     return (
         <>
@@ -65,9 +68,10 @@ const BookingDetailsPage = () => {
                                                     .chosenAccommodation.title
                                             }
                                         </h2>
-                                        <OutlinedButton
+                                        <OutlinedButtonWithIcon
+                                            icon={<MdEdit />}
                                             label='Edit'
-                                            className='h-9'
+                                            className='h-9 flex justify-center items-center gap-2'
                                         />
                                     </div>
                                 )}
@@ -87,9 +91,10 @@ const BookingDetailsPage = () => {
                                 </span>
                             </div>
                             {smallScreen && (
-                                <OutlinedButton
+                                <OutlinedButtonWithIcon
+                                    icon={<MdEdit />}
                                     label='Edit'
-                                    className='w-72 mx-auto'
+                                    className='mx-auto flex justify-center items-center gap-2'
                                 />
                             )}
                         </div>
@@ -100,7 +105,11 @@ const BookingDetailsPage = () => {
                         <p className='bold'>Your total:</p>
                         {totalAmount} SEK
                     </span>
-                    <PrimaryButton label='Book now' onClick={redirectToBooking}/>
+                    <PrimaryButton
+                        label='Book now'
+                        onClick={redirectToBooking}
+                        className='h-12 w-full'
+                    />
                 </div>
             </div>
             {bigScreen && <Footer />}

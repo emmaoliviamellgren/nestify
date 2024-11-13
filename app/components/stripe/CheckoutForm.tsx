@@ -3,15 +3,16 @@
 import {
     PaymentElement,
     useStripe,
-    useElements
+    useElements,
 } from '@stripe/react-stripe-js';
 import { Layout } from '@stripe/stripe-js';
 import { useState } from 'react';
-import { DisabledButton, PrimaryButtonWithIcon } from '../ui/buttons';
+import { DisabledButtonWithIcon, PrimaryButtonWithIcon } from '../ui/buttons';
 import { useBooking } from 'contexts/bookingProvider';
 import { createBooking } from '@/lib/booking.db';
 import { useAuth } from 'contexts/authProvider';
-import { BadgeCheck } from 'lucide-react';
+import { BadgeCheck, Loader } from 'lucide-react';
+import Link from 'next/link';
 
 const CheckoutForm = () => {
     const stripe = useStripe();
@@ -75,15 +76,29 @@ const CheckoutForm = () => {
                 options={paymentElementOptions}
             />
             {loading || !stripe || !elements ? (
-                <DisabledButton label='Pay now'></DisabledButton>
+                <DisabledButtonWithIcon
+                icon={<Loader />}
+                label='Processing...'
+                className='h-9 flex justify-center items-center gap-2'
+            />
             ) : (
-                <PrimaryButtonWithIcon
-                    id='submit'
-                    icon={<BadgeCheck />}
-                    className='w-full h-[50px] flex justify-center items-center gap-2'
-                    label={
-                        loading ? 'Loading...' : 'Pay now'
-                    }></PrimaryButtonWithIcon>
+                <>
+                    <PrimaryButtonWithIcon
+                        id='submit'
+                        icon={<BadgeCheck />}
+                        className='w-full h-[50px] flex justify-center items-center gap-2'
+                        label={
+                            loading ? 'Loading...' : 'Pay now'
+                        }></PrimaryButtonWithIcon>
+                    <span className='flex gap-1 justify-center items-center'>
+                        <span className='text-sm md:text-base'>or</span>
+                        <Link
+                            href='/'
+                            className='underline text-sm md:text-base'>
+                            cancel
+                        </Link>
+                    </span>
+                </>
             )}
 
             {message && <div id='payment-message'>{message}</div>}

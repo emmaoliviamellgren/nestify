@@ -5,11 +5,11 @@ import { useStripe } from '@stripe/react-stripe-js';
 import Link from 'next/link';
 import { CircleCheck, CircleX, Info } from 'lucide-react';
 
-const SuccessIcon = <CircleCheck />;
+const SuccessIcon = <CircleCheck className='size-12 text-[--primary]'/>;
 
-const ErrorIcon = <CircleX />;
+const ErrorIcon = <CircleX className='size-12 text-[--primary]'/>;
 
-const InfoIcon = <Info />;
+const InfoIcon = <Info className='size-12 text-[--primary]'/>;
 
 type PaymentStatus =
     | 'succeeded'

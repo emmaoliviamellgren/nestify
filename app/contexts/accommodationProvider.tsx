@@ -12,6 +12,7 @@ import { useParams, useRouter } from 'next/navigation';
 type AccommodationContextType = {
     accommodations: Accommodation[];
     accommodation: Accommodation | null;
+    fetchAccommodations: () => Promise<void>;
     loading: boolean;
 };
 
@@ -68,7 +69,8 @@ const AccommodationContextProvider = ({
     const value = {
         accommodations,
         accommodation,
-        loading
+        loading,
+        fetchAccommodations,
     };
 
     return (

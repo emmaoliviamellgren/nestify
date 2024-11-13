@@ -1,47 +1,73 @@
-import {
-    Accessibility,
-    House,
-    Building,
-    PawPrint,
-    Trees,
-    Waves,
-    SlidersHorizontal,
-} from 'lucide-react';
+import { SlidersHorizontal } from 'lucide-react';
 import { FilterPillButton } from './ui/pillButtons';
+import { useAccommodation } from 'contexts/accommodationProvider';
+import { Accommodation } from '@/types/accommodation';
+import { useState, useEffect } from 'react';
+import { iconMappingToNode } from './ui/propertiesIcons';
+import AccommodationGrid from './accommodation/accommodationGrid';
 
-const Filters = () => {
+const Accommodations = () => {
+    const { accommodations, fetchAccommodations } = useAccommodation();
+    const [filteredAccommodations, setFilteredAccommodations] =
+        useState<Accommodation[]>(accommodations);
+    const [filters, setFilters] = useState<string[]>([]);
+
+    useEffect(() => {
+        applyFilters();
+    }, [filters]);
+
+    const handleSetFilter = (filter: string) => {
+        setFilters((prevFilters) => {
+            if (prevFilters.includes(filter)) {
+                return prevFilters.filter((f) => f !== filter);
+            } else {
+                return [...prevFilters, filter];
+            }
+        });
+    };
+
+    const applyFilters = () => {
+        if (filters.length === 0) {
+            setFilteredAccommodations(accommodations);
+            return;
+        }
+
+        const filtered = accommodations.filter((accommodation) => {
+            return filters.every((filter) =>
+                accommodation.properties?.includes(filter)
+            );
+        });
+
+        setFilteredAccommodations(filtered);
+    };
+
+    const filterLabels = Object.keys(iconMappingToNode);
+
     return (
-        <div className='flex gap-3 items-center justify-center flex-wrap max-w-screen py-6'>
-            <FilterPillButton
-                icon={<Accessibility className='size-[1.15rem]'/>}
-                label='Accessible'
-            />
-            <FilterPillButton
-                icon={<House className='size-[1.15rem]'/>}
-                label='Spacious'
-            />
-            <FilterPillButton
-                icon={<Building className='size-[1.15rem]'/>}
-                label='Apartment'
-            />
-            <FilterPillButton
-                icon={<PawPrint className='size-[1.15rem]'/>}
-                label='Pet friendly'
-            />
-            <FilterPillButton
-                icon={<Trees className='size-[1.15rem]'/>}
-                label='Close to nature'
-            />
-            <FilterPillButton
-                icon={<Waves className='size-[1.15rem]'/>}
-                label='Near water'
-            />
-            <FilterPillButton
-                icon={<SlidersHorizontal className='size-[1.15rem]'/>}
-                label='All filters'
-            />
-        </div>
+        <>
+            <div className='flex gap-3 items-center justify-center flex-wrap max-w-screen py-6'>
+                {filterLabels.map((label) => (
+                    <FilterPillButton
+                        key={label}
+                        icon={iconMappingToNode[label]}
+                        label={label}
+                        onClick={() => handleSetFilter(label)}
+                        className={
+                            filters.includes(label)
+                                ? 'bg-[--warning] text-[--text-secondary] outline outline-white'
+                                : ''
+                        }
+                    />
+                ))}
+                <FilterPillButton
+                    icon={<SlidersHorizontal className='size-[1.15rem]' />}
+                    label='All filters'
+                    onClick={() => handleSetFilter('All filters')}
+                />
+            </div>
+            <AccommodationGrid accommodations={filteredAccommodations} />
+        </>
     );
 };
 
-export default Filters;
+export default Accommodations;

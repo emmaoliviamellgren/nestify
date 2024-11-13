@@ -3,7 +3,7 @@
 import Image from 'next/image';
 import EmblaCarousel from '@/components/carousel';
 import { EmblaOptionsType } from 'embla-carousel';
-import iconMappingToNode from '@/components/ui/propertiesIcons';
+import { iconMappingToNode } from '@/components/ui/propertiesIcons';
 import Navigation from '@/components/navigation';
 import smilingMan from '@/public/smiling-man.jpg';
 import BookingForm from '@/components/BookingForm';

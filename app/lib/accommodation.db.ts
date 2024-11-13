@@ -3,6 +3,7 @@ import { db, storage } from '../../firebase.config';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import toast from 'react-hot-toast';
+import { mapPropertiesToTags } from '@/components/ui/propertiesIcons';
 
 export const getAllAccommodations = async (): Promise<Accommodation[]> => {
     try {
@@ -20,10 +21,18 @@ export const getAllAccommodations = async (): Promise<Accommodation[]> => {
                 const imageRef = ref(storage, data.images[0]);
                 try {
                     const imageUrl = await getDownloadURL(imageRef);
-                    return { ...data, id: doc.id, image: imageUrl };
+                    const filteringTags = data.properties as string[];
+                    console.log('Tags from DB mapped: ' + filteringTags);
+                    return {
+                        ...data,
+                        id: doc.id,
+                        image: imageUrl,
+                        filteringTags,
+                    };
                 } catch (imageError) {
                     console.error('Error fetching image URL:', imageError);
-                    return { ...data, id: doc.id, image: '' };
+                    const filteringTags = data.properties;
+                    return { ...data, id: doc.id, image: '', filteringTags };
                 }
             })
         );

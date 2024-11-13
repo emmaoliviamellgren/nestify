@@ -79,7 +79,7 @@ const CheckoutForm = () => {
                 <DisabledButtonWithIcon
                 icon={<Loader />}
                 label='Processing...'
-                className='h-9 flex justify-center items-center gap-2'
+                className='w-full h-[50px] flex justify-center items-center gap-2'
             />
             ) : (
                 <>

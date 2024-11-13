@@ -3,17 +3,16 @@
 import AccommodationDetails from '@/components/accommodation/accommodationDetails';
 import Footer from '@/components/footer';
 import LabelButton from '@/components/ui/labelButton';
+import useResponsive from '@/hooks/useResponsive';
 
 const HomeDetailsPage = () => {
+    const { bigScreen, smallScreen } = useResponsive();
+
     return (
         <>
-            <span className='md:hidden'>
-                <LabelButton />
-            </span>
+            {smallScreen && <LabelButton />}
             <AccommodationDetails />
-            <span className='hidden md:block'>
-                <Footer />
-            </span>
+            {bigScreen && <Footer />}
         </>
     );
 };

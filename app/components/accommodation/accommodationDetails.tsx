@@ -9,9 +9,11 @@ import smilingMan from '@/public/smiling-man.jpg';
 import BookingForm from '@/components/BookingForm';
 import { useAccommodation } from 'contexts/accommodationProvider';
 import Loading from '../loading';
+import useResponsive from '@/hooks/useResponsive';
 
 const AccommodationDetails = () => {
     const { accommodation, loading } = useAccommodation();
+    const { smallScreen, bigScreen } = useResponsive();
 
     if (loading) return <Loading />;
     if (!accommodation) return null;
@@ -41,46 +43,48 @@ const AccommodationDetails = () => {
 
     return (
         <>
-            {/* ------ CAROUSEL IN DEFAULT VIEW ------ */}
-            <section className='block mt-5 mx-auto w-screen max-w-[calc(100vw-50px)] md:hidden'>
-                <EmblaCarousel
-                    slides={SLIDES}
-                    options={OPTIONS}
-                />
-            </section>
+            {smallScreen && (
+                <section className='block mt-5 mx-auto w-screen max-w-[calc(100vw-50px)]'>
+                    <EmblaCarousel
+                        slides={SLIDES}
+                        options={OPTIONS}
+                    />
+                </section>
+            )}
 
-            <nav className='hidden md:block'>
-                <Navigation />
-            </nav>
+            {bigScreen && <Navigation />}
 
             {/* ------ IMAGE GRID IN DESKTOP VIEW ------ */}
-            <section className='mt-6 hidden md:grid mx-auto md:mb-4 gap-2 md:grid-cols-2 md:w-[900px]'>
-                <div className='h-[400px]'>
-                    <Image
-                        src={accommodation.images[0]}
-                        width={1000}
-                        height={1000}
-                        alt={accommodation.title}
-                        className='w-full h-full object-cover rounded-lg'
-                    />
-                </div>
-                <div className='flex md:grid gap-4 md:grid-rows-2 h-[400px]'>
-                    <Image
-                        src={accommodation.images[1]}
-                        width={1000}
-                        height={1000}
-                        alt={accommodation.title}
-                        className='w-full h-full object-cover rounded-lg'
-                    />
-                    <Image
-                        src={accommodation.images[2]}
-                        width={1000}
-                        height={1000}
-                        alt={accommodation.title}
-                        className='w-full h-full object-cover rounded-lg'
-                    />
-                </div>
-            </section>
+            {bigScreen && (
+                <section className='mt-6 grid mx-auto mb-4 gap-2 grid-cols-2 w-[900px]'>
+                    <div className='h-[400px]'>
+                        <Image
+                            src={accommodation.images[0]}
+                            width={1000}
+                            height={1000}
+                            alt={accommodation.title}
+                            className='w-full h-full object-cover rounded-lg'
+                        />
+                    </div>
+                    <div className='grid gap-4 grid-rows-2 h-[400px]'>
+                        <Image
+                            src={accommodation.images[1]}
+                            width={1000}
+                            height={1000}
+                            alt={accommodation.title}
+                            className='w-full h-full object-cover rounded-lg'
+                        />
+                        <Image
+                            src={accommodation.images[2]}
+                            width={1000}
+                            height={1000}
+                            alt={accommodation.title}
+                            className='w-full h-full object-cover rounded-lg'
+                        />
+                    </div>
+                </section>
+            )}
+
             <main className='flex flex-col gap-2 px-8 md:px-0 py-4 md:mx-auto md:w-[900px]'>
                 <section className='md:grid md:grid-cols-2 gap-[5rem]'>
                     <div>
@@ -133,21 +137,26 @@ const AccommodationDetails = () => {
                         </div>
                     </div>
                     {/* ------ BOOKING FORM FOR DESKTOP ------ */}
-                    <div className='hidden md:flex md:flex-col md:justify-evenly rounded-md border-2 border-[--primary] md:px-4'>
-                        <span className='flex gap-2 items-baseline py-3'>
-                            <h2>{accommodation.price}</h2>
-                            <p className='text-slate-500 relative bottom-0.5'>
-                                SEK per night
-                            </p>
-                        </span>
-                        <BookingForm />
-                    </div>
+                    {bigScreen && (
+                        <div className='flex flex-col justify-evenly rounded-md border-2 border-[--primary] px-4'>
+                            <span className='flex gap-2 items-baseline py-3'>
+                                <h2>{accommodation.price}</h2>
+                                <p className='text-slate-500 relative bottom-0.5'>
+                                    SEK per night
+                                </p>
+                            </span>
+                            <BookingForm />
+                        </div>
+                    )}
                 </section>
             </main>
+
             {/* ------ BOOKING FORM DEFAULT (MOBILE) ------ */}
-            <footer className='flex flex-col md:hidden justify-between rounded-md bg-[--background-muted] border-[--primary] px-8 py-10 gap-8 mt-2'>
-                <BookingForm />
-            </footer>
+            {smallScreen && (
+                <footer className='flex flex-col justify-between rounded-md bg-[--background-muted] border-[--primary] px-8 py-10 gap-8 mt-2'>
+                    <BookingForm />
+                </footer>
+            )}
         </>
     );
 };

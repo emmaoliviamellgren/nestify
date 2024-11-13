@@ -3,8 +3,7 @@
 import {
     PaymentElement,
     useStripe,
-    useElements,
-    Elements,
+    useElements
 } from '@stripe/react-stripe-js';
 import { Layout } from '@stripe/stripe-js';
 import { useState } from 'react';

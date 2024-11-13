@@ -10,6 +10,7 @@ import { useRouter } from 'next/navigation';
 import { useForm, Controller } from 'react-hook-form';
 import { MdErrorOutline } from 'react-icons/md';
 import { z } from 'zod';
+import useResponsive from '@/hooks/useResponsive';
 
 type SignUpFormValues = {
     firstName: string;
@@ -28,6 +29,7 @@ const formSchema = z.object({
 });
 
 const RegisterPage = () => {
+    const { bigScreen } = useResponsive();
     const { register } = useAuth();
     const router = useRouter();
 
@@ -63,13 +65,14 @@ const RegisterPage = () => {
 
     return (
         <div className='md:grid md:grid-cols-2'>
-            <aside className='hidden md:block'>
+            {bigScreen && (
                 <img
                     src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
                     alt='Sign Up Image'
                     className='h-screen w-full object-cover'
                 />
-            </aside>
+            )}
+
             <main className='flex items-center justify-center flex-col p-12 w-full'>
                 <h2 className='text-center md:text-left'>Register</h2>
                 <form

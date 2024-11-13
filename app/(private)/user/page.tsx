@@ -10,6 +10,7 @@ import Footer from '@/components/footer';
 import { useEffect } from 'react';
 import { useBooking } from 'contexts/bookingProvider';
 import { fetchBookings } from '@/lib/booking.db';
+import useResponsive from '@/hooks/useResponsive';
 
 const ProfilePage = () => {
     const { user } = useAuth();
@@ -20,6 +21,7 @@ const ProfilePage = () => {
         setActiveBookings,
         setPastBookings,
     } = useBooking();
+    const { smallScreen, bigScreen } = useResponsive();
 
     useEffect(() => {
         if (user) {
@@ -34,12 +36,8 @@ const ProfilePage = () => {
     return (
         <>
             <main className='overflow-x-hidden min-h-screen'>
-                <nav className='hidden md:block'>
-                    <Navigation />
-                </nav>
-                <span className='md:hidden'>
-                    <LabelButton />
-                </span>
+                {bigScreen && <Navigation />}
+                {smallScreen && <LabelButton />}
                 <p className='title text-center py-8 md:py-12 md:max-w-6xl md:mx-auto'>
                     My account
                 </p>

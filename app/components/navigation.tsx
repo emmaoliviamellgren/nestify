@@ -1,5 +1,5 @@
-import { ChangeEvent, useState } from 'react';
-import { SearchBarPrimary, SearchBarSecondary } from './ui/inputs';
+import { useState } from 'react';
+import { SearchBarSecondary } from './ui/inputs';
 import { CircleUserRound } from 'lucide-react';
 import { PillButton } from './ui/pillButtons';
 import { LogOut } from 'lucide-react';
@@ -9,18 +9,14 @@ import { auth } from '../../firebase.config';
 import { signOut } from 'firebase/auth';
 import Loading from '@/components/loading';
 import useResponsive from '@/hooks/useResponsive';
+import { useSearchAndFilter } from 'contexts/searchAndFilterProvider';
 
 const Navigation = () => {
     const router = useRouter();
     const { user } = useAuth();
     const { smallScreen, bigScreen } = useResponsive();
-
-    const [searchValue, setSearchValue] = useState('');
+    const { search, handleSearch } = useSearchAndFilter();
     const [loading, setLoading] = useState(false);
-
-    const handleSearch = (e: ChangeEvent<HTMLInputElement>) => {
-        setSearchValue(e.target.value);
-    };
 
     const handleLogout = async () => {
         setLoading(true);
@@ -39,11 +35,12 @@ const Navigation = () => {
     return (
         <>
             {smallScreen && (
-                <span className='py-6 justify-center flex flex-wrap gap-3 items-center'>
+                <span className='py-6 justify-center flex flex-wrap gap-2 items-center'>
                     <SearchBarSecondary
-                        value={searchValue}
-                        onChange={handleSearch}
+                        value={search}
+                        onChange={(e) => handleSearch(e.target.value)}
                         placeholder='Search...'
+                        className={`${user ? ' !w-[170px]' : 'w-full'}`}
                     />
                     {!user ? (
                         <button
@@ -105,8 +102,8 @@ const Navigation = () => {
                         )}
 
                         <SearchBarSecondary
-                            value={searchValue}
-                            onChange={handleSearch}
+                            value={search}
+                            onChange={(e) => handleSearch(e.target.value)}
                             placeholder='Search...'
                         />
                     </div>

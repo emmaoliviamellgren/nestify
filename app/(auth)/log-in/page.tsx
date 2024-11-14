@@ -11,6 +11,9 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useRouter } from 'next/navigation';
 import { useAuth } from 'contexts/authProvider';
 import useResponsive from '@/hooks/useResponsive';
+import Image from 'next/image';
+import auth from '@/public/auth.jpg';
+import LabelButton from '@/components/ui/labelButton';
 
 type LoginFormValues = {
     email: string;
@@ -23,7 +26,7 @@ const formSchema = z.object({
 });
 
 const LogInPage = () => {
-    const { bigScreen } = useResponsive();
+    const { bigScreen, smallScreen } = useResponsive();
     const { login } = useAuth();
     const router = useRouter();
 
@@ -47,9 +50,10 @@ const LogInPage = () => {
 
     return (
         <div className='md:grid md:grid-cols-2'>
+            {smallScreen && <LabelButton />}
             {bigScreen && (
-                <img
-                    src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                <Image
+                    src={auth}
                     alt='Sign Up Image'
                     className='h-screen w-full object-cover'
                 />

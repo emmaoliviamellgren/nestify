@@ -3,6 +3,7 @@ import { Search } from 'lucide-react';
 // Define the type for the input props
 type InputProps = {
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+    className?: string;
     placeholder: string;
     type?: string;
     value?: string;
@@ -16,6 +17,7 @@ export const Input = ({
     type,
     placeholder,
     onChange,
+    className,
 }: InputProps) => {
     return (
         <input
@@ -24,7 +26,7 @@ export const Input = ({
             value={value}
             onChange={onChange}
             placeholder={placeholder || 'Enter text'}
-            className='input w-full h-[35px] md:h-[40px] rounded-lg outline outline-offset-2 outline-1 outline-[--primary] py-1.5 px-3 placeholder-opacity-30 text-opacity-30'
+            className={`${className} input w-full h-[35px] md:h-[40px] rounded-lg outline outline-offset-2 outline-1 outline-[--primary] py-1.5 px-3 placeholder-opacity-30 text-opacity-30`}
         />
     );
 };
@@ -34,6 +36,7 @@ export const SearchBarPrimary = ({
     value,
     onChange,
     placeholder,
+    className,
 }: InputProps) => {
     return (
         <div className='relative flex items-center'>
@@ -45,7 +48,7 @@ export const SearchBarPrimary = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder || 'Search...'}
-                className='input w-[250px] md:w-[350px] h-[45px] md:h-[40px] outline outline-offset-2 outline-1 outline-[--primary] rounded-lg py-1.5 pl-[3rem] pr-3 placeholder-opacity-30 text-opacity-30'
+                className={`${className} input w-[250px] md:w-[350px] h-[45px] md:h-[40px] outline outline-2 outline-offset-1 outline-[--primary] rounded-lg py-1.5 pl-[3rem] pr-3 placeholder-opacity-30 text-opacity-30`}
             />
         </div>
     );
@@ -55,6 +58,7 @@ export const SearchBarSecondary = ({
     value,
     onChange,
     placeholder,
+    className,
 }: InputProps) => {
     return (
         <div className='relative flex items-center'>
@@ -66,7 +70,7 @@ export const SearchBarSecondary = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder || 'Search...'}
-                className='input w-[180px] md:w-[350px] h-[35px] md:h-[35px] outline outline-offset-2 outline-1 outline-[--primary] rounded-lg py-1.5 pl-10 pr-3 placeholder-opacity-30 text-opacity-30'
+                className={`${className} input w-[180px] md:w-[350px] h-[35px] md:h-[35px] outline outline-2 outline-offset-1 outline-[--primary] rounded-lg py-1.5 pl-10 pr-3 placeholder-opacity-30 text-opacity-30`}
             />
         </div>
     );

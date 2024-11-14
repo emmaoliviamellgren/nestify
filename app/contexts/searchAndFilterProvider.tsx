@@ -9,7 +9,9 @@ type SearchAndFilterContextType = {
     filteredAccommodations: Accommodation[];
     filterLabels: string[];
     filters: string[];
+    search: string;
     handleSetFilter: (filter: string) => void;
+    handleSearch: (search: string) => void;
 };
 
 export const SearchAndFilterContext = createContext<
@@ -24,12 +26,43 @@ const SearchAndFilterContextProvider = ({
     const { accommodations } = useAccommodation();
     const [filteredAccommodations, setFilteredAccommodations] =
         useState<Accommodation[]>(accommodations);
+
     const [filters, setFilters] = useState<string[]>([]);
+    const [search, setSearch] = useState<string>('');
 
     useEffect(() => {
         applyFilters();
     }, [filters]);
 
+    useEffect(() => {
+        applySearch();
+    }, [search]);
+
+    const handleSearch = (search: string) => {
+        setSearch(search);
+    };
+
+    const applySearch = () => {
+        if (!search) {
+            setFilteredAccommodations(accommodations);
+            return;
+        }
+
+        const searched = accommodations.filter(
+            (accommodation) =>
+                accommodation.title
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                accommodation.description
+                    .toLowerCase()
+                    .includes(search.toLowerCase()) ||
+                accommodation.location
+                    .toLowerCase()
+                    .includes(search.toLowerCase())
+        );
+
+        setFilteredAccommodations(searched);
+    };
     const handleSetFilter = (filter: string) => {
         setFilters((prevFilters) => {
             if (prevFilters.includes(filter)) {
@@ -61,7 +94,9 @@ const SearchAndFilterContextProvider = ({
         filteredAccommodations,
         filterLabels,
         filters,
+        search,
         handleSetFilter,
+        handleSearch,
     };
 
     return (

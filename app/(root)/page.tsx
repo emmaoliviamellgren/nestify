@@ -1,6 +1,5 @@
 'use client';
 
-import { useState } from 'react';
 import { SearchBarPrimary } from '@/components/ui/inputs';
 import Navigation from '@/components/navigation';
 import Footer from '@/components/footer';
@@ -8,30 +7,35 @@ import useResponsive from '@/hooks/useResponsive';
 import Filters from '@/components/filters';
 import AccommodationGrid from '@/components/accommodation/accommodationGrid';
 import { useSearchAndFilter } from 'contexts/searchAndFilterProvider';
+import home from '@/public/home.jpg';
 
 const LandingPage = () => {
-    const [value, setValue] = useState('');
-    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setValue(e.target.value);
-    };
     const { bigScreen } = useResponsive();
-    const { filteredAccommodations } = useSearchAndFilter();
+    const { filteredAccommodations, search, handleSearch } = useSearchAndFilter();
 
     return (
         <>
             <Navigation />
             {bigScreen && (
-                <div className='block mx-auto py-6 max-w-6xl sm:pl-10 lg:pl-0'>
-                    <div className='py-9'>
-                        <h1>Rent your dream home</h1>
-                        <h2>Where do you want to go?</h2>
+                <main className='relative block sm:pl-10 lg:pl-0'>
+                    <div
+                        className='bg-cover bg-right'
+                        style={{ backgroundImage: `url(${home.src})` }}>
+                        <div className='py-24 bg-gradient-to-r from-white/40'>
+                            <div className='relative z-10 max-w-6xl mx-auto'>
+                                <h1>Rent your dream home</h1>
+                                <h2>Where do you want to go?</h2>
+                            </div>
+                            <div className='relative z-10 py-9 max-w-6xl mx-auto'>
+                                <SearchBarPrimary
+                                    value={search}
+                                    onChange={(e) => handleSearch(e.target.value)}
+                                    placeholder='Search...'
+                                />
+                            </div>
+                        </div>
                     </div>
-                    <SearchBarPrimary
-                        placeholder='Search...'
-                        onChange={handleChange}
-                        value={value}
-                    />
-                </div>
+                </main>
             )}
             <Filters />
             {bigScreen && (

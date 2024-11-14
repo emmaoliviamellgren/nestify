@@ -11,6 +11,9 @@ import { useForm, Controller } from 'react-hook-form';
 import { MdErrorOutline } from 'react-icons/md';
 import { z } from 'zod';
 import useResponsive from '@/hooks/useResponsive';
+import Image from 'next/image';
+import auth from '@/public/auth.jpg';
+import LabelButton from '@/components/ui/labelButton';
 
 type SignUpFormValues = {
     firstName: string;
@@ -29,7 +32,7 @@ const formSchema = z.object({
 });
 
 const RegisterPage = () => {
-    const { bigScreen } = useResponsive();
+    const { bigScreen, smallScreen } = useResponsive();
     const { register } = useAuth();
     const router = useRouter();
 
@@ -65,9 +68,10 @@ const RegisterPage = () => {
 
     return (
         <div className='md:grid md:grid-cols-2'>
+            {smallScreen && <LabelButton />}
             {bigScreen && (
-                <img
-                    src='https://images.unsplash.com/photo-1518780664697-55e3ad937233?q=80&w=465&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
+                <Image
+                    src={auth}
                     alt='Sign Up Image'
                     className='h-screen w-full object-cover'
                 />

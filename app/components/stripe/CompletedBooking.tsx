@@ -30,7 +30,7 @@ const STATUS_CONTENT_MAP: Record<
         icon: SuccessIcon,
     },
     processing: {
-        text: 'Your payment is processing... ⏳',
+        text: 'Your payment is processing...',
         icon: InfoIcon,
     },
     requires_payment_method: {
@@ -82,7 +82,7 @@ const CompletedBooking = () => {
     return (
         <div
             id='payment-status'
-            className='w-screen min-h-screen flex flex-col gap-4 justify-center items-center'>
+            className='w-screen min-h-screen flex flex-col flex-wrap md:flex-nowrap gap-4 justify-center items-center'>
             <div
                 id='status-icon'>
                 {STATUS_CONTENT_MAP[status].icon}

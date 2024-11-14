@@ -1,12 +1,14 @@
 import { DatePicker, Select, SelectItem } from '@nextui-org/react';
 import { CircleUserRound } from 'lucide-react';
-import { PrimaryButton } from './ui/buttons';
+import { DisabledButton, PrimaryButton } from './ui/buttons';
 import { useState } from 'react';
 import { parseDate, DateValue } from '@internationalized/date';
 import { useBooking } from 'contexts/bookingProvider';
+import { useAuth } from 'contexts/authProvider';
 
 const BookingForm = () => {
     const { onSubmit, register, handleSubmit, setValue } = useBooking();
+    const { user } = useAuth();
 
     const [fromDate, setFromDate] = useState<string>('');
     const [toDate, setToDate] = useState<string>('');
@@ -107,14 +109,25 @@ const BookingForm = () => {
                     </Select>
                 </div>
                 <div className='flex justify-center'>
-                    <PrimaryButton
-                        label='Reserve'
-                        type='submit'
-                        onClick={() => {
-                            setUserSubmitted(true);
-                        }}
-                        customWidth={false}
-                    />
+                    {user ? (
+
+                        <PrimaryButton
+                            label='Reserve'
+                            type='submit'
+                            onClick={() => {
+                                setUserSubmitted(true);
+                            }}
+                            customWidth={false}
+                        />
+                    ) : (
+                        <DisabledButton
+                            label='Log in to book'
+                            onClick={() => {
+                                setUserSubmitted(true);
+                            }}
+                            customWidth={false}
+                        />
+                    )}
                 </div>
             </form>
     );

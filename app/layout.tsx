@@ -23,7 +23,7 @@ export default function RootLayout({
         <html lang='en'>
             <body
                 className={`${lexend.variable} ${familjenGrotesk.variable} antialiased`}>
-                <NextUIProvider>
+                <NextUIProvider locale='en-GB'>
                     <AccommodationContextProvider>
                         <SearchAndFilterProvider>
                             <AuthContextProvider>

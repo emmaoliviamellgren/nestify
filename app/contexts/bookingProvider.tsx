@@ -19,7 +19,7 @@ import { useRouter } from 'next/navigation';
 const FormSchema = z.object({
     fromDate: z.string().min(1),
     toDate: z.string().min(1),
-    guests: z.number().int().min(1).max(7),
+    guests: z.string().min(1).max(7),
 });
 
 type BookingFormData = z.infer<typeof FormSchema>;
@@ -34,6 +34,8 @@ type BookingContextType = {
     pastBookings: Booking[];
     setActiveBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
     setPastBookings: React.Dispatch<React.SetStateAction<Booking[]>>;
+    isEditingBooking: boolean;
+    setIsEditingBooking: React.Dispatch<React.SetStateAction<boolean>>;
     currentBooking: Booking | null;
     cost: number;
     fromDate: string;
@@ -53,6 +55,8 @@ const BookingContextProvider = ({
 
     const { user } = useAuth();
     const { accommodation } = useAccommodation();
+
+    const [isEditingBooking, setIsEditingBooking] = useState<boolean>(false);
 
     const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
     const [pastBookings, setPastBookings] = useState<Booking[]>([]);
@@ -84,7 +88,7 @@ const BookingContextProvider = ({
         defaultValues: {
             fromDate: '',
             toDate: '',
-            guests: 2,
+            guests: '',
         },
     });
 
@@ -95,6 +99,8 @@ const BookingContextProvider = ({
             console.log('User not authenticated');
             return;
         }
+
+        setIsEditingBooking(false);
 
         try {
             {
@@ -129,6 +135,8 @@ const BookingContextProvider = ({
         setActiveBookings,
         pastBookings,
         setPastBookings,
+        isEditingBooking,
+        setIsEditingBooking,
         currentBooking,
         cost,
         fromDate,

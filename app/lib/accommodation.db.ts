@@ -3,7 +3,6 @@ import { db, storage } from '../../firebase.config';
 import { doc, getDoc, collection, getDocs } from 'firebase/firestore';
 import { ref, getDownloadURL } from 'firebase/storage';
 import toast from 'react-hot-toast';
-import { mapPropertiesToTags } from '@/components/ui/propertiesIcons';
 
 export const getAllAccommodations = async (): Promise<Accommodation[]> => {
     try {
@@ -22,7 +21,6 @@ export const getAllAccommodations = async (): Promise<Accommodation[]> => {
                 try {
                     const imageUrl = await getDownloadURL(imageRef);
                     const filteringTags = data.properties as string[];
-                    console.log('Tags from DB mapped: ' + filteringTags);
                     return {
                         ...data,
                         id: doc.id,

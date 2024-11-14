@@ -2,7 +2,7 @@
 
 import Navigation from '@/components/navigation';
 import LabelButton from '@/components/ui/labelButton';
-import authChecking from '@/hooks/authChecking';
+import authChecking from '@/hooks/useAuthChecking';
 import { useAuth } from 'contexts/authProvider';
 import { getInitials } from '@/utils/getInitials';
 import AccommodationCardSmall from '@/components/accommodation/accommodationCardSmall';

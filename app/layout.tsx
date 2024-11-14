@@ -7,6 +7,7 @@ import AuthContextProvider from './contexts/authProvider';
 import { NextUIProvider } from '@nextui-org/react';
 import BookingContextProvider from 'contexts/bookingProvider';
 import AccommodationContextProvider from 'contexts/accommodationProvider';
+import SearchAndFilterProvider from 'contexts/searchAndFilterProvider';
 
 export const metadata: Metadata = {
     title: 'Nestify',
@@ -24,12 +25,14 @@ export default function RootLayout({
                 className={`${lexend.variable} ${familjenGrotesk.variable} antialiased`}>
                 <NextUIProvider>
                     <AccommodationContextProvider>
-                        <AuthContextProvider>
-                            <BookingContextProvider>
-                                <Toaster />
-                                {children}
-                            </BookingContextProvider>
-                        </AuthContextProvider>
+                        <SearchAndFilterProvider>
+                            <AuthContextProvider>
+                                <BookingContextProvider>
+                                    <Toaster />
+                                    {children}
+                                </BookingContextProvider>
+                            </AuthContextProvider>
+                        </SearchAndFilterProvider>
                     </AccommodationContextProvider>
                 </NextUIProvider>
             </body>

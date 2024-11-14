@@ -5,7 +5,9 @@ import { SearchBarPrimary } from '@/components/ui/inputs';
 import Navigation from '@/components/navigation';
 import Footer from '@/components/footer';
 import useResponsive from '@/hooks/useResponsive';
-import Accommodations from '@/components/filters';
+import Filters from '@/components/filters';
+import AccommodationGrid from '@/components/accommodation/accommodationGrid';
+import { useSearchAndFilter } from 'contexts/searchAndFilterProvider';
 
 const LandingPage = () => {
     const [value, setValue] = useState('');
@@ -13,6 +15,7 @@ const LandingPage = () => {
         setValue(e.target.value);
     };
     const { bigScreen } = useResponsive();
+    const { filteredAccommodations } = useSearchAndFilter();
 
     return (
         <>
@@ -30,7 +33,18 @@ const LandingPage = () => {
                     />
                 </div>
             )}
-            <Accommodations />
+            <Filters />
+            {bigScreen && (
+                <div className='px-4 mx-auto md:max-w-6xl'>
+                    <p className='title pb-2 pt-6'>Featured</p>
+                    <p className='block pb-6'>
+                        Take a look at our most popular accommodations!
+                    </p>
+                </div>
+            )}
+            <div className='md:max-w-6xl md:mx-auto p-6'>
+                <AccommodationGrid accommodations={filteredAccommodations} />
+            </div>
             <Footer />
         </>
     );

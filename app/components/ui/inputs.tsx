@@ -45,7 +45,7 @@ export const SearchBarPrimary = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder || 'Search...'}
-                className='input w-[250px] md:w-[350px] h-[45px] md:h-[50px] outline outline-offset-2 outline-1 outline-[--primary] rounded-lg py-1.5 pl-[3rem] pr-3 placeholder-opacity-30 text-opacity-30'
+                className='input w-[250px] md:w-[350px] h-[45px] md:h-[40px] outline outline-offset-2 outline-1 outline-[--primary] rounded-lg py-1.5 pl-[3rem] pr-3 placeholder-opacity-30 text-opacity-30'
             />
         </div>
     );
@@ -66,7 +66,7 @@ export const SearchBarSecondary = ({
                 value={value}
                 onChange={onChange}
                 placeholder={placeholder || 'Search...'}
-                className='input w-[250px] md:w-[350px] h-[35px] md:h-[40px] outline outline-offset-2 outline-1 outline-[--primary] rounded-lg py-1.5 pl-10 pr-3 placeholder-opacity-30 text-opacity-30'
+                className='input w-[180px] md:w-[350px] h-[35px] md:h-[35px] outline outline-offset-2 outline-1 outline-[--primary] rounded-lg py-1.5 pl-10 pr-3 placeholder-opacity-30 text-opacity-30'
             />
         </div>
     );

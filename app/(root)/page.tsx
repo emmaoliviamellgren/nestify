@@ -30,15 +30,7 @@ const LandingPage = () => {
                     />
                 </div>
             )}
-            <div className='px-4 mx-auto md:max-w-6xl'>
-                <p className='title pb-2 pt-6'>Featured</p>
-                {bigScreen && (
-                    <p className='block pb-6'>
-                        Take a look at our most popular accommodations!
-                    </p>
-                )}
-            </div>
-                <Accommodations />
+            <Accommodations />
             <Footer />
         </>
     );

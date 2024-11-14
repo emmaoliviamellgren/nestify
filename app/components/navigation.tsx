@@ -39,8 +39,8 @@ const Navigation = () => {
     return (
         <>
             {smallScreen && (
-                <span className='py-6 justify-center flex flex-wrap gap-6 items-center md:hidden'>
-                    <SearchBarPrimary
+                <span className='py-6 justify-center flex flex-wrap gap-3 items-center'>
+                    <SearchBarSecondary
                         value={searchValue}
                         onChange={handleSearch}
                         placeholder='Search...'

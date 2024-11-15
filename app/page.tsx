@@ -1,3 +1,5 @@
+'use client';
+
 import LandingPage from './(root)/page';
 
 const RootPage = () => {

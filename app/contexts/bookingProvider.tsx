@@ -3,7 +3,7 @@
 import { moveBooking } from '@/lib/booking.db';
 import { Booking } from '@/types/booking';
 import { useAuth } from 'contexts/authProvider';
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useEffect, useState } from 'react';
 import { zodResolver } from '@hookform/resolvers/zod';
 import {
     useForm,
@@ -14,7 +14,10 @@ import {
 import { z } from 'zod';
 import { Accommodation } from '@/types/accommodation';
 import { useAccommodation } from './accommodationProvider';
-import { useRouter } from 'next/navigation';
+import {
+    useRouter,
+    usePathname
+} from 'next/navigation';
 
 const FormSchema = z.object({
     fromDate: z.string().min(1),
@@ -40,6 +43,8 @@ type BookingContextType = {
     cost: number;
     fromDate: string;
     toDate: string;
+    setFromDate: React.Dispatch<React.SetStateAction<string>>;
+    setToDate: React.Dispatch<React.SetStateAction<string>>;
 };
 
 export const BookingContext = createContext<BookingContextType | undefined>(
@@ -52,6 +57,7 @@ const BookingContextProvider = ({
     children: React.ReactNode;
 }>) => {
     const router = useRouter();
+    const pathname = usePathname();
 
     const { user } = useAuth();
     const { accommodation } = useAccommodation();
@@ -63,8 +69,10 @@ const BookingContextProvider = ({
     const [currentBooking, setCurrentBooking] = useState<Booking | null>(null);
 
     const [cost, setCost] = useState<number>(0);
-    const [fromDate, setFromDate] = useState<string>('');
-    const [toDate, setToDate] = useState<string>('');
+    const [fromDate, setFromDate] = useState<string>(
+        currentBooking?.fromDate || ''
+    );
+    const [toDate, setToDate] = useState<string>(currentBooking?.toDate || '');
 
     const checkIfBookingExpired = () => {
         if (user && user.activeBookings) {
@@ -86,15 +94,32 @@ const BookingContextProvider = ({
     const form = useForm<BookingFormData>({
         resolver: zodResolver(FormSchema),
         defaultValues: {
-            fromDate: '',
-            toDate: '',
-            guests: '',
+            fromDate: currentBooking?.fromDate || '',
+            toDate: currentBooking?.toDate || '',
+            guests: currentBooking?.guests || '2',
         },
     });
 
     const { register, handleSubmit, setValue } = form;
 
+    useEffect(() => {
+        {
+            /* ------ Resetting form if user doesn't navigate to next page/ continuing booking process ------ */
+        }
+        if (pathname === '/') {
+            console.log('Resetting form because of this pathname: ', pathname);
+            form.reset({
+                fromDate: '',
+                toDate: '',
+                guests: '2',
+            });
+            setFromDate('');
+            setToDate('');
+        }
+    }, [form, fromDate, toDate, currentBooking, pathname]);
+
     const onSubmit = async (data: BookingFormData) => {
+        console.log('Form is submitting');
         if (!user) {
             console.log('User not authenticated');
             return;
@@ -141,6 +166,8 @@ const BookingContextProvider = ({
         cost,
         fromDate,
         toDate,
+        setFromDate,
+        setToDate,
     };
 
     return (

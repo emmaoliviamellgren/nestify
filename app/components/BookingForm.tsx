@@ -16,29 +16,28 @@ const BookingForm = ({ onClose }: Props) => {
         register,
         handleSubmit,
         setValue,
-        currentBooking,
         isEditingBooking,
+        fromDate,
+        toDate,
+        setFromDate,
+        setToDate,
     } = useBooking();
     const { user } = useAuth();
 
-    const [fromDate, setFromDate] = useState<string>(currentBooking?.fromDate || '');
-    const [toDate, setToDate] = useState<string>(currentBooking?.toDate || '');
     {
         /* ------ Setting a min value date for toDate based on fromDate ------ */
     }
     const [minValueDate, setMinValueDate] = useState<DateValue | undefined>(
         undefined
     );
-
     const [userSubmitted, setUserSubmitted] = useState<boolean>(false);
-
-    const defaultOnEdit = isEditingBooking
-        ? currentBooking?.guests.toString() || '2'
-        : '2';
 
     return (
         <form
-            onSubmit={handleSubmit(onSubmit)}
+            onSubmit={handleSubmit((data) => {
+                console.log('Form submitted:', data);
+                onSubmit(data);
+            })}
             className='flex flex-col gap-8'>
             <div className='flex flex-row md:flex-col gap-4'>
                 <DatePicker
@@ -106,9 +105,9 @@ const BookingForm = ({ onClose }: Props) => {
                 <Select
                     labelPlacement='outside-left'
                     variant='faded'
+                    aria-hidden='false'
                     className='max-w-[284px] md:max-w-none flex flex-col gap-1 items-start'
                     classNames={{ label: 'text-base md:text-[1.1rem]' }}
-                    defaultSelectedKeys={[defaultOnEdit]}
                     label='Guests'
                     placeholder='2'
                     startContent={<CircleUserRound />}

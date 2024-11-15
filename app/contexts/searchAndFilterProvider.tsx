@@ -53,9 +53,6 @@ const SearchAndFilterContextProvider = ({
                 accommodation.title
                     .toLowerCase()
                     .includes(search.toLowerCase()) ||
-                accommodation.description
-                    .toLowerCase()
-                    .includes(search.toLowerCase()) ||
                 accommodation.location
                     .toLowerCase()
                     .includes(search.toLowerCase())

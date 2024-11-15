@@ -1,4 +1,3 @@
-import { SlidersHorizontal } from 'lucide-react';
 import { FilterPillButton } from './ui/pillButtons';
 import { iconMappingToNode } from './ui/propertiesIcons';
 import { useSearchAndFilter } from 'contexts/searchAndFilterProvider';
@@ -23,11 +22,6 @@ const Filters = () => {
                         }
                     />
                 ))}
-                <FilterPillButton
-                    icon={<SlidersHorizontal className='size-[1.15rem]' />}
-                    label='All filters'
-                    onClick={() => handleSetFilter('All filters')}
-                />
             </div>
         </>
     );

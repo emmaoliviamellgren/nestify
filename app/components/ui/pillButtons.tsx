@@ -20,7 +20,7 @@ export const FilterPillButton = ({ label, icon, onClick, className }: PillButton
     return (
         <button
             onClick={onClick}
-            className={`${className} text-sm text-[--text-primary] outline outline-1 outline-[--primary] transition hover:translate-y-0.5 w-fit aspect-square md:aspect-auto md:h-[33px] md:pl-3.5 md:pr-4 p-2 rounded-full flex items-center gap-1 last:bg-[--primary] last:text-[--text-secondary] last:outline-[--background]`}>
+            className={`${className} text-sm text-[--text-primary] outline outline-1 outline-[--primary] transition hover:translate-y-0.5 w-fit aspect-square md:aspect-auto md:h-[33px] md:pl-3.5 md:pr-4 p-2 rounded-full flex items-center gap-1`}>
             {icon}
             <span className='caption hidden md:block'>{label}</span>
         </button>

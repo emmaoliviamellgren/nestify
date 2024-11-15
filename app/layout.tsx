@@ -11,7 +11,7 @@ import SearchAndFilterProvider from 'contexts/searchAndFilterProvider';
 
 export const metadata: Metadata = {
     title: 'Nestify',
-    description: 'Where to?',
+    description: 'Book your next stay with Nestify',
 };
 
 export default function RootLayout({

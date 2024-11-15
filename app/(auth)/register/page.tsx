@@ -105,7 +105,7 @@ const RegisterPage = () => {
                                     )}
                                 />
                                 {formState.errors.firstName && (
-                                    <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                    <span className='text-error text-xs flex gap-1 items-center pt-2 text-[--warning]'>
                                         <MdErrorOutline />
                                         <span className='text-xs'>
                                             {formState.errors.firstName.message}
@@ -133,7 +133,7 @@ const RegisterPage = () => {
                                     )}
                                 />
                                 {formState.errors.lastName && (
-                                    <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                    <span className='text-error text-xs flex gap-1 items-center pt-2 text-[--warning]'>
                                         <MdErrorOutline />
                                         <span className='text-xs'>
                                             {formState.errors.lastName.message}
@@ -162,7 +162,7 @@ const RegisterPage = () => {
                                 )}
                             />
                             {formState.errors.email && (
-                                <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                <span className='text-error text-xs flex gap-1 items-center pt-2 text-[--warning]'>
                                     <MdErrorOutline />
                                     <span className='text-xs'>
                                         {formState.errors.email?.message}
@@ -190,7 +190,7 @@ const RegisterPage = () => {
                                 )}
                             />
                             {formState.errors.password && (
-                                <span className='text-error text-xs mt-[2px] flex gap-1 items-center'>
+                                <span className='text-error text-xs flex gap-1 items-center pt-2 text-[--warning]'>
                                     <MdErrorOutline />
                                     <span className='text-xs'>
                                         {formState.errors.password?.message}

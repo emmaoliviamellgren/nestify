@@ -98,7 +98,7 @@ const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
             return userCredential.user.uid;
         } catch (error: unknown) {
-            handleError(error, toastId);
+            console.log('Unknown error: ' + (error as Error).message);
         }
     };
 

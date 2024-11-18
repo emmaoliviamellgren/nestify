@@ -32,7 +32,7 @@ const AccommodationContextProvider = ({
     const [accommodation, setAccommodation] = useState<Accommodation | null>(
         null
     );
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
 
     useEffect(() => {
         fetchAccommodations();
@@ -43,6 +43,7 @@ const AccommodationContextProvider = ({
     }, [id, router]);
 
     const fetchAccommodations = async () => {
+        setLoading(true);
         try {
             const data: Accommodation[] = await getAllAccommodations();
             setAccommodations(data);
@@ -54,6 +55,7 @@ const AccommodationContextProvider = ({
     };
 
     const fetchAccommodationById = async (id: string) => {
+        setLoading(true);
         try {
             const data: Accommodation | null = await getAccommodationById(id);
             setAccommodation(data);

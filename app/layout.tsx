@@ -4,10 +4,11 @@ import './embla.css';
 import { lexend, familjenGrotesk } from './utils/fonts';
 import { Toaster } from 'react-hot-toast';
 import AuthContextProvider from './contexts/authProvider';
-import { NextUIProvider } from '@nextui-org/react';
+// import { NextUIProvider } from '@nextui-org/react';
 import BookingContextProvider from 'contexts/bookingProvider';
 import AccommodationContextProvider from 'contexts/accommodationProvider';
 import SearchAndFilterProvider from 'contexts/searchAndFilterProvider';
+
 
 export const metadata: Metadata = {
     title: 'Nestify',
@@ -22,8 +23,8 @@ export default function RootLayout({
     return (
         <html lang='en'>
             <body
-                className={`${lexend.variable} ${familjenGrotesk.variable} antialiased`}>
-                <NextUIProvider locale='en-GB'>
+                className={`${lexend.variable} ${familjenGrotesk.variable} antialiased`} suppressHydrationWarning>
+                {/* <NextUIProvider locale='en-GB'> */}
                     <AccommodationContextProvider>
                         <SearchAndFilterProvider>
                             <AuthContextProvider>
@@ -34,7 +35,7 @@ export default function RootLayout({
                             </AuthContextProvider>
                         </SearchAndFilterProvider>
                     </AccommodationContextProvider>
-                </NextUIProvider>
+                {/* </NextUIProvider> */}
             </body>
         </html>
     );

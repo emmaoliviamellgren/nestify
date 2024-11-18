@@ -16,7 +16,7 @@ export const createBooking = async (
     try {
         const userDocRef = doc(db, 'Users', userId);
         const userDoc = await getDoc(userDocRef);
-
+console.log('THis booking called')
         if (userDoc.exists()) {
             await updateDoc(userDocRef, {
                 activeBookings: arrayUnion(booking),

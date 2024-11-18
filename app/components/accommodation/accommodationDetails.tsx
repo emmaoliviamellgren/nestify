@@ -8,14 +8,12 @@ import Navigation from '@/components/navigation';
 import smilingMan from '@/public/smiling-man.jpg';
 import BookingForm from '@/components/BookingForm';
 import { useAccommodation } from 'contexts/accommodationProvider';
-import Loading from '../loading';
 import useResponsive from '@/hooks/useResponsive';
 
 const AccommodationDetails = () => {
-    const { accommodation, loading } = useAccommodation();
+    const { accommodation } = useAccommodation();
     const { smallScreen, bigScreen } = useResponsive();
 
-    if (loading) return <Loading />;
     if (!accommodation) return null;
 
     const SLIDES = [
@@ -145,7 +143,13 @@ const AccommodationDetails = () => {
                                     SEK per night
                                 </p>
                             </span>
-                            <BookingForm />
+                            <BookingForm
+                                onClose={() =>
+                                    console.log(
+                                        'Closing form when editing booking'
+                                    )
+                                }
+                            />
                         </div>
                     )}
                 </section>
@@ -154,7 +158,11 @@ const AccommodationDetails = () => {
             {/* ------ BOOKING FORM DEFAULT (MOBILE) ------ */}
             {smallScreen && (
                 <footer className='flex flex-col justify-between rounded-md bg-[--background-muted] border-[--primary] px-8 py-10 gap-8 mt-2'>
-                    <BookingForm />
+                    <BookingForm
+                        onClose={() =>
+                            console.log('Closing form when editing booking')
+                        }
+                    />
                 </footer>
             )}
         </>

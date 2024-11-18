@@ -3,7 +3,7 @@
 import { useBooking } from 'contexts/bookingProvider';
 import Loading from '@/components/loading';
 import Image from 'next/image';
-import { PrimaryButton } from '@/components/ui/buttons';
+import { LoadingButton, PrimaryButton } from '@/components/ui/buttons';
 import LabelButton from '@/components/ui/labelButton';
 import { calculateOrderAmount } from '@/lib/stripe/calculateTotalAmount';
 import Footer from '@/components/footer';
@@ -12,11 +12,13 @@ import useResponsive from '@/hooks/useResponsive';
 import { useRouter } from 'next/navigation';
 import { useDateFormatter } from '@react-aria/i18n';
 import BookingEditForm from '@/components/BookingEditForm';
+import { useState } from 'react';
 
 const BookingDetailsPage = () => {
     const { currentBooking, cost } = useBooking();
     const { bigScreen, smallScreen } = useResponsive();
     const router = useRouter();
+    const [loading, setLoading] = useState(false);
 
     const formatter = useDateFormatter({ dateStyle: 'full' });
 
@@ -37,9 +39,15 @@ const BookingDetailsPage = () => {
     );
 
     const redirectToBooking = () => {
-        router.push(
-            `/accommodations/${currentBooking.chosenAccommodation.id}/${currentBooking.id}/booking`
-        );
+        setLoading(true);
+        console.log('Redirecting', currentBooking);
+        try {
+            router.push(
+                `/accommodations/${currentBooking.chosenAccommodation.id}/${currentBooking.id}/booking`
+            );
+        } catch (error) {
+            console.error('Failed to redirect to booking page: ', error);
+        }
     };
 
     return (
@@ -119,11 +127,18 @@ const BookingDetailsPage = () => {
                         <p className='bold'>Your total:</p>
                         {totalAmount} SEK
                     </span>
-                    <PrimaryButton
-                        label='Book now'
-                        onClick={redirectToBooking}
-                        className='h-12 w-full'
-                    />
+                    {loading ? (
+                        <LoadingButton
+                            label='Processing...'
+                            className='flex justify-center items-center gap-2 h-12 w-full'
+                        />
+                    ) : (
+                        <PrimaryButton
+                            label='Book now'
+                            onClick={redirectToBooking}
+                            className='h-12 w-full'
+                        />
+                    )}
                 </div>
             </div>
             {bigScreen && <Footer />}

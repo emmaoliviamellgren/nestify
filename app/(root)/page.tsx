@@ -8,13 +8,22 @@ import Filters from '@/components/filters';
 import AccommodationGrid from '@/components/accommodation/accommodationGrid';
 import { useSearchAndFilter } from 'contexts/searchAndFilterProvider';
 import home from '@/public/home.jpg';
+import { useState, useEffect } from 'react';
 
 const LandingPage = () => {
     const { bigScreen } = useResponsive();
-    const { filteredAccommodations, search, handleSearch } = useSearchAndFilter();
+    const { filteredAccommodations, search, handleSearch } =
+        useSearchAndFilter();
+    const [isClient, setIsClient] = useState(false);
+
+    useEffect(() => {
+        setIsClient(true);
+    }, []);
+
+    if (!isClient) return null;
 
     return (
-        <>
+        <div>
             <Navigation />
             {bigScreen && (
                 <main className='relative block sm:pl-10 lg:pl-0'>
@@ -29,7 +38,9 @@ const LandingPage = () => {
                             <div className='relative z-10 py-9 max-w-6xl mx-auto'>
                                 <SearchBarPrimary
                                     value={search}
-                                    onChange={(e) => handleSearch(e.target.value)}
+                                    onChange={(e) =>
+                                        handleSearch(e.target.value)
+                                    }
                                     placeholder='Search...'
                                 />
                             </div>
@@ -50,7 +61,7 @@ const LandingPage = () => {
                 <AccommodationGrid accommodations={filteredAccommodations} />
             </div>
             <Footer />
-        </>
+        </div>
     );
 };
 

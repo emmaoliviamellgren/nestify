@@ -1,3 +1,5 @@
+'use client'
+
 import { useState } from 'react';
 import { SearchBarSecondary } from './ui/inputs';
 import { CircleUserRound } from 'lucide-react';
@@ -33,9 +35,9 @@ const Navigation = () => {
     if (loading) return <Loading />;
 
     return (
-        <>
+        <div suppressHydrationWarning>
             {smallScreen && (
-                <span className='py-6 justify-center flex flex-wrap gap-2 items-center'>
+                <div className='py-6 justify-center flex flex-wrap gap-2 items-center'>
                     <SearchBarSecondary
                         value={search}
                         onChange={(e) => handleSearch(e.target.value)}
@@ -69,11 +71,11 @@ const Navigation = () => {
                             </button>
                         </>
                     )}
-                </span>
+                </div>
             )}
 
             {bigScreen && (
-                <span className='py-4 hidden md:flex justify-between items-center px-8 border-b'>
+                <div className='py-4 flex justify-between items-center px-8 border-b'>
                     <h2
                         className='cursor-pointer transition-all hover:translate-y-0.5'
                         onClick={() => router.push('/')}>
@@ -107,9 +109,9 @@ const Navigation = () => {
                             placeholder='Search...'
                         />
                     </div>
-                </span>
+                </div>
             )}
-        </>
+        </div>
     );
 };
 

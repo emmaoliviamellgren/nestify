@@ -1,63 +1,84 @@
 'use client';
 
-import {
-    PaymentElement,
-    useStripe,
-    useElements,
-} from '@stripe/react-stripe-js';
-import { Layout } from '@stripe/stripe-js';
-import { useState } from 'react';
-import { DisabledButtonWithIcon, PrimaryButtonWithIcon } from '../ui/buttons';
+import { useState, useEffect } from 'react';
+import { useStripe, useElements, PaymentElement } from '@stripe/react-stripe-js';
 import { useBooking } from 'contexts/bookingProvider';
-import { createBooking } from '@/lib/booking.db';
 import { useAuth } from 'contexts/authProvider';
-import { BadgeCheck, Loader } from 'lucide-react';
-import Link from 'next/link';
+import { createBooking } from '@/lib/booking.db';
+import { LoadingButton, PrimaryButtonWithIcon } from '@/components/ui/buttons';
+import { BadgeCheck } from 'lucide-react';
+import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const CheckoutForm = () => {
     const stripe = useStripe();
     const elements = useElements();
     const { currentBooking } = useBooking();
     const { user } = useAuth();
+    const router = useRouter();
 
-    const [message, setMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
+
+    useEffect(() => {
+        console.log('User:', user);
+        console.log('Current Booking:', currentBooking);
+    }, [user, currentBooking]);
 
     const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
-        if (!stripe || !elements) return;
-
+        console.log('Form submitted');
         setLoading(true);
 
-        if (user && currentBooking) {
-            try {
-                await createBooking(user.id, currentBooking);
-                console.log('Payment and booking succeeded!');
-            } catch (err) {
-                console.log('Booking could not be created: ' + err);
+        try {
+            if (!stripe || !elements) {
+                console.log('Stripe.js has not loaded');
+                setLoading(false);
+                return;
             }
-        } else {
-            console.log('Booking could not be created');
+
+            console.log('Confirming payment...');
+            const { error, paymentIntent } = await stripe.confirmPayment({
+                elements,
+                confirmParams: {
+                    return_url: `${window.location.origin}/accommodations/${currentBooking?.chosenAccommodation.id}/${currentBooking?.id}/booking/confirmed`,
+                },
+                redirect: 'if_required',
+            });
+
+            if (error) {
+                console.log('Payment error:', error);
+                if (error.type === 'card_error' || error.type === 'validation_error') {
+                    toast.error(String(error.message));
+                } else {
+                    toast.error('Payment failed');
+                }
+                setLoading(false);
+                return;
+            }
+
+            if (paymentIntent && paymentIntent.status === 'succeeded') {
+                console.log('Payment succeeded');
+                if (user && currentBooking) {
+                    console.log('Creating booking...');
+                    await createBooking(user.id, currentBooking);
+                    console.log('Payment and booking succeeded!');
+                    router.push(`/accommodations/${currentBooking.chosenAccommodation.id}/${currentBooking.id}/booking/confirmed?payment_intent_client_secret=${paymentIntent.client_secret}`);
+                } else {
+                    console.log('Booking could not be created');
+                }
+            } else {
+                console.log('Payment did not succeed');
+            }
+        } catch (err) {
+            console.log('An error occurred:', err);
+            toast.error('An error occurred during the process.');
+        } finally {
+            setLoading(false);
         }
-
-        const { error } = await stripe.confirmPayment({
-            elements,
-            confirmParams: {
-                return_url: `${window.location.origin}/accommodations/${currentBooking?.chosenAccommodation.id}/${currentBooking?.id}/booking/confirmed`,
-            },
-        });
-
-        if (error.type === 'card_error' || error.type === 'validation_error') {
-            setMessage('Error:' + error.message);
-        } else {
-            setMessage('Payment succeeded!');
-        }
-
-        setLoading(false);
     };
 
     const paymentElementOptions = {
-        layout: 'tabs' as Layout,
+        layout: 'tabs' as const,
         style: {
             base: {
                 color: '#0b132b',
@@ -76,32 +97,18 @@ const CheckoutForm = () => {
                 options={paymentElementOptions}
             />
             {loading || !stripe || !elements ? (
-                <DisabledButtonWithIcon
-                icon={<Loader />}
-                label='Processing...'
-                className='w-full h-[50px] flex justify-center items-center gap-2'
-            />
+                <LoadingButton
+                    label='Processing...'
+                    className='w-full h-[50px] flex justify-center items-center gap-2'
+                />
             ) : (
-                <>
-                    <PrimaryButtonWithIcon
-                        id='submit'
-                        icon={<BadgeCheck />}
-                        className='w-full h-[50px] flex justify-center items-center gap-2'
-                        label={
-                            loading ? 'Loading...' : 'Pay now'
-                        }></PrimaryButtonWithIcon>
-                    <span className='flex gap-1 justify-center items-center'>
-                        <span className='text-sm md:text-base'>or</span>
-                        <Link
-                            href='/'
-                            className='underline text-sm md:text-base'>
-                            cancel
-                        </Link>
-                    </span>
-                </>
+                <PrimaryButtonWithIcon
+                    id='submit'
+                    icon={<BadgeCheck />}
+                    className='w-full h-[50px] flex justify-center items-center gap-2'
+                    label='Pay now'
+                />
             )}
-
-            {message && <div id='payment-message'>{message}</div>}
         </form>
     );
 };

@@ -1,7 +1,7 @@
 import { DatePicker, Select, SelectItem } from '@nextui-org/react';
 import { CircleUserRound } from 'lucide-react';
-import { DisabledButton, PrimaryButton, WarningButton } from './ui/buttons';
-import { useState } from 'react';
+import { DisabledButton, LoadingButton, PrimaryButton, WarningButton } from './ui/buttons';
+import { useEffect, useState } from 'react';
 import { parseDate, DateValue } from '@internationalized/date';
 import { useBooking } from 'contexts/bookingProvider';
 import { useAuth } from 'contexts/authProvider';
@@ -21,8 +21,16 @@ const BookingForm = ({ onClose }: Props) => {
         toDate,
         setFromDate,
         setToDate,
+        loading,
+        setLoading
     } = useBooking();
     const { user } = useAuth();
+
+    useEffect(() => {
+        if (isEditingBooking) {
+            setLoading(false);
+        }
+    })
 
     {
         /* ------ Setting a min value date for toDate based on fromDate ------ */
@@ -132,7 +140,13 @@ const BookingForm = ({ onClose }: Props) => {
                         customWidth
                     />
                 )}
-                {user ? (
+                {user && loading ? (
+                    <LoadingButton
+                        label='Processing...'
+                        customWidth={isEditingBooking ? true : false}
+                        className='flex justify-center items-center gap-2'
+                    />
+                ) : user ? (
                     <PrimaryButton
                         label={isEditingBooking ? 'Confirm' : 'Reserve'}
                         type='submit'

@@ -7,7 +7,6 @@ const Filters = () => {
         useSearchAndFilter();
 
     return (
-        <>
             <div className='flex gap-3 items-center justify-center flex-wrap max-w-screen py-2 md:py-6'>
                 {filterLabels.map((label) => (
                     <FilterPillButton
@@ -23,7 +22,6 @@ const Filters = () => {
                     />
                 ))}
             </div>
-        </>
     );
 };
 

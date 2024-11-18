@@ -14,10 +14,7 @@ import {
 import { z } from 'zod';
 import { Accommodation } from '@/types/accommodation';
 import { useAccommodation } from './accommodationProvider';
-import {
-    useRouter,
-    usePathname
-} from 'next/navigation';
+import { useRouter, usePathname } from 'next/navigation';
 
 const FormSchema = z.object({
     fromDate: z.string().min(1),
@@ -45,6 +42,8 @@ type BookingContextType = {
     toDate: string;
     setFromDate: React.Dispatch<React.SetStateAction<string>>;
     setToDate: React.Dispatch<React.SetStateAction<string>>;
+    loading: boolean;
+    setLoading: React.Dispatch<React.SetStateAction<boolean>>;
 };
 
 export const BookingContext = createContext<BookingContextType | undefined>(
@@ -63,6 +62,7 @@ const BookingContextProvider = ({
     const { accommodation } = useAccommodation();
 
     const [isEditingBooking, setIsEditingBooking] = useState<boolean>(false);
+    const [loading, setLoading] = useState(false);
 
     const [activeBookings, setActiveBookings] = useState<Booking[]>([]);
     const [pastBookings, setPastBookings] = useState<Booking[]>([]);
@@ -126,11 +126,8 @@ const BookingContextProvider = ({
         }
 
         setIsEditingBooking(false);
-
+        setLoading(true);
         try {
-            {
-                /* ------ CREATE BOOKING OBJECT WITH DATA ------ */
-            }
             const booking: Booking = {
                 id: Math.random().toString(16).slice(2),
                 chosenAccommodation: accommodation as Accommodation,
@@ -168,6 +165,8 @@ const BookingContextProvider = ({
         toDate,
         setFromDate,
         setToDate,
+        loading,
+        setLoading,
     };
 
     return (

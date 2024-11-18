@@ -5,11 +5,9 @@ import { useStripe } from '@stripe/react-stripe-js';
 import Link from 'next/link';
 import { CircleCheck, CircleX, Info } from 'lucide-react';
 
-const SuccessIcon = <CircleCheck className='size-12 text-[--primary]'/>;
-
-const ErrorIcon = <CircleX className='size-12 text-[--primary]'/>;
-
-const InfoIcon = <Info className='size-12 text-[--primary]'/>;
+const SuccessIcon = <CircleCheck className='size-12 text-[--primary]' />;
+const ErrorIcon = <CircleX className='size-12 text-[--primary]' />;
+const InfoIcon = <Info className='size-12 text-[--primary]' />;
 
 type PaymentStatus =
     | 'succeeded'
@@ -21,10 +19,7 @@ type PaymentStatus =
     | 'canceled'
     | 'default';
 
-const STATUS_CONTENT_MAP: Record<
-    PaymentStatus,
-    { text: string; icon: JSX.Element }
-> = {
+const STATUS_CONTENT_MAP: Record<PaymentStatus, { text: string; icon: JSX.Element }> = {
     succeeded: {
         text: 'Payment succeeded! 🎉',
         icon: SuccessIcon,
@@ -66,15 +61,16 @@ const CompletedBooking = () => {
     const [intentId, setIntentId] = useState<string | null>(null);
 
     useEffect(() => {
+        console.log('Stripe:', stripe);
         if (!stripe) return;
         const clientSecret = new URLSearchParams(window.location.search).get(
             'payment_intent_client_secret'
         );
         if (!clientSecret) return;
-
+        console.log('Client secret: ', clientSecret);
         stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
             if (!paymentIntent) return;
-            setStatus(paymentIntent.status);
+            setStatus(paymentIntent.status as PaymentStatus);
             setIntentId(paymentIntent.id);
         });
     }, [stripe]);
@@ -83,10 +79,7 @@ const CompletedBooking = () => {
         <div
             id='payment-status'
             className='w-screen min-h-screen flex flex-col flex-wrap md:flex-nowrap gap-4 justify-center items-center'>
-            <div
-                id='status-icon'>
-                {STATUS_CONTENT_MAP[status].icon}
-            </div>
+            <div id='status-icon'>{STATUS_CONTENT_MAP[status].icon}</div>
             <h2
                 id='status-text'
                 className='text-[--primary]'>

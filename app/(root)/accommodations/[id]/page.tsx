@@ -9,11 +9,11 @@ const HomeDetailsPage = () => {
     const { bigScreen, smallScreen } = useResponsive();
 
     return (
-        <>
+        <main className='h-full min-h-screen'>
             {smallScreen && <LabelButton />}
             <AccommodationDetails />
             {bigScreen && <Footer />}
-        </>
+        </main>
     );
 };
 

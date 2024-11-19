@@ -16,7 +16,6 @@ export const createBooking = async (
     try {
         const userDocRef = doc(db, 'Users', userId);
         const userDoc = await getDoc(userDocRef);
-console.log('THis booking called')
         if (userDoc.exists()) {
             await updateDoc(userDocRef, {
                 activeBookings: arrayUnion(booking),
@@ -46,11 +45,10 @@ export const fetchBookings = async (
                 pastBookings: userData.pastBookings || [],
             };
         } else {
-            toast.error('User not found');
             return { activeBookings: [], pastBookings: [] };
         }
     } catch (error) {
-        toast.error('Failed to fetch bookings: ' + (error as Error).message);
+        console.log('Failed to fetch bookings: ' + (error as Error).message);
         return { activeBookings: [], pastBookings: [] };
     }
 };

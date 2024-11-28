@@ -11,6 +11,4 @@ Nestify is a mock web application inspired by Airbnb, built using **Next.js** an
 
 ## Tech Stack
 - **Frontend**: Next.js, Tailwind CSS
-- **Backend**: Firebase Authentication, Firebase Firestore
-- **Hosting**: Firebase Hosting
-- **Others**: ESLint, Prettier
+- **Backend**: Firebase

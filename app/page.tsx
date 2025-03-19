@@ -1,4 +1,4 @@
-import LandingPage from './(root)/page';
+import LandingPage from './(root)/LandingPage';
 
 const RootPage = () => {
     return <LandingPage />;
